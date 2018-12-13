@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.CollegeMapper">
+
+  <select id="seleceAllXY" resultType="College">
+    select id,xyName from college
+  </select>
+
+  <select id="seleceAllZY" resultType="Profession">
+    select id,zyName,cid from profession where cid=1
+  </select>
+
+  <select id="seleceAllZY1" resultType="Profession">
+    select id,zyName,cid from profession where cid=#{cid}
+  </select>
+
+  <select id="seleceAllClass" resultType="ClassModel">
+    select id,cname,classid from class where classid=#{classid}
+  </select>
+</mapper>

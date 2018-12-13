@@ -1,0 +1,125 @@
+@charset "gb2312";
+/* CSS Document */
+
+* 
+{ 
+	margin:0; 
+	padding:0;
+	word-break:break-all; 
+ }
+body 
+{ 
+	background:#FFF;
+	 color:#333; 
+	 font:12px/1.6em Helvetica, Arial, sans-serif; 
+	 }
+h1, h2, h3, h4, h5, h6 
+{
+	 font-size:1em;
+	  
+}
+a 
+{ 
+	color:#0287CA; 
+	text-decoration:none; }
+a:hover 
+ {
+	  text-decoration:underline;
+	  }
+ul, li 
+{ 
+list-style:none;
+ }
+fieldset, img 
+{ 
+border:none;
+ }
+legend 
+{ 
+display:none;
+ }
+em, strong, cite, th {
+	 font-style:normal; 
+	 font-weight:normal;
+	  }
+input, textarea, select, button {
+	 font:12px Helvetica, Arial, sans-serif; 
+	 }
+table {
+	 border-collapse:collapse;
+	  }
+html {
+	 overflow:-moz-scrollbars-vertical;
+	  } 
+
+#ifocus { 
+	width:900px;
+	height:450px;
+  	margin:20px;
+    border:1px solid #DEDEDE;
+    background:#F8F8F8;
+	 }
+ #ifocus_pic 
+ {
+	  display:inline;
+	  position:relative; 
+	  float:left; 
+	  width:700px;
+	  height:400px;
+	  overflow:hidden; 
+	  margin:10px 0 0 10px; 
+	  }
+#ifocus_piclist { 
+position:absolute;
+ }
+#ifocus_piclist li { 
+	 width:700px;
+	 height:400px;
+	 overflow:hidden;
+ }
+#ifocus_piclist img {
+	 width:700px;
+	  height:400px;
+	  }
+#ifocus_btn { 
+     display:inline; 
+	 float:right; 
+	 width:150px;
+	 margin:9px 9px 0 0; 
+	 }
+#ifocus_btn li { 
+
+     width:150px;
+	 height:100px;
+	 cursor:pointer; 
+	 opacity:0.5;
+	  -moz-opacity:0.5; 
+	  filter:alpha(opacity=50); 
+	  }
+#ifocus_btn img { 
+ 	width:150px;
+	height:100px;
+    margin:5px 0 0 5px;
+	}
+#ifocus_btn .current {
+	 opacity:1; -moz-opacity:1; filter:alpha(opacity=100); 
+	 }
+#ifocus_opdiv { 
+	  position:absolute; 
+	  left:0; 
+	  bottom:0; 
+	  width:700px;
+	   height:65px;
+		background:#000;
+		 opacity:0.5; 
+		 -moz-opacity:0.5; 
+		 filter:alpha(opacity=50); 
+   }
+#ifocus_tx { 
+  position:absolute; 
+  left:3px;
+  bottom:8px; 
+  color:#FFF; }
+#ifocus_tx .normal { 
+  display:none;
+  }

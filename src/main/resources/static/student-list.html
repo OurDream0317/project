@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table th,table td{
+            border: thin solid blue;
+            width: 100px;
+            height: 30px;
+            text-align: center;
+        }
+
+         .addStudent{
+             width: 200px;
+             height: 30px;
+             border-radius: 2px;
+         }
+        .add1{
+            width: 50px;
+            height: 30px;
+            border-radius: 4px;
+            background-color: deepskyblue;
+        }
+        .check{
+            width: 150px;
+            height: 30px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-family: 微软雅黑;
+        }
+        .span1{
+            font-size: 10px;
+            font-family: 微软雅黑;
+            color: dodgerblue;
+        }
+        .ye{
+            width: 100px;
+            height: 30px;
+            border-radius: 4px;
+            background-color: deepskyblue;
+        }
+        #center-one{
+            margin: 0 auto;
+           width: 900px;
+            height: 700px;
+        }
+        #div_left{
+            float: left;
+        }
+        #div_right{
+            float: left;
+        }
+    </style>
+
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        var start=1;
+        var tmp=0;
+        function method(start2){
+            $("#ye_center").val(start)
+            $.get("/student/selAll",{"start":start,"num":20}, function (data) {
+
+                var list=JSON.parse(data)
+                if(list.length>0){
+                method(list);
+                return;}
+                else{
+                    start=start2-1;
+                    upordown(start);
+                    return;
+                }
+            })
+            function method(data) {
+                var str = "";
+                for (var i = 0; i < data.length; i++) {
+                    str = "<tr><td><input name='studentid' type='checkbox' value='"+data[i].id+"'></td><td>" + (i + 1) + "</td><td>" + data[i].sname + "</td><td>"+ data[i].snumber+
+                        "</td><td>" + data[i].sbrithday + "</td><td>" +
+                        data[i].sage + "</td><td>" + data[i].sphone +
+                        "</td><td><button style='background-color: lightgreen'>修改</button>&nbsp;&nbsp;&nbsp;" +
+                        "<button class='btn'  style='background-color: red' onclick='del("+data[i].id+")'>删除</button></td></tr>";
+                    $("table").append(str);
+
+                }
+            }
+        }
+      $(function() {
+            method(1);
+          $.get("/college/xyAll",function (data) {
+              console.log(data)
+             var list=JSON.parse(data);
+             var str1="";
+              for (var i=0;i<list.length;i++){
+                  str1="<option value='"+list[i].id+"'>"+list[i].xyName+"</option>"
+                  $("#xy").append(str1);
+              }
+          })
+
+         $("#file").click(function () {
+             console.log("导出Excel")
+             $.get("/excel/export",{"filename":"1234"},function () {
+                   alert("数据导出成功，默认在D盘")
+             })
+         })
+          $("#addStudent").click(function () {
+              $("#addStudent01").show();
+              $("#center").hide();
+          })
+         $("#qx").click(function () {
+             $("#addStudent01").hide();
+             $("#center").show();
+         })
+          $("#true").click(function () {
+              $("#addStudent01").hide();
+              $("#center").show();
+          })
+          $("#all").click(function () {
+              if(tmp!=0){
+                  var val=$("input[type='checkbox']");
+                  val.each(function () {
+                      $(this).prop("checked",false);
+                  })
+                  tmp=0;
+                  return;
+              }
+              var val=$("input[type='checkbox']");
+              val.each(function () {
+                  $(this).prop("checked",true);
+              })
+              tmp=1;
+          })
+      })
+        
+    </script>
+<script>
+    function upordown(start1) {
+        if(start1==0){
+            return;
+        }
+        start=start1;
+        $("table  tr:not(:first)").empty("");
+              method(start)
+
+    }
+    function  del(del) {
+        $.get("/student/delstudent",{"id":del},function () {
+            location.reload();
+        })
+    }
+    function deleteAll() {
+        var all = $("input:checked[name='studentid']"); //所有name为ck并且是选择状态的checkbox
+        console.log(all.length); //所有选中的复选框的长度
+
+        //删除
+        var str=",";
+        var ids="";
+        for(var i = 0; i < all.length; i++) {
+            ids=ids+$("input:checked[name='studentid']").attr("value")+str;
+            all[i].parentNode.parentNode.remove();
+        }
+        window.location.href="/student/delAll?ids="+ids;
+    }
+    function select() {
+          console.log($("#xy").val())
+        if($("#xy").val()=="请选择学院"){
+            $("#zy  option").remove("");
+            $("#zy").append("<option>请选择专业</option>")
+            $("#cla  option").remove("");
+            $("#cla").append("<option>请选择班级</option>")
+            return;
+        }
+        $("#zy  option").remove("");
+        $.get("/college/zyAll1",{"cid":$("#xy").val()},function (data) {
+            console.log(data)
+            var list=JSON.parse(data);
+            var str1="";
+            for (var i=0;i<list.length;i++){
+                str1="<option value='"+list[i].id+"'>"+list[i].zyName+"</option>"
+                $("#zy").append(str1);
+            }
+        })
+    }
+    function ZYchange() {
+        $("#cla  option").remove("");
+        $.get("/college/claAll1",{"classid":$("#zy").val()},function (data) {
+            console.log(data)
+            var list=JSON.parse(data);
+            var str1="";
+            for (var i=0;i<list.length;i++){
+                str1="<option value='"+list[i].id+"'>"+list[i].cname+"</option>"
+                $("#cla").append(str1);
+            }
+        })
+    }
+</script>
+</head>
+<body>
+<div id="addStudent01" style="display:none">
+    <form action="/student/addstudent" method="get">
+        用户名： <pre>       <input class="addStudent" type="text" name="sname"></pre>
+        密码：   <pre>       <input class="addStudent" type="text" name="spassword"></pre>
+        电话：   <pre>       <input class="addStudent" type="text" name="sphone"></pre>
+        学号：   <pre>       <input class="addStudent" type="text" name="snumber"></pre>
+        出生年月:<pre>       <input class="addStudent" type="date" name="sbrithday"></pre>
+       <pre>       <input class="add1" type="button" value="取消" id="qx">                <input class="add1" type="submit" value="提交" id="true"></pre>
+    </form>
+</div>
+<div id="center">
+    <div id="div_left"><input type="button" value="批量删除" style="width: 200px;height: 60px;background-color:red;border-radius: 6px" onclick="deleteAll()" style="background-color: deepskyblue;width: 200px;height: 60px;border-radius: 3px" ></div>
+    <div id="div_right"><button id="addStudent" style="width: 200px;height: 60px;background-color: deepskyblue;border-radius: 6px">新增学生</button></div>
+    <input type="button" value="Excel导出" id="file"  style="background-color: deepskyblue;width: 200px;height: 60px;border-radius: 3px" ></pre>
+    <pre>
+
+
+
+    </pre>
+    <pre><span class="span1">学生名：</span>  <input type="text" class="check" placeholder="请输入学生名">    <span class="span1">学号：</span>  <input type="text" class="check" placeholder="请输入学生学号">    <span class="span1">学院：</span>  <select id="xy" class="check" onchange="select()"><option>请选择学院</option></select>   <span class="span1">专业：</span>  <select id="zy"  type="text" class="check" onchange="ZYchange()"><option>请选择专业</option></select>   <span class="span1">班级：</span>  <select type="text" class="check" id="cla"><option>请选择班级</option></select>   <input class="check" type="button" value="搜索" style="background-color: deepskyblue"></pre>
+<div id="center-one">
+    <table cellspacing="0" cellpadding="0">
+        <th width="40"><input type="button" value="全选" id="all"/> </th>
+        <th width="80">序号</th>
+        <th width="100">学生</th>
+        <th width="150">学号</th>
+        <th width="150">出生日期</th>
+        <th width="80">年龄</th>
+        <th width="200">电话</th>
+        <th width="200">操作</th>
+</table>
+    <pre>                               <input class="ye" type="button" value="上一页" onclick="upordown(start-1)">              <input type="text" style="width: 60px;height: 20px;text-align: center" readonly="readonly" id="ye_center">               <input class="ye" type="button" value="下一页" onclick="upordown(start+1)"></pre>
+</div>
+</div>
+</body>
+
+</html>

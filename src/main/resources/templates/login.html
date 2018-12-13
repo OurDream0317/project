@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<form action="/student/login" method="post">
+    用户名：<input type="text" name="sname"><br/>
+    密码：<input type="text" name="spassword"><br/>
+    <input type="submit" value="登录">
+    <button onclick="del()"></button>
+</form>
+<span th:text="'working web application'"></span><br>
+<span th:text="2013 + 2"></span><br>
+<input type="text" name="userName" value="e-learn" th:value="111111" /><br>
+</body>
+</html>

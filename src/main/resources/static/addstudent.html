@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .addStudent{
+            width: 200px;
+            height: 30px;
+            border-radius: 2px;
+        }
+        .add1{
+            width: 50px;
+            height: 30px;
+            border-radius: 4px;
+            background-color: deepskyblue;
+        }
+    </style>
+</head>
+<body>
+<div id="addStudent01" style="display:block">
+    <form action="/student/addstudent" method="get">
+        用户名： <pre>       <input class="addStudent" type="text" name="sname"></pre>
+        密码：   <pre>       <input class="addStudent" type="text" name="spassword"></pre>
+        电话：   <pre>       <input class="addStudent" type="text" name="sphone"></pre>
+        学号：   <pre>       <input class="addStudent" type="text" name="snumber"></pre>
+        出生年月:<pre>       <input class="addStudent" type="date" name="sbrithday"></pre>
+        <pre>      <input class="add1" type="button" value="取消" id="qx">                <input class="add1" type="submit" value="提交" id="true"></pre>
+    </form>
+</div>
+</body>
+</html>

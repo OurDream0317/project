@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript">
+
+        //判断浏览器是否支持FileReader接口
+        if (typeof FileReader == 'undefined') {
+            document.getElementById("xmTanDiv").InnerHTML = "<h1>当前浏览器不支持FileReader接口</h1>";
+            //使选择控件不可操作
+            document.getElementById("xdaTanFileImg").setAttribute("disabled", "disabled");
+        }
+        function upfile() {
+            $("#xmTanImg").attr("src",$("#xdaTanFileImg").val())
+        }
+    </script>
+    <style>
+        .addimage {
+            width: 200px;
+            height: 30px;
+            border-radius: 2px;
+        }
+
+        .add1 {
+            width: 50px;
+            height: 30px;
+            border-radius: 4px;
+            background-color: deepskyblue;
+        }
+
+        #btn {
+            position: relative;
+            left: 50px;
+        }
+    </style>
+
+</head>
+<body>
+<div id="addImage01" style="display:block">
+    <form action="/image/addimg" method="post" enctype="multipart/form-data">
+        图片标题：
+        <pre>       <input class="addimage" type="text" name="ititle"></pre>
+        图片栏目：
+        <pre>       <input class="addimage" type="text" name="itype"></pre>
+        排序值：
+        <pre>       <input class="addimage" type="text" name="isort"></pre>
+        发布日期：
+        <pre>       <input class="addimage" type="text" name="itime"></pre>
+        图文作者：
+        <pre>       <input class="addimage" type="text" name="iauthor"></pre>
+        图文描述：
+        <pre>       <textarea style="width: 200px;height: 200px" name="idescribe"></textarea></pre>
+        图片上传：
+        <div>
+            <p>
+                图片上传前预览：<input type="file" id="xdaTanFileImg" onchange="upfile()" name="file" style="display: none"/>
+                <input type="button" value="隐藏图片" onclick="document.getElementById('xmImg').style.display = 'none';"/>
+                <input type="button" value="显示图片"
+                       onclick="document.getElementById('xmTanImg').style.display = 'block';"/>
+            </p>
+            <label for="xdaTanFileImg"><img src="/img/upfile.jpg" id="xmTanImg" style="width: 200px;height: 200px"/></label>
+        </div>
+
+        <pre>      <input class="add1" type="button" value="取消" id="qx"
+                          onclick="window.location.href='/picture-list.html'">                <input class="add1"
+                                                                                                     type="submit"
+                                                                                                     value="提交"
+                                                                                                     id="true"></pre>
+    </form>
+</div>
+<!--<script>
+    function picture_noadd(url){
+        var index = layer.open({
+            type: 4,
+            content: url
+        });
+        layer.full(index);
+    }
+
+</script>-->
+</body>
+</html>

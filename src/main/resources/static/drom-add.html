@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+    <style>
+        .adddrom{
+            width: 200px;
+            height: 30px;
+            border-radius: 2px;
+        }
+        .add1{
+            width: 50px;
+            height: 30px;
+            border-radius: 4px;
+            background-color: deepskyblue;
+        }
+    </style>
+
+</head>
+<body>
+<div id="adddrom01" style="display:block">
+    <form action="/drom/adddrom" method="get">
+        宿舍分类： <pre>       <select class="adddrom"><option>男生公寓</option><option>女生公寓</option></select></pre>
+        宿舍楼号： <pre>       <input class="adddrom" type="text" name="itype"></pre>
+        宿舍楼层： <pre>       <input class="adddrom" type="text" name="isort"></pre>
+        宿舍号：   <pre>       <input class="adddrom" type="text" name="itime"></pre>
+        学院：     <pre>       <select class="adddrom" type="text" name="iauthor"></select></pre>
+        专业：     <pre>       <select class="adddrom" type="text" name="iauthor"></select></pre>
+        班级：     <pre>       <select class="adddrom" type="text" name="iauthor"></select></pre>
+        宿舍成员： <pre>       <input class="adddrom" type="text" name="iauthor"></pre>
+        <pre>      <input class="add1" type="button" value="取消" id="qx" onclick="window.location.href='/drom-list.html'">                <input class="add1" type="submit" value="提交" id="true"></pre>
+    </form>
+</div>
+<!--<script>
+    function picture_noadd(url){
+        var index = layer.open({
+            type: 4,
+            content: url
+        });
+        layer.full(index);
+    }
+
+</script>-->
+</body>
+</html>

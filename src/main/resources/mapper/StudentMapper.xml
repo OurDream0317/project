@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.StudentMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.Student" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sname" property="sname" jdbcType="VARCHAR" />
+    <result column="spassword" property="spassword" jdbcType="VARCHAR" />
+    <result column="sphone" property="sphone" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sname, spassword, sphone
+  </sql>
+  <select id="studentLogin" resultType="Student">
+    select *  from student where delstatus=0 limit #{start},#{num}
+  </select>
+  <insert id="addStudent">
+     insert into student(sname,spassword,snumber,sbrithday,sage,sphone) value(#{student.sname},#{student.spassword},#{student.snumber},#{student.sbrithday},#{student.sage},#{student.sphone})
+  </insert>
+  <update id="delStudent">
+    update student set delstatus=1 where id=#{id}
+  </update>
+  <delete id="delAll">
+      update student set delstatus=1
+    <where>
+      id in
+      <foreach collection="array" index="index" item="item"
+               open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </where>
+  </delete>
+  <select id="selectAllStudent" resultType="Student">
+    select * from student  where delstatus=0
+  </select>
+ <!-- <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from student
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.Student" >
+    insert into student (id, sname, spassword, 
+      sphone)
+    values (#{id,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR}, #{spassword,jdbcType=VARCHAR}, 
+      #{sphone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.Student" >
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sname != null" >
+        sname,
+      </if>
+      <if test="spassword != null" >
+        spassword,
+      </if>
+      <if test="sphone != null" >
+        sphone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sname != null" >
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="spassword != null" >
+        #{spassword,jdbcType=VARCHAR},
+      </if>
+      <if test="sphone != null" >
+        #{sphone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.Student" >
+    update student
+    <set >
+      <if test="sname != null" >
+        sname = #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="spassword != null" >
+        spassword = #{spassword,jdbcType=VARCHAR},
+      </if>
+      <if test="sphone != null" >
+        sphone = #{sphone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.Student" >
+    update student
+    set sname = #{sname,jdbcType=VARCHAR},
+      spassword = #{spassword,jdbcType=VARCHAR},
+      sphone = #{sphone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>-->
+</mapper>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>成绩查询</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        function select() {
+            console.log($("#xy").val())
+            if($("#xy").val()=="请选择学院"){
+                $("#zy  option").remove("");
+                $("#zy").append("<option>请选择专业</option>")
+                $("#cla  option").remove("");
+                $("#cla").append("<option>请选择班级</option>")
+                return;
+            }
+            $("#zy  option").remove("");
+            $.get("/college/zyAll1",{"cid":$("#xy").val()},function (data) {
+                console.log(data)
+                var list=JSON.parse(data);
+                var str1="";
+                for (var i=0;i<list.length;i++){
+                    str1="<option value='"+list[i].id+"'>"+list[i].zyName+"</option>"
+                    $("#zy").append(str1);
+                }
+    </script>
+    <style>
+        .check{
+            width: 150px;
+            height: 30px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-family: 微软雅黑;
+        }
+        .span1{
+            font-size: 10px;
+            font-family: 微软雅黑;
+            color: dodgerblue;
+        }
+    </style>
+</head>
+<body>
+<pre><span class="span1">学生名：</span>  <input type="text" class="check" placeholder="请输入学生名">    <span class="span1">学号：</span>  <input type="text" class="check" placeholder="请输入学生学号">    <span class="span1">学院：</span>  <select id="xy" class="check" onchange="select()"><option>请选择学院</option></select>   <span class="span1">专业：</span>  <select id="zy"  type="text" class="check" onchange="ZYchange()"><option>请选择专业</option></select>   <span class="span1">班级：</span>  <select type="text" class="check" id="cla"><option>请选择班级</option></select>   <input class="check" type="button" value="搜索" style="background-color: deepskyblue"></pre>
+</body>
+</html>
