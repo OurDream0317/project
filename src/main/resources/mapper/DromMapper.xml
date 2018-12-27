@@ -33,70 +33,88 @@
       #{dzy,jdbcType=VARCHAR}, #{dclass,jdbcType=VARCHAR}, #{dprople,jdbcType=VARCHAR}, 
       #{dstatus,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.example.demo.model.Drom" >
+  <insert id="addDrom" parameterType="com.example.demo.model.Drom" >
     insert into drom
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="dtype != null" >
+      <if test="drom.dtype != null" >
         dtype,
       </if>
-      <if test="dnumber != null" >
+      <if test="drom.dnumber != null" >
         dnumber,
       </if>
-      <if test="dfloor != null" >
+      <if test="drom.dfloor != null" >
         dfloor,
       </if>
-      <if test="dnumber1 != null" >
+      <if test="drom.dnumber1 != null" >
         dnumber1,
       </if>
-      <if test="dxy != null" >
+      <if test="drom.dxy != null" >
         dxy,
       </if>
-      <if test="dzy != null" >
+      <if test="drom.dzy != null" >
         dzy,
       </if>
-      <if test="dclass != null" >
+      <if test="drom.dclass != null" >
         dclass,
       </if>
-      <if test="dprople != null" >
+      <if test="drom.dprople != null" >
         dprople,
       </if>
-      <if test="dstatus != null" >
-        dstatus,
+      <if test="drom.dprople1 != null" >
+        dprople1,
+      </if>
+      <if test="drom.dprople2 != null" >
+        dprople2,
+      </if>
+      <if test="drom.dprople3 != null" >
+        dprople3,
+      </if>
+      <if test="drom.dprople4 != null" >
+        dprople4,
+      </if>
+      <if test="drom.dprople5 != null" >
+        dprople5,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+      <if test="drom.dtype != null" >
+        #{drom.dtype},
       </if>
-      <if test="dtype != null" >
-        #{dtype,jdbcType=VARCHAR},
+      <if test="drom.dnumber != null" >
+        #{drom.dnumber},
       </if>
-      <if test="dnumber != null" >
-        #{dnumber,jdbcType=VARCHAR},
+      <if test="drom.dfloor != null" >
+        #{drom.dfloor},
       </if>
-      <if test="dfloor != null" >
-        #{dfloor,jdbcType=VARCHAR},
+      <if test="drom.dnumber1 != null" >
+        #{drom.dnumber1},
       </if>
-      <if test="dnumber1 != null" >
-        #{dnumber1,jdbcType=INTEGER},
+      <if test="drom.dxy != null" >
+        #{drom.dxy},
       </if>
-      <if test="dxy != null" >
-        #{dxy,jdbcType=VARCHAR},
+      <if test="drom.dzy != null" >
+        #{drom.dzy},
       </if>
-      <if test="dzy != null" >
-        #{dzy,jdbcType=VARCHAR},
+      <if test="drom.dclass != null" >
+        #{drom.dclass},
       </if>
-      <if test="dclass != null" >
-        #{dclass,jdbcType=VARCHAR},
+      <if test="drom.dprople != null" >
+      #{drom.dprople,jdbcType=VARCHAR},
+    </if>
+      <if test="drom.dprople1 != null" >
+        #{drom.dprople1},
       </if>
-      <if test="dprople != null" >
-        #{dprople,jdbcType=VARCHAR},
+      <if test="drom.dprople2 != null" >
+        #{drom.dprople2},
       </if>
-      <if test="dstatus != null" >
-        #{dstatus,jdbcType=INTEGER},
+      <if test="drom.dprople3 != null" >
+        #{drom.dprople3},
+      </if>
+      <if test="drom.dprople4 != null" >
+        #{drom.dprople4},
+      </if>
+      <if test="drom.dprople5 != null" >
+        #{drom.dprople5},
       </if>
     </trim>
   </insert>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/image/addimg" method="post" enctype="multipart/form-data">
+    课程名：
+    <pre>       <input class="addimage" type="text" name="ititle"></pre>
+    图片栏目：
+    <pre>       <input class="addimage" type="text" name="itype"></pre>
+    排序值：
+    <pre>       <input class="addimage" type="text" name="isort"></pre>
+    发布日期：
+    <pre>       <input class="addimage" type="text" name="itime"></pre>
+    图文作者：
+    <pre>       <input class="addimage" type="text" name="iauthor"></pre>
+    图文描述：
+    <pre>       <textarea style="width: 200px;height: 200px" name="idescribe"></textarea></pre>
+
+    <pre>      <input class="add1" type="button" value="取消" id="qx"
+                      onclick="window.location.href='/picture-list.html'">                <input class="add1"
+                                                                                                 type="submit"
+                                                                                                 value="提交"
+                                                                                                 id="true"></pre>
+</form>
+</body>
+</html>

@@ -8,9 +8,11 @@ import com.example.demo.service.StudentService;
 import com.example.demo.util.ExcelUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.beans.IntrospectionException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -71,9 +73,33 @@ public class StudentServiceImpl implements StudentService {
         excel.add(new ExcelBean("学生年龄", "sage", 0));
         excel.add(new ExcelBean("学生生日", "sbrithday", 0));
         map.put(0, excel);
-        String sheetName = filename + ".xlsx";
+        String sheetName =filename + ".xlsx";
         //调用ExcelUtil的方法  生成excel表格文件
         xssfWorkbook = ExcelUtil.createExcelFile(Student.class, list, map, sheetName);
         return xssfWorkbook;
+    }
+
+    @Override
+    public void importExcelInfo(InputStream in, MultipartFile file) throws Exception {
+        List<List<Object>> listob = ExcelUtil.getBankListByExcel(in, file.getOriginalFilename());
+        //遍历listob数据，把数据放到List中
+        for (int i = 0; i < listob.size(); i++) {
+            List<Object> ob = listob.get(i);
+            Student student= new Student();
+            student.setSname((String)ob.get(1));
+            student.setSpassword((String) ob.get(2));
+            student.setSphone((String) ob.get(3));
+            student.setSnumber((String)ob.get(4));
+            student.setSage(Integer.parseInt((String) ob.get(5)));
+            student.setSbrithday((String) ob.get(6));
+           List list=new ArrayList();
+           list.add(student);
+            studentMapper.saveexcel(list);
+        }
+    }
+
+    @Override
+    public Student selStudent(String name) {
+        return studentMapper.selStudent(name);
     }
 }

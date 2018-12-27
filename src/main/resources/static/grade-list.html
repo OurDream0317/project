@@ -5,29 +5,29 @@
     <title>成绩查询</title>
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script>
-        function select() {
-            console.log($("#xy").val())
-            if($("#xy").val()=="请选择学院"){
-                $("#zy  option").remove("");
-                $("#zy").append("<option>请选择专业</option>")
-                $("#cla  option").remove("");
-                $("#cla").append("<option>请选择班级</option>")
-                return;
-            }
-            $("#zy  option").remove("");
-            $.get("/college/zyAll1",{"cid":$("#xy").val()},function (data) {
+        $(function (){
+            $.get("/college/xyAll",function (data) {
                 console.log(data)
-                var list=JSON.parse(data);
-                var str1="";
-                for (var i=0;i<list.length;i++){
-                    str1="<option value='"+list[i].id+"'>"+list[i].zyName+"</option>"
-                    $("#zy").append(str1);
+                var list = JSON.parse(data);
+                var str1 = "";
+                for (var i = 0; i < list.length; i++) {
+                    str1 = "<option value='" + list[i].id + "'>" + list[i].xyName + "</option>"
+                    $("#xy").append(str1);
                 }
+            })
+        })
     </script>
     <style>
-        .check{
+        .check1{
             width: 150px;
             height: 30px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-family: 微软雅黑;
+        }
+        .check{
+            width: 150px;
+            height: 35px;
             border-radius: 4px;
             font-size: 12px;
             font-family: 微软雅黑;
@@ -40,6 +40,42 @@
     </style>
 </head>
 <body>
-<pre><span class="span1">学生名：</span>  <input type="text" class="check" placeholder="请输入学生名">    <span class="span1">学号：</span>  <input type="text" class="check" placeholder="请输入学生学号">    <span class="span1">学院：</span>  <select id="xy" class="check" onchange="select()"><option>请选择学院</option></select>   <span class="span1">专业：</span>  <select id="zy"  type="text" class="check" onchange="ZYchange()"><option>请选择专业</option></select>   <span class="span1">班级：</span>  <select type="text" class="check" id="cla"><option>请选择班级</option></select>   <input class="check" type="button" value="搜索" style="background-color: deepskyblue"></pre>
+<pre>    <span class="span1">学生名：</span>  <input type="text" class="check1" placeholder="请输入学生名">    <span class="span1">学号：</span>  <input type="text" class="check1" placeholder="请输入学生学号"> <select class="check1"></select>--<select class="check1"></select>
+
+    <span class="span1">学院：</span>  <select id="xy" class="check" onchange="select()"><option>请选择学院</option></select>   <span class="span1">专业：</span>  <select id="zy"  type="text" class="check" onchange="ZYchange()"><option>请选择专业</option></select>   <span class="span1">班级：</span>  <select type="text" class="check" id="cla"><option>请选择班级</option></select>   <input class="check" type="button" value="搜索" style="background-color: deepskyblue"></pre>
 </body>
+<script>
+    function select() {
+        console.log($("#xy").val())
+        if($("#xy").val()=="请选择学院"){
+            $("#zy  option").remove("");
+            $("#zy").append("<option>请选择专业</option>")
+            $("#cla  option").remove("");
+            $("#cla").append("<option>请选择班级</option>")
+            return;
+        }
+        $("#zy  option").remove("");
+        $.get("/college/zyAll1",{"cid":$("#xy").val()},function (data) {
+            console.log(data)
+            var list=JSON.parse(data);
+            var str1="";
+            for (var i=0;i<list.length;i++){
+                str1="<option value='"+list[i].id+"'>"+list[i].zyName+"</option>"
+                $("#zy").append(str1);
+            }
+        })
+    }
+    function ZYchange() {
+        $("#cla  option").remove("");
+        $.get("/college/claAll1",{"classid":$("#zy").val()},function (data) {
+            console.log(data)
+            var list=JSON.parse(data);
+            var str1="";
+            for (var i=0;i<list.length;i++){
+                str1="<option value='"+list[i].id+"'>"+list[i].cname+"</option>"
+                $("#cla").append(str1);
+            }
+        })
+    }
+</script>
 </html>

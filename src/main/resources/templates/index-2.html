@@ -54,8 +54,8 @@
 					<a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
 					<ul class="dropDown-menu menu radius box-shadow">
 						<li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
-						<li><a href="#">切换账户</a></li>
-						<li><a href="#">退出</a></li>
+						<li><a href="/login">切换账户</a></li>
+						<li><a href="/logout">退出</a></li>
 				</ul>
 			</li>
 				<li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
@@ -106,15 +106,32 @@
 			<dt><i class="Hui-iconfont">&#xe622;</i> 成绩管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="/grade-list.html" data-title="成绩查询" href="javascript:;">评论列表</a></li>
+					<li><a data-href="/grade-list.html" data-title="成绩查询" href="javascript:;">成绩查询</a></li>
 				</ul>
 			</dd>
 		</dl>
-		<dl id="menu-member">
+		<dl id="menu-member1">
 			<dt><i class="Hui-iconfont">&#xe60d;</i> 宿舍管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
 					<li><a data-href="/drom-list.html" data-title="宿舍列表" href="javascript:;">宿舍列表</a></li>
+				</ul>
+			</dd>
+		</dl>
+		<dl id="menu-member">
+		<dt><i class="Hui-iconfont">&#xe60d;</i> 课程管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+		<dd>
+			<ul>
+				<li><a data-href="/coures-list.html" data-title="课程列表" href="javascript:;">课程列表</a></li>
+				<li><a data-href="/coures-add.html" data-title="添加课程" href="javascript:;">添加课程</a></li>
+			</ul>
+		</dd>
+	</dl>
+		<dl id="menu-member">
+			<dt><i class="Hui-iconfont">&#xe60d;</i> 教室管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a data-href="/room-list.html" data-title="教室管理" href="javascript:;">教室管理</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -132,7 +149,7 @@
 			<dt><i class="Hui-iconfont">&#xe61a;</i> 系统统计<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="charts-1.html" data-title="折线图" href="javascript:void(0)">折线图</a></li>
+					<li><a data-href="/vedio.html" data-title="视频" href="javascript:void(0)">视频</a></li>
 					<li><a data-href="charts-2.html" data-title="时间轴折线图" href="javascript:void(0)">时间轴折线图</a></li>
 					<li><a data-href="charts-3.html" data-title="区域图" href="javascript:void(0)">区域图</a></li>
 					<li><a data-href="charts-4.html" data-title="柱状图" href="javascript:void(0)">柱状图</a></li>

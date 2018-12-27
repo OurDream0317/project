@@ -13,8 +13,18 @@
   <select id="studentLogin" resultType="Student">
     select *  from student where delstatus=0 limit #{start},#{num}
   </select>
+  <select id="selStudent" resultType="Student">
+    select *  from student where delstatus=0 and sname=#{name}
+  </select>
   <insert id="addStudent">
      insert into student(sname,spassword,snumber,sbrithday,sage,sphone) value(#{student.sname},#{student.spassword},#{student.snumber},#{student.sbrithday},#{student.sage},#{student.sphone})
+  </insert>
+  <insert id="saveexcel" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+     insert into student(sname,spassword,sphone,snumber,sage,sbrithday) values
+    <foreach collection="list" item="list" separator=",">
+           (#{list.sname},#{list.spassword},#{list.sphone},#{list.snumber},#{list.sage},#{list.sbrithday})
+    </foreach>
+
   </insert>
   <update id="delStudent">
     update student set delstatus=1 where id=#{id}

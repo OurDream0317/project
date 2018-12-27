@@ -9,7 +9,7 @@ public class Drom {
 
     private String dfloor;
 
-    private Integer dnumber1;
+    private String dnumber1;
 
     private String dxy;
 
@@ -18,6 +18,11 @@ public class Drom {
     private String dclass;
 
     private String dprople;
+    private String dprople1;
+    private String dprople2;
+    private String dprople3;
+    private String dprople4;
+    private String dprople5;
 
     private Integer dstatus;
 
@@ -53,11 +58,11 @@ public class Drom {
         this.dfloor = dfloor == null ? null : dfloor.trim();
     }
 
-    public Integer getDnumber1() {
+    public String getDnumber1() {
         return dnumber1;
     }
 
-    public void setDnumber1(Integer dnumber1) {
+    public void setDnumber1(String dnumber1) {
         this.dnumber1 = dnumber1;
     }
 
@@ -99,5 +104,45 @@ public class Drom {
 
     public void setDstatus(Integer dstatus) {
         this.dstatus = dstatus;
+    }
+
+    public String getDprople1() {
+        return dprople1;
+    }
+
+    public void setDprople1(String dprople1) {
+        this.dprople1 = dprople1;
+    }
+
+    public String getDprople2() {
+        return dprople2;
+    }
+
+    public void setDprople2(String dprople2) {
+        this.dprople2 = dprople2;
+    }
+
+    public String getDprople3() {
+        return dprople3;
+    }
+
+    public void setDprople3(String dprople3) {
+        this.dprople3 = dprople3;
+    }
+
+    public String getDprople4() {
+        return dprople4;
+    }
+
+    public void setDprople4(String dprople4) {
+        this.dprople4 = dprople4;
+    }
+
+    public String getDprople5() {
+        return dprople5;
+    }
+
+    public void setDprople5(String dprople5) {
+        this.dprople5 = dprople5;
     }
 }

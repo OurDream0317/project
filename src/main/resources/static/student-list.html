@@ -52,6 +52,9 @@
         #div_right{
             float: left;
         }
+        #div_import{
+            display: none;
+        }
     </style>
 
     <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
@@ -100,10 +103,20 @@
           })
 
          $("#file").click(function () {
+             var timestamp=new Date().getTime();
              console.log("导出Excel")
-             $.get("/excel/export",{"filename":"1234"},function () {
-                   alert("数据导出成功，默认在D盘")
+             $.ajax({
+                 type:"post",
+                 url:"/excel/export",
+                 data:{"filename":timestamp},
+                 success:function (data) {
+                     alert("导出成功")
+                 },
+                 error:function () {
+                     alert("导出失败")
+                 }
              })
+
          })
           $("#addStudent").click(function () {
               $("#addStudent01").show();
@@ -132,10 +145,13 @@
               })
               tmp=1;
           })
+
+
       })
         
     </script>
 <script>
+
     function upordown(start1) {
         if(start1==0){
             return;
@@ -195,6 +211,7 @@
             }
         })
     }
+
 </script>
 </head>
 <body>
@@ -211,12 +228,13 @@
 <div id="center">
     <div id="div_left"><input type="button" value="批量删除" style="width: 200px;height: 60px;background-color:red;border-radius: 6px" onclick="deleteAll()" style="background-color: deepskyblue;width: 200px;height: 60px;border-radius: 3px" ></div>
     <div id="div_right"><button id="addStudent" style="width: 200px;height: 60px;background-color: deepskyblue;border-radius: 6px">新增学生</button></div>
-    <input type="button" value="Excel导出" id="file"  style="background-color: deepskyblue;width: 200px;height: 60px;border-radius: 3px" ></pre>
+    <input type="button" value="Excel导出" id="file"  style="background-color: deepskyblue;width: 200px;height: 60px;border-radius: 3px" ><input type="button" value="Excel导入" id="file1"  style="background-color: deepskyblue;width: 200px;height: 60px;border-radius: 3px" onclick="importExp()"></pre>
     <pre>
 
 
 
     </pre>
+
     <pre><span class="span1">学生名：</span>  <input type="text" class="check" placeholder="请输入学生名">    <span class="span1">学号：</span>  <input type="text" class="check" placeholder="请输入学生学号">    <span class="span1">学院：</span>  <select id="xy" class="check" onchange="select()"><option>请选择学院</option></select>   <span class="span1">专业：</span>  <select id="zy"  type="text" class="check" onchange="ZYchange()"><option>请选择专业</option></select>   <span class="span1">班级：</span>  <select type="text" class="check" id="cla"><option>请选择班级</option></select>   <input class="check" type="button" value="搜索" style="background-color: deepskyblue"></pre>
 <div id="center-one">
     <table cellspacing="0" cellpadding="0">

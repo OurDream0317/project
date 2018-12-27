@@ -2,13 +2,17 @@ package com.example.demo.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.example.demo.mapper.DromMapper;
+import com.example.demo.model.Drom;
 import com.example.demo.service.DromService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Service(value = "dromService")
 public class DromServiceImpl implements DromService {
      @Resource
@@ -17,6 +21,7 @@ public class DromServiceImpl implements DromService {
      private DromMapper dromMapper;
     @Override
     public List selectAll() {
+        redisTemplate.delete("list");
         List list1 = (List) redisTemplate.opsForList().leftPop("list");
         if(list1==null){
             list1=dromMapper.selectAll();
@@ -25,7 +30,14 @@ public class DromServiceImpl implements DromService {
         return  list1;
         }
 
-        return null;
+        return list1;
 
+    }
+
+    @Override
+    public void addDrom(Drom drom) {
+        Map map=new HashMap();
+        map.put("drom",drom);
+        dromMapper.addDrom(map);
     }
 }

@@ -3,8 +3,10 @@ package com.example.demo.Controller;
 import com.example.demo.service.StudentService;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -54,5 +56,19 @@ public class ExcelController {
                 e.printStackTrace();
             }
         }
+    }
+
+    @RequestMapping("/import")
+    public String impotr(MultipartFile file, Model model) throws Exception {
+        int adminId = 1;
+        System.out.println(file.getOriginalFilename()+"22222222");
+        //获取上传的文件
+        /*String month = request.getParameter("month");*/
+
+        InputStream in =file.getInputStream();
+        //数据导入
+        studentService.importExcelInfo(in,file);
+        in.close();
+        return "index";
     }
 }

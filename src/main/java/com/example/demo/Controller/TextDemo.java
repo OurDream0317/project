@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class TextDemo {
-    @RequestMapping("/")
+    @RequestMapping("/login")
     public String text(){
         System.out.println("1111111111111");
         return "login";
