@@ -19,6 +19,23 @@
   <select id="selectAll" resultType="Drom" >
     select * from drom
   </select>
+  <select id="selectDrom" resultType="Drom">
+    select * from drom
+    <where>
+      <if test="type!='请选择公寓类型'">
+        dtype=#{type}
+      </if>
+      <if test="number!=null and number.length()>0">
+       and  dnumber like #{number}
+      </if>
+      <if test="floor!=null and floor.length()>0">
+      and  dfloor like #{floor}
+      </if>
+      <if test="number1!=null and number.length()>0" >
+       and  dnumber1 like #{number1}
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from drom
     where id = #{id,jdbcType=INTEGER}

@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/student")
@@ -58,7 +56,7 @@ public class StudentController {
         System.out.println(ids+"====");
         String[] arr=ids.split(",");
         studentService.delAll(arr);
-        return "index";
+        return "login";
     }
     @RequestMapping("/toLogin")
     public String toLogin(Student student, Model model){

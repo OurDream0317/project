@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.model.ClassModel;
+import com.example.demo.model.College;
+import com.example.demo.model.Profession;
 
 
 import java.util.List;

@@ -42,4 +42,5 @@ public class CollegeController {
         List<ClassModel> list= collegeService.seleceAllClass(classid);
         return JSON.toJSONString(list);
     }
+
 }

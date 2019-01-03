@@ -29,9 +29,7 @@ public class DromServiceImpl implements DromService {
         }else{
         return  list1;
         }
-
         return list1;
-
     }
 
     @Override
@@ -39,5 +37,16 @@ public class DromServiceImpl implements DromService {
         Map map=new HashMap();
         map.put("drom",drom);
         dromMapper.addDrom(map);
+    }
+
+    @Override
+    public List selectDrom(String type, String number, String floor, String number1) {
+        System.out.println(type+" +"+number+" +"+floor+"+ "+number1);
+        Map map=new HashMap();
+        map.put("type",type);
+        map.put("number","%"+number+"%");
+        map.put("floor","%"+floor+"%");
+        map.put("number1","%"+number1+"%");
+      return dromMapper.selectDrom(map);
     }
 }

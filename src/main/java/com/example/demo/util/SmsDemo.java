@@ -18,6 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+import static com.example.demo.util.RandomCodeDemo.randomdemo;
+
 /**
  * Created on 17/6/7.
  * 短信API产品的DEMO程序,工程中包含了一个SmsDemo类，直接通过
@@ -60,7 +62,7 @@ public class SmsDemo {
         //必填:短信模板-可在短信控制台中找到
         request.setTemplateCode("SMS_144150302");
         //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
-        request.setTemplateParam("{\"name\":\"Tom\", \"code\":\"123\"}");
+        request.setTemplateParam("{'name':'Tom', 'code':'"+randomdemo()+"'}");
 
         //选填-上行短信扩展码(无特殊需求用户请忽略此字段)
         //request.setSmsUpExtendCode("90997");

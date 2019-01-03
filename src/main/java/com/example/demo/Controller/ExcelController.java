@@ -69,6 +69,6 @@ public class ExcelController {
         //数据导入
         studentService.importExcelInfo(in,file);
         in.close();
-        return "index";
+        return "login";
     }
 }

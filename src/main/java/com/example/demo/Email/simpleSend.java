@@ -19,8 +19,9 @@ public class simpleSend {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
         helper.setFrom("1484834931@qq.com");
-        helper.setTo("420169597@qq.com");
+        helper.setTo("1484834931@qq.com");
        mimeMessage.setContent("<html><body><a href='www.baidu.com'>智障，点一下</a></body></html>","text/html;charset=utf-8");
+       mimeMessage.setText("123456\n789123\nwww.baidu.com\nwww.aliplay.com");
        mailSender.send(mimeMessage);
        return "login";
     }

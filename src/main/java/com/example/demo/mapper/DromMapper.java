@@ -10,4 +10,5 @@ import java.util.Map;
 public interface DromMapper {
    public List selectAll();
    public void addDrom(Map map);
+   public List selectDrom(Map map);
 }

@@ -25,6 +25,7 @@
     <script>
         $(function () {
             var tmp1="";
+             var selectBtn="";
             $.ajax({
                 type: "GET",
                 url: "/image/selectAll",
@@ -40,7 +41,11 @@
                         }else{
                             tmp1="校园通知";
                         }
-                        console.log(obj.iurl)
+                        if(obj.istatus==0){
+                            selectBtn="选择";
+                        }else if(obj.istatus==1){
+                            selectBtn="已选择";
+                        }
                         $("tbody").append("<tr class=\"text-c\">" +
                             "<td><input name='' type='checkbox' value=''></td>" +
                             "<td>"+(index+1)+"</td>" +
@@ -49,13 +54,32 @@
                             "<td>"+obj.idescribe+"</td>" +
                             "<td>"+obj.isort+"</td>" +
                             "<td>"+obj.itime+"</td>" +
-                            "<td>"+obj.istatus+"</td>" +
-                            "<td><button>选择</button>&nbsp;&nbsp;&nbsp;<button>修改</button>&nbsp;&nbsp;&nbsp;<button>删除</button></td>" +
+                            "<td><button id="+obj.id+" onclick='Btn("+obj.id+")'>"+selectBtn+"</button>&nbsp;&nbsp;&nbsp;<button>修改</button>&nbsp;&nbsp;&nbsp;<button>删除</button></td>" +
                             "</tr>")
                     })
                 }
             })
         })
+      function Btn(event) {
+            if($("#"+event).text()=="选择") {
+                $.get("/image/selectStatus",function (data) {
+                    var data1=JSON.parse(data);
+                    if(data1.length<4){
+                        $("#" + event).text("已选择");
+                        $.get("/image/updateStatus",{"id": event,"istatus":1},function () {
+
+                        })
+                    }
+                })
+
+            }
+          if($("#"+event).text()=="已选择") {
+              $("#"+event).text("选择");
+              $.get("/image/updateStatus",{"id": event,"istatus":0},function () {
+
+              })
+          }
+      }
     </script>
 </head>
 <body>
@@ -80,7 +104,6 @@
                 <th width="200">图片描述</th>
                 <th width="80">排序值</th>
                 <th width="150">更新时间</th>
-                <th width="60">发布状态</th>
                 <th width="100">操作</th>
             </tr>
             </thead>

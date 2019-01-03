@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.mapper.CollegeMapper;
 import com.example.demo.model.ClassModel;
 import com.example.demo.model.College;
+import com.example.demo.model.Profession;
 import com.example.demo.service.CollegeService;
 import org.springframework.stereotype.Service;
 
@@ -36,4 +37,5 @@ public class CollegeServiceImpl implements CollegeService {
         List list=collegeMapper.seleceAllClass(classid);
         return list;
     }
+
 }

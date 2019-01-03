@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.GradeMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.Grade" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="stuid" property="stuid" jdbcType="INTEGER" />
+    <result column="claid" property="claid" jdbcType="INTEGER" />
+    <result column="proid" property="proid" jdbcType="INTEGER" />
+    <result column="colid" property="colid" jdbcType="INTEGER" />
+    <result column="shuxue" property="shuxue" jdbcType="INTEGER" />
+    <result column="yuwen" property="yuwen" jdbcType="INTEGER" />
+    <result column="yingyu" property="yingyu" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, stuid, claid, proid, colid, shuxue, yuwen, yingyu
+  </sql>
+  <select id="selectAll"  resultType="Grade" >
+    select *
+    from grade
+    where id=1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from grade
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.Grade" >
+    insert into grade (id, stuid, claid, 
+      proid, colid, shuxue, 
+      yuwen, yingyu)
+    values (#{id,jdbcType=INTEGER}, #{stuid,jdbcType=INTEGER}, #{claid,jdbcType=INTEGER}, 
+      #{proid,jdbcType=INTEGER}, #{colid,jdbcType=INTEGER}, #{shuxue,jdbcType=INTEGER}, 
+      #{yuwen,jdbcType=INTEGER}, #{yingyu,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.Grade" >
+    insert into grade
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="stuid != null" >
+        stuid,
+      </if>
+      <if test="claid != null" >
+        claid,
+      </if>
+      <if test="proid != null" >
+        proid,
+      </if>
+      <if test="colid != null" >
+        colid,
+      </if>
+      <if test="shuxue != null" >
+        shuxue,
+      </if>
+      <if test="yuwen != null" >
+        yuwen,
+      </if>
+      <if test="yingyu != null" >
+        yingyu,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="stuid != null" >
+        #{stuid,jdbcType=INTEGER},
+      </if>
+      <if test="claid != null" >
+        #{claid,jdbcType=INTEGER},
+      </if>
+      <if test="proid != null" >
+        #{proid,jdbcType=INTEGER},
+      </if>
+      <if test="colid != null" >
+        #{colid,jdbcType=INTEGER},
+      </if>
+      <if test="shuxue != null" >
+        #{shuxue,jdbcType=INTEGER},
+      </if>
+      <if test="yuwen != null" >
+        #{yuwen,jdbcType=INTEGER},
+      </if>
+      <if test="yingyu != null" >
+        #{yingyu,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.Grade" >
+    update grade
+    <set >
+      <if test="stuid != null" >
+        stuid = #{stuid,jdbcType=INTEGER},
+      </if>
+      <if test="claid != null" >
+        claid = #{claid,jdbcType=INTEGER},
+      </if>
+      <if test="proid != null" >
+        proid = #{proid,jdbcType=INTEGER},
+      </if>
+      <if test="colid != null" >
+        colid = #{colid,jdbcType=INTEGER},
+      </if>
+      <if test="shuxue != null" >
+        shuxue = #{shuxue,jdbcType=INTEGER},
+      </if>
+      <if test="yuwen != null" >
+        yuwen = #{yuwen,jdbcType=INTEGER},
+      </if>
+      <if test="yingyu != null" >
+        yingyu = #{yingyu,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.Grade" >
+    update grade
+    set stuid = #{stuid,jdbcType=INTEGER},
+      claid = #{claid,jdbcType=INTEGER},
+      proid = #{proid,jdbcType=INTEGER},
+      colid = #{colid,jdbcType=INTEGER},
+      shuxue = #{shuxue,jdbcType=INTEGER},
+      yuwen = #{yuwen,jdbcType=INTEGER},
+      yingyu = #{yingyu,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

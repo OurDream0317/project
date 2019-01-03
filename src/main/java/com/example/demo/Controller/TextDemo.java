@@ -13,7 +13,6 @@ public class TextDemo {
     @RequestMapping("/index")
     public String text1(){
 
-        return "index";
+        return "login";
     }
-
 }

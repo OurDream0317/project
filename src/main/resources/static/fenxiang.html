@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function shareToQq(title,url,picurl){
+            var shareqqzonestring='http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?summary='+title+'&url='+url+'&pics='+picurl;
+            window.open(shareqqzonestring,'newwindow','height=400,width=400,top=100,left=100');
+        }
+        function subinfo(){
+            shareToQq("测试标题","www.baidu.com","http://aladdin-vray.oss-cn-beijing.aliyuncs.com/Other/80de988c-ad11-449b-af48-b5341c957668.jpg");
+        }
+    </script>
+
+</head>
+<body>
+<button onclick="subinfo()">分享</button>
+</body>
+</html>

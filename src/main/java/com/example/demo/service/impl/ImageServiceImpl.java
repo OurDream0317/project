@@ -28,4 +28,14 @@ public class ImageServiceImpl implements ImageService {
     public List selectAll() {
         return imageMapper.selectAll();
     }
+
+    @Override
+    public void updateStatus(int id,int istatus) {
+        imageMapper.updateStatus(id,istatus);
+    }
+
+    @Override
+    public List selectStatus() {
+        return imageMapper.selectStatus();
+    }
 }

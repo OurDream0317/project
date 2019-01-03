@@ -29,4 +29,15 @@ public class ImageController {
         List list=imageService.selectAll();
         return JSON.toJSONString(list);
     }
+    @RequestMapping("/updateStatus")
+    public String updateStatus(int id,int istatus){
+        imageService.updateStatus(id,istatus);
+        return "redirect:/picture-list.html";
+    }
+    @RequestMapping("/selectStatus")
+    @ResponseBody
+    public String selectStatus(){
+        List list=imageService.selectStatus();
+        return JSON.toJSONString(list);
+    }
 }

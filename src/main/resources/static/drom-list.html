@@ -50,18 +50,47 @@
                     })
                 }
             })
+            $("#drom").click(function () {
+                $("table tr").not(':eq(0)').empty();
+                $.ajax({
+                    type: "GET",
+                    url: "/drom/selectDrom",
+                    data:{"type":$("#type").val(),"number":$("#number").val(),"floor":$("#floor").val(),"number1":$("#number1").val()},
+                    dataType: "json",
+                    success: function(data){
+                        $("#count").text(data.length)
+                        console.log(data)
+                        $.each(data,function (index,obj) {
+                            $("tbody").append("<tr class=\"text-c\">" +
+                                "<td><input name='' type='checkbox' value=''></td>" +
+                                "<td>"+(index+1)+"</td>" +
+                                "<td>"+obj.dtype+"</td>" +
+                                "<td>"+obj.dnumber+"</td>" +
+                                "<td>"+obj.dfloor+"</td>" +
+                                "<td>"+obj.dnumber1+"</td>" +
+                                "<td>"+obj.dxy+"</td>" +
+                                "<td>"+obj.dzy+"</td>" +
+                                "<td>"+obj.dclass+"</td>" +
+                                "<td>"+obj.dprople+"&nbsp;"+obj.dprople1+"&nbsp;"+obj.dprople2+"&nbsp;"+obj.dprople3+"&nbsp;"+obj.dprople4+"&nbsp;"+obj.dprople5+"</td>" +
+                                "<td>"+obj.dstatus+"</td>" +
+                                "<td style='width: 150px'>&nbsp;<button>修改</button>&nbsp;&nbsp;&nbsp;<button>删除</button></td>" +
+                                "</tr>")
+                        })
+                    }
+                })
+            })
         })
     </script>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 图片管理 <span class="c-gray en">&gt;</span> 图片列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 宿舍管理 <span class="c-gray en">&gt;</span> 图片列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-    <div class="text-c"> 日期范围：
-        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">
-        -
-        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;">
-        <input type="text" name="" id="" placeholder=" 图片名称" style="width:250px" class="input-text">
-        <button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜图片</button>
+    <div class="text-c">
+        宿舍分类：<select id="type" class="btn btn-success"><option>请选择公寓类型</option><option>男生公寓</option><option>女生公寓</option></select>
+        宿舍楼号：<input id="number" class="btn btn-success" type="text" style="width:120px;">
+        宿舍楼层：<input id="floor" class="btn btn-success" type="text" style="width:120px;">
+        宿舍号：<input id="number1" class="btn btn-success" type="text" style="width:120px;">
+        <button name="" id="drom" class="btn btn-success" type="button"><i class="Hui-iconfont">&#xe665;</i> 搜宿舍</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius"  href="/drom-add.html"><i class="Hui-iconfont">&#xe600;</i> 添加宿舍</a></span> <span class="r">共有数据：<strong><span id="count"></span></strong> 条</span> </div>
     <div class="mt-20">

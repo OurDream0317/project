@@ -9,4 +9,6 @@ import java.util.Map;
 public interface ImageService {
     public void addimage(Image image, MultipartFile file);
     public List selectAll();
+    public void updateStatus(int id,int istatus);
+    public List selectStatus();
 }

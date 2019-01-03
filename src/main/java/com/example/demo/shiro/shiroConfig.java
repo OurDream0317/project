@@ -20,6 +20,10 @@ public class shiroConfig {
         fMap.put("/login","anon");
         fMap.put("/student/toLogin","anon");
         fMap.put("/logout","logout");
+        fMap.put("/css/**","anon");
+        fMap.put("/js/**","anon");
+        fMap.put("/images/**","anon");
+        fMap.put("/img/**","anon");
         fMap.put("/**","authc");
 
         //被拦截返回登录页面
