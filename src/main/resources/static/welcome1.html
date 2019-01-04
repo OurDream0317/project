@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>js简单图片轮播切换</title>
+<link href="/css/css.css" rel="stylesheet" type="text/css" />
+<SCRIPT src="js/js.js" type=text/javascript></SCRIPT>
+</head>
+<body>
+<center>
+<div id="ifocus">
+ <div id="ifocus_pic">
+  <div id="ifocus_piclist" style="left:0; top:0;">
+   <ul>
+    <li><a href="#"><img src="/img/shangshi04.jpg" alt="" /></a></li>
+    <li><a href="#"><img src="/img/shangshi01.jpg" alt="" /></a></li>
+    <li><a href="#"><img src="/img/shangshi02.jpg" alt="" /></a></li>
+    <li><a href="#"><img src="/img/shangshi03.jpg" alt="" /></a></li>
+   </ul>
+  </div>
+  <div id="ifocus_opdiv"></div>
+  <div id="ifocus_tx">
+   <ul>
+    <li class="current">忧伤在我心中沉静下来，宛如降临在寂静山林中的夜色</li>
+    <li class="normal">我就像一只停泊在海滩上的小船，聆听着晚潮奏</li>
+    <li class="normal">生命是上天赋予的，我们惟有献出生命，才能真正得到它</li>
+    <li class="normal">今天大地在阳光下向我细语，用一种已被遗忘的语言</li>
+   </ul>
+  </div>
+ </div>
+ <div id="ifocus_btn">
+  <ul>
+   <li class="current"><img src="/img/shangshi04.jpg" alt="" /></li>
+   <li class="normal"><img src="/img/shangshi01.jpg" alt="" /></li>
+   <li class="normal"><img src="/img/shangshi02.jpg" alt="" /></li>
+   <li class="normal"><img src="/img/shangshi03.jpg" alt="" /></li>
+  </ul>
+ </div>
+</div>
+<div>
+ <div class="fl">分享到：</div>
+ <div onclick="subinfo()">
+  <img src="http://zixuephp.net/static/images/qqzoneshare.png" width="30">
+ </div>
+ <div onclick="subinfo1()">
+  <img src="http://zixuephp.net/static/images/sinaweiboshare.png" width="36">
+ </div>
+ <div onclick="shareToqq1()">
+    <img src="http://zixuephp.net/static/images/qqshare.png" />
+ </div>
+ </div>
+</center>
+<meta name="description" content="wangweixiang">
+</body>
+<script>
+ //qq
+
+    function shareToqq1(){
+        window.open("http://connect.qq.com/widget/shareqq/index.html?url=http://www.sevenphp.com/test/test.html&amp;desc=邀请详情&amp;title=标题&amp;summary=简介");
+    }
+    //qq空间接口的传参
+
+    function shareToQq(title,url,picurl){
+        var shareqqzonestring='http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?summary='+title+'&url='+url+'&pics='+picurl;
+        window.open(shareqqzonestring,'newwindow','height=400,width=400,top=100,left=100');
+    }
+    function subinfo(){
+        shareToQq("测试标题","www.baidu.com","http://aladdin-vray.oss-cn-beijing.aliyuncs.com/Other/80de988c-ad11-449b-af48-b5341c957668.jpg");
+    }
+
+    //新浪微博接口的传参
+    function shareToXl(title,url,picurl){
+        var sharesinastring='http://v.t.sina.com.cn/share/share.php?title='+title+'&url='+url+'&content=utf-8&sourceUrl='+url+'&pic='+picurl;
+        window.open(sharesinastring,'newwindow','height=400,width=400,top=100,left=100');
+    }
+    function subinfo1(){
+        shareToXl("测试标题","http://localhost:8080/login","http://aladdin-vray.oss-cn-beijing.aliyuncs.com/Other/80de988c-ad11-449b-af48-b5341c957668.jpg");
+    }
+</script>
+</html>

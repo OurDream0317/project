@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.ScoresMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.Scores" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="score" property="score" jdbcType="VARCHAR" />
+    <result column="stype" property="stype" jdbcType="VARCHAR" />
+    <result column="surl" property="surl" jdbcType="VARCHAR" />
+    <result column="sadress" property="sadress" jdbcType="VARCHAR" />
+    <result column="steacher" property="steacher" jdbcType="VARCHAR" />
+    <result column="slevel" property="slevel" jdbcType="VARCHAR" />
+    <result column="sclass" property="sclass" jdbcType="VARCHAR" />
+    <result column="sstatus" property="sstatus" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, score, stype, surl, sadress, steacher, slevel, sclass, sstatus
+  </sql>
+  <select id="selectAllScores" resultType="Scores" >
+    select *
+    from scores
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from scores
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.Scores" >
+    insert into scores (id, score, stype, 
+      surl, sadress, steacher, 
+      slevel, sclass, sstatus
+      )
+    values (#{id,jdbcType=INTEGER}, #{score,jdbcType=VARCHAR}, #{stype,jdbcType=VARCHAR}, 
+      #{surl,jdbcType=VARCHAR}, #{sadress,jdbcType=VARCHAR}, #{steacher,jdbcType=VARCHAR}, 
+      #{slevel,jdbcType=VARCHAR}, #{sclass,jdbcType=VARCHAR}, #{sstatus,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.Scores" >
+    insert into scores
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="stype != null" >
+        stype,
+      </if>
+      <if test="surl != null" >
+        surl,
+      </if>
+      <if test="sadress != null" >
+        sadress,
+      </if>
+      <if test="steacher != null" >
+        steacher,
+      </if>
+      <if test="slevel != null" >
+        slevel,
+      </if>
+      <if test="sclass != null" >
+        sclass,
+      </if>
+      <if test="sstatus != null" >
+        sstatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=VARCHAR},
+      </if>
+      <if test="stype != null" >
+        #{stype,jdbcType=VARCHAR},
+      </if>
+      <if test="surl != null" >
+        #{surl,jdbcType=VARCHAR},
+      </if>
+      <if test="sadress != null" >
+        #{sadress,jdbcType=VARCHAR},
+      </if>
+      <if test="steacher != null" >
+        #{steacher,jdbcType=VARCHAR},
+      </if>
+      <if test="slevel != null" >
+        #{slevel,jdbcType=VARCHAR},
+      </if>
+      <if test="sclass != null" >
+        #{sclass,jdbcType=VARCHAR},
+      </if>
+      <if test="sstatus != null" >
+        #{sstatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.Scores" >
+    update scores
+    <set >
+      <if test="score != null" >
+        score = #{score,jdbcType=VARCHAR},
+      </if>
+      <if test="stype != null" >
+        stype = #{stype,jdbcType=VARCHAR},
+      </if>
+      <if test="surl != null" >
+        surl = #{surl,jdbcType=VARCHAR},
+      </if>
+      <if test="sadress != null" >
+        sadress = #{sadress,jdbcType=VARCHAR},
+      </if>
+      <if test="steacher != null" >
+        steacher = #{steacher,jdbcType=VARCHAR},
+      </if>
+      <if test="slevel != null" >
+        slevel = #{slevel,jdbcType=VARCHAR},
+      </if>
+      <if test="sclass != null" >
+        sclass = #{sclass,jdbcType=VARCHAR},
+      </if>
+      <if test="sstatus != null" >
+        sstatus = #{sstatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.Scores" >
+    update scores
+    set score = #{score,jdbcType=VARCHAR},
+      stype = #{stype,jdbcType=VARCHAR},
+      surl = #{surl,jdbcType=VARCHAR},
+      sadress = #{sadress,jdbcType=VARCHAR},
+      steacher = #{steacher,jdbcType=VARCHAR},
+      slevel = #{slevel,jdbcType=VARCHAR},
+      sclass = #{sclass,jdbcType=VARCHAR},
+      sstatus = #{sstatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

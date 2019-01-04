@@ -38,4 +38,6 @@ public class ImageServiceImpl implements ImageService {
     public List selectStatus() {
         return imageMapper.selectStatus();
     }
+
+
 }

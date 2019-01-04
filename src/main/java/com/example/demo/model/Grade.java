@@ -11,12 +11,6 @@ public class Grade {
 
     private Integer colid;
 
-    private Integer shuxue;
-
-    private Integer yuwen;
-
-    private Integer yingyu;
-
     public Integer getId() {
         return id;
     }
@@ -57,27 +51,5 @@ public class Grade {
         this.colid = colid;
     }
 
-    public Integer getShuxue() {
-        return shuxue;
-    }
 
-    public void setShuxue(Integer shuxue) {
-        this.shuxue = shuxue;
-    }
-
-    public Integer getYuwen() {
-        return yuwen;
-    }
-
-    public void setYuwen(Integer yuwen) {
-        this.yuwen = yuwen;
-    }
-
-    public Integer getYingyu() {
-        return yingyu;
-    }
-
-    public void setYingyu(Integer yingyu) {
-        this.yingyu = yingyu;
-    }
 }

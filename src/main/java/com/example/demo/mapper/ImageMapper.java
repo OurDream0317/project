@@ -11,4 +11,5 @@ public interface ImageMapper {
   public List selectAll();
   public void updateStatus(@Param("id") int id,@Param("istatus") int istatus);
   public List selectStatus();
+
 }
