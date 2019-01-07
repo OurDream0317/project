@@ -16,8 +16,14 @@
   <sql id="Base_Column_List" >
     id, dtype, dnumber, dfloor, dnumber1, dxy, dzy, dclass, dprople, dstatus
   </sql>
+  <select id="selectDromDemo" resultType="Drom" >
+    select * from drom where id=#{id}
+  </select>
   <select id="selectAll" resultType="Drom" >
     select * from drom
+  </select>
+  <select id="selectDromOne" resultType="Drom" >
+    select * from drom where dnumber1=#{dnumber1} and dtype=#{dtype}
   </select>
   <select id="selectDrom" resultType="Drom">
     select * from drom
@@ -135,38 +141,50 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.Drom" >
+  <update id="updatedrom">
     update drom
     <set >
-      <if test="dtype != null" >
-        dtype = #{dtype,jdbcType=VARCHAR},
+      <if test="drom.dtype != null" >
+        dtype = #{drom.dtype,jdbcType=VARCHAR},
       </if>
-      <if test="dnumber != null" >
-        dnumber = #{dnumber,jdbcType=VARCHAR},
+      <if test="drom.dnumber != null" >
+        dnumber = #{drom.dnumber,jdbcType=VARCHAR},
       </if>
-      <if test="dfloor != null" >
-        dfloor = #{dfloor,jdbcType=VARCHAR},
+      <if test="drom.dfloor != null" >
+        dfloor = #{drom.dfloor,jdbcType=VARCHAR},
       </if>
-      <if test="dnumber1 != null" >
-        dnumber1 = #{dnumber1,jdbcType=INTEGER},
+      <if test="drom.dnumber1 != null" >
+        dnumber1 = #{drom.dnumber1,jdbcType=INTEGER},
       </if>
-      <if test="dxy != null" >
-        dxy = #{dxy,jdbcType=VARCHAR},
+      <if test="drom.dxy != null" >
+        dxy = #{drom.dxy,jdbcType=VARCHAR},
       </if>
-      <if test="dzy != null" >
-        dzy = #{dzy,jdbcType=VARCHAR},
+      <if test="drom.dzy != null" >
+        dzy = #{drom.dzy,jdbcType=VARCHAR},
       </if>
-      <if test="dclass != null" >
-        dclass = #{dclass,jdbcType=VARCHAR},
+      <if test="drom.dclass != null" >
+        dclass = #{drom.dclass,jdbcType=VARCHAR},
       </if>
-      <if test="dprople != null" >
-        dprople = #{dprople,jdbcType=VARCHAR},
+      <if test="drom.dprople != null" >
+      dprople = #{drom.dprople,jdbcType=VARCHAR},
+    </if>
+      <if test="drom.dprople1 != null" >
+        dprople1 = #{drom.dprople1,jdbcType=VARCHAR},
       </if>
-      <if test="dstatus != null" >
-        dstatus = #{dstatus,jdbcType=INTEGER},
+      <if test="drom.dprople2 != null" >
+        dprople2 = #{drom.dprople2,jdbcType=VARCHAR},
+      </if>
+      <if test="drom.dprople3 != null" >
+        dprople3 = #{drom.dprople3,jdbcType=VARCHAR},
+      </if>
+      <if test="drom.dprople4 != null" >
+        dprople4 = #{drom.dprople4,jdbcType=VARCHAR},
+      </if>
+      <if test="drom.dprople5 != null" >
+        dprople5 = #{drom.dprople5,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{drom.id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.demo.model.Drom" >
     update drom

@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.example.demo.mapper.ImageMapper;
 import com.example.demo.model.Image;
 import com.example.demo.service.ImageService;
@@ -36,7 +37,13 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public List selectStatus() {
-        return imageMapper.selectStatus();
+       List list=imageMapper.selectStatus();
+       if(list.size()<4){
+        List list1=imageMapper.selectStatus1(4-list.size());
+        list.addAll(list1);
+        return list;
+       }
+       return list;
     }
 
 

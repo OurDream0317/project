@@ -24,8 +24,6 @@ public class StudentController {
     private StudentService studentService;
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public String login(Student student) {
-        System.out.println("wangweixiang");
-        System.out.println(student.getSname()+""+student.getSpassword());
         if(student.getSname().equals("123") && student.getSpassword().equals("123")){
             /*List list=studentService.studentLogin();
             return JSON.toJSONString(list);*/

@@ -38,4 +38,22 @@ public class CollegeServiceImpl implements CollegeService {
         return list;
     }
 
+    @Override
+    public College selectxyname(int id) {
+        College college=collegeMapper.selectxyname(id);
+        return college;
+    }
+
+    @Override
+    public Profession selectzyname(int id) {
+        Profession profession=collegeMapper.selectzyname(id);
+        return profession;
+    }
+
+    @Override
+    public ClassModel selectclaname(int id) {
+        ClassModel classModel=collegeMapper.selectclaname(id);
+        return classModel;
+    }
+
 }

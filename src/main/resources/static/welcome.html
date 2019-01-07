@@ -26,10 +26,10 @@
 		window.onload=function()
         {
             $.get("/image/selectStatus", function (data) {
+                console.log(data)
                 var data1 = JSON.parse(data);
-                console.log(data1)
                 $.each(data1, function (index, obj) {
-                    if (index == 3) {
+                   /* if (index == 3) {
                         $("#img4").attr("src", obj.iurl);
                     }
                     if (index == 2) {
@@ -40,7 +40,8 @@
                     }
                     if (index == 0) {
                         $("#img1").attr("src", obj.iurl);
-                    }
+                    }*/
+                   $("#img"+(index+1)).attr("src",obj.iurl);
                 })
             })
         }

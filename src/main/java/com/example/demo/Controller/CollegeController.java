@@ -24,6 +24,24 @@ public class CollegeController {
        List<College> list= collegeService.seleceAll();
         return JSON.toJSONString(list);
     }
+    @RequestMapping("/xyOne")
+    @ResponseBody
+    public String xyOne(int id){
+      College college= collegeService.selectxyname(id);
+        return JSON.toJSONString(college);
+    }
+    @RequestMapping("/zyOne")
+    @ResponseBody
+    public String zyOne(int id){
+        Profession profession= collegeService.selectzyname(id);
+        return JSON.toJSONString(profession);
+    }
+    @RequestMapping("/claOne")
+    @ResponseBody
+    public String claOne(int id){
+        ClassModel classModel= collegeService.selectclaname(id);
+        return JSON.toJSONString(classModel);
+    }
     @RequestMapping("/zyAll")
     @ResponseBody
     public String zyAll(){

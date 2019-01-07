@@ -26,4 +26,7 @@
   <select id="selectStatus" resultType="Image">
     select * from image where istatus=1
   </select>
+  <select id="selectStatus1" resultType="Image">
+    select * from image where istatus=0 limit 0,#{num}
+  </select>
 </mapper>

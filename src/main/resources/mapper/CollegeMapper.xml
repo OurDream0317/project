@@ -17,10 +17,13 @@
   <select id="seleceAllClass" resultType="ClassModel">
     select id,cname,classid from class where classid=#{classid}
   </select>
-  <select id="selectxyid" resultType="College">
-    select * from college where xyName=#{xyName}
+  <select id="selectxyname" resultType="College">
+    select * from college where id=#{id}
   </select>
-  <select id="selectzyid" resultType="Profession">
-    select * from profession where zyName=#{zyName}
+  <select id="selectzyname" resultType="Profession">
+    select * from profession where id=#{id}
+  </select>
+  <select id="selectclaname" resultType="ClassModel">
+    select * from class where id=#{id}
   </select>
 </mapper>

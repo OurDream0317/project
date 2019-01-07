@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+    <script>
+        $(function (){
+            var tmp="";
+            var tmp1="";
+            var tmp2="";
+            $.get("/college/xyAll",function (data) {
+                console.log(data)
+                var list = JSON.parse(data);
+                var str1 = "";
+                for (var i = 0; i < list.length; i++) {
+                    str1 = "<option value='" + list[i].id + "'>" + list[i].xyName + "</option>"
+                    $("#xy").append(str1);
+                }
+            })
+            $.ajax({
+                method:"get",
+                url:"/drom/updateDromOne",
+                success:function (data) {
+                    var  data=JSON.parse(data);
+                    $.get("/college/xyOne",{"id":data.dxy},function (data1) {
+                        var data1=JSON.parse(data1);
+                        tmp=data1.xyName;
+                        $("#xy1").text(tmp);
+                    })
+                    $.get("/college/zyOne",{"id":data.dzy},function (data1) {
+                        var data1=JSON.parse(data1);
+                        tmp1=data1.zyName;
+                        $("#zy1").text(tmp1);
+                    })
+                    $.get("/college/claOne",{"id":data.dclass},function (data1) {
+                        var data1=JSON.parse(data1);
+                        tmp2=data1.cname;
+                        $("#cla1").text(tmp2);
+                    })
+                   $("#type1").val(data.dtype);
+                   $("#dnumber").val(data.dnumber);
+                   $("#dfloor").val(data.dfloor);
+                   $("#dnumber1").val(data.dnumber1);
+                   $("#1").val(data.dprople);
+                    $("#2").val(data.dprople1);
+                    $("#3").val(data.dprople2);
+                    $("#4").val(data.dprople3);
+                    $("#5").val(data.dprople4);
+                    $("#6").val(data.dprople5);
+                }
+            })
+        })
+    </script>
+    <style>
+        .adddrom{
+            width: 200px;
+            height: 30px;
+            border-radius: 2px;
+        }
+        .add1{
+            width: 50px;
+            height: 30px;
+            border-radius: 4px;
+            background-color: deepskyblue;
+        }
+    </style>
+
+</head>
+<body>
+<div id="adddrom01" style="display:block">
+    <form action="/drom/updatedrom" method="get">
+        宿舍分类： <pre>       <input class="adddrom" id="type1" name="dtype" readonly="readonly"></pre>
+        宿舍楼号： <pre>       <input class="adddrom" type="text" id="dnumber" name="dnumber" placeholder="请输入宿舍楼号" readonly="readonly"></pre>
+        宿舍楼层： <pre>       <input class="adddrom" type="text" id="dfloor" name="dfloor" placeholder="请输入宿舍楼层" readonly="readonly"></pre>
+        宿舍号：   <pre>       <input class="adddrom" type="text" onchange="methodA()" id="dnumber1" name="dnumber1" placeholder="请输入宿舍号" readonly="readonly"><span id="dnumberspan"></span></pre>
+        学院：     <pre>       <select class="adddrom" type="text" name="dxy" id="xy" onchange="select()"><option id="xy1" style="background-color: red">请选择学院</option></select></pre>
+        专业：     <pre>       <select class="adddrom" type="text" name="dzy" id="zy" onchange="ZYchange()"><option id="zy1">请选择专业</option></select></pre>
+        班级：     <pre>       <select class="adddrom" type="text" name="dclass" id="cla" ><option id="cla1">请选择班级</option></select></pre>
+        宿舍成员： <pre>       <input class="adddrom" id="1" type="text" name="dprople"  placeholder="请输入宿舍成员"></pre>
+        <pre>       <input class="adddrom" id="2" type="text" name="dprople1"  placeholder="请输入宿舍成员"></pre>
+        <pre>       <input class="adddrom" id="3" type="text" name="dprople2" placeholder="请输入宿舍成员"></pre>
+        <pre>       <input class="adddrom" id="4" type="text" name="dprople3"  placeholder="请输入宿舍成员"></pre>
+        <pre>       <input class="adddrom" id="5" type="text" name="dprople4"  placeholder="请输入宿舍成员"></pre>
+        <pre>       <input class="adddrom" id="6" type="text" name="dprople5" placeholder="请输入宿舍成员"></pre>
+        <pre>      <input class="add1" type="button" value="取消" id="qx" onclick="window.location.href='/drom-list.html'">             <input class="add1" type="button" value="提交" onclick="methodBtn()">   <input class="add1" type="submit" value="提交" id="true" style="display: none"></pre>
+    </form>
+</div>
+<!--<script>
+    function picture_noadd(url){
+        var index = layer.open({
+            type: 4,
+            content: url
+        });
+        layer.full(index);
+    }
+
+</script>-->
+<div id="div1" style="width: 200px;height: 200px;background-color: #00b7ee;position: absolute;right: 300px;top: 500px;display: none">
+
+</div>
+</body>
+<script>
+
+    function methodBtn() {
+        if($("#xy").val()=="请选择学院"||$("#zy").val()=="请选择专业"||$("#cla").val()=="请选择班级"){
+            $("#div1").show();
+            $("#div1").html("<p>信息填写不完整或错误！请填写正确的学院以及相应的专业和班级</p>");
+            return;
+        }
+        $("#true").click();
+    }
+    function select() {
+        $("#cla  option").remove("");
+        if($("#xy").val()=="请选择学院"){
+            $("#zy  option").remove("");
+            $("#zy").append("<option>请选择专业</option>")
+            $("#cla  option").remove("");
+            $("#cla").append("<option>请选择班级</option>")
+            return;
+        }
+        $("#zy  option").remove("");
+        $("#cla").append("<option>请选择班级</option>")
+        $.get("/college/zyAll1",{"cid":$("#xy").val()},function (data) {
+            console.log(data)
+            var list=JSON.parse(data);
+            var str1="";
+            for (var i=0;i<list.length;i++){
+                str1="<option value='"+list[i].id+"'>"+list[i].zyName+"</option>"
+                $("#zy").append(str1);
+            }
+        })
+    }
+    function ZYchange() {
+        $("#cla  option").remove("");
+        $.get("/college/claAll1",{"classid":$("#zy").val()},function (data) {
+            console.log(data)
+            var list=JSON.parse(data);
+            var str1="";
+            for (var i=0;i<list.length;i++){
+                str1="<option value='"+list[i].id+"'>"+list[i].cname+"</option>"
+                $("#cla").append(str1);
+            }
+        })
+    }
+    function methodA() {
+        if($("#dnumber1").text()==""){
+            $("#dnumberspan").text("请正确填写宿舍号！")
+        }
+        $("#dnumberspan").text("")
+        $.ajax({
+            method:"get",
+            url:"/drom/selectDromOne",
+            data:{"dtype":$("#type1").val(),"dnumber1":$("#dnumber1").val()},
+            success:function (data) {
+                if(data.length>0){
+                    $("#dnumberspan").text(data);
+                }
+            }
+        })
+    }
+</script>
+</html>

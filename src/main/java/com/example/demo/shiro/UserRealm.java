@@ -27,14 +27,11 @@ public class UserRealm extends AuthorizingRealm {
         realUser.setSname(user.getUsername());
         realUser.setSpassword(String.copyValueOf(user.getPassword()));
         Student newUser =studentService.selStudent(realUser.getSname());
-        System.out.println(user.getUsername());
-
         if(newUser == null){
             //用户名错误
             //shiro会抛出UnknownAccountException异常
             return null;
         }
-         System.out.println(newUser.getSname()+"====="+newUser.getSpassword());
         return new SimpleAuthenticationInfo(newUser,newUser.getSpassword(),"");
     }
 

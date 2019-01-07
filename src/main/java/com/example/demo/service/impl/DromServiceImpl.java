@@ -1,10 +1,8 @@
 package com.example.demo.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.example.demo.mapper.DromMapper;
 import com.example.demo.model.Drom;
 import com.example.demo.service.DromService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -48,5 +46,22 @@ public class DromServiceImpl implements DromService {
         map.put("floor","%"+floor+"%");
         map.put("number1","%"+number1+"%");
       return dromMapper.selectDrom(map);
+    }
+
+    @Override
+    public Drom selectDromOne(String dtype,String dnumber1) {
+        return dromMapper.selectDromOne(dtype,dnumber1);
+    }
+
+    @Override
+    public Drom selectDromDemo(int id) {
+       return dromMapper.selectDromDemo(id);
+    }
+
+    @Override
+    public void updatedrom(Drom drom) {
+        Map map=new HashMap();
+        map.put("drom",drom);
+        dromMapper.updatedrom(map);
     }
 }
