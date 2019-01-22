@@ -20,7 +20,6 @@ import java.util.Map;
  */
 public class UpFile {
     public void addNewsDemo(MultipartFile file1) {
-        System.out.println(file1.getOriginalFilename()+"555555555555555");
         String path1= ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static/img"+"/"+file1.getOriginalFilename();
         // shop.setShopPacking();
         File target1 = new File(path1);

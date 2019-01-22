@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface StudentService {
     public List studentLogin(int start,int num);
-    public void addStudent(Student student);
+    public void addStudent(Student student,int dclass);
     public void delStudent(int id);
     public void delAll(String[] arr);
 

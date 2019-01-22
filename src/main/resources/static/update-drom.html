@@ -28,16 +28,19 @@
                     $.get("/college/xyOne",{"id":data.dxy},function (data1) {
                         var data1=JSON.parse(data1);
                         tmp=data1.xyName;
+                        $("#xy1").val(data1.id);
                         $("#xy1").text(tmp);
                     })
                     $.get("/college/zyOne",{"id":data.dzy},function (data1) {
                         var data1=JSON.parse(data1);
                         tmp1=data1.zyName;
+                        $("#zy1").val(data1.id);
                         $("#zy1").text(tmp1);
                     })
                     $.get("/college/claOne",{"id":data.dclass},function (data1) {
                         var data1=JSON.parse(data1);
                         tmp2=data1.cname;
+                        $("#cla1").val(data1.id);
                         $("#cla1").text(tmp2);
                     })
                    $("#type1").val(data.dtype);

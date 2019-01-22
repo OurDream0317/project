@@ -41,5 +41,10 @@ public class ImageController {
         List list=imageService.selectStatus();
         return JSON.toJSONString(list);
     }
-
+    @RequestMapping("/selectStatus2")
+    @ResponseBody
+    public String selectStatus2(){
+        List list=imageService.selectStatus2();
+        return JSON.toJSONString(list);
+    }
 }

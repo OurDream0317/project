@@ -40,8 +40,8 @@ public class StudentController {
         return JSON.toJSONString(list);
     }
     @RequestMapping("/addstudent")
-    public String addstudent(Student student){
-        studentService.addStudent(student);
+    public String addstudent(Student student,int dclass){
+        studentService.addStudent(student,dclass);
         return "redirect:/student-list.html";
     }
     @RequestMapping("/delstudent")

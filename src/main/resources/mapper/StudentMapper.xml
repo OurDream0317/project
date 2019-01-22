@@ -17,7 +17,7 @@
     select *  from student where delstatus=0 and sname=#{name}
   </select>
   <insert id="addStudent">
-     insert into student(sname,spassword,snumber,sbrithday,sage,sphone) value(#{student.sname},#{student.spassword},#{student.snumber},#{student.sbrithday},#{student.sage},#{student.sphone})
+     insert into student(sname,spassword,snumber,sbrithday,sage,sphone,classid) value(#{student.sname},#{student.spassword},#{student.snumber},#{student.sbrithday},#{student.sage},#{student.sphone},#{student.classid})
   </insert>
   <insert id="saveexcel" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
      insert into student(sname,spassword,sphone,snumber,sage,sbrithday) values

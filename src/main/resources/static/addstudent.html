@@ -3,6 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $.get("/college/xyAll",function (data) {
+                console.log(data)
+                var list = JSON.parse(data);
+                var str1 = "";
+                for (var i = 0; i < list.length; i++) {
+                    str1 = "<option value='" + list[i].id + "'>" + list[i].xyName + "</option>"
+                    $("#xy").append(str1);
+                }
+            })
+        })
+    </script>
     <style>
         .addStudent{
             width: 200px;
@@ -25,8 +39,72 @@
         电话：   <pre>       <input class="addStudent" type="text" name="sphone"></pre>
         学号：   <pre>       <input class="addStudent" type="text" name="snumber"></pre>
         出生年月:<pre>       <input class="addStudent" type="date" name="sbrithday"></pre>
-        <pre>      <input class="add1" type="button" value="取消" id="qx" onclick="window.location.href='/student-list.html'">                <input class="add1" type="submit" value="提交" id="true"></pre>
+        学院：   <pre>       <select class="addStudent" type="text" name="dxy" id="xy" onchange="select()"><option>请选择学院</option></select></pre>
+        专业：   <pre>       <select class="addStudent" type="text" name="dzy" id="zy" onchange="ZYchange()"><option>请选择专业</option></select></pre>
+        班级：   <pre>       <select class="addStudent" type="text" name="dclass" id="cla" ><option>请选择班级</option></select></pre>
+        <pre>       <input class="add1" type="button" value="取消" id="qx" onclick="window.location.href='/student-list.html'">                 <input class="add1" type="button" value="提交" onclick="methodBtn()">   <input class="add1" type="submit" value="提交" id="true" style="display: none"></pre>
     </form>
 </div>
+<div id="div1" style="width: 200px;height: 200px;background-color: #00b7ee;position: absolute;right: 300px;top: 500px;display: none">
+
+</div>
 </body>
+<script>
+    function methodBtn() {
+        if($("#xy").val()=="请选择学院"||$("#zy").val()=="请选择专业"||$("#cla").val()=="请选择班级"){
+            $("#div1").show();
+            $("#div1").html("<p>信息填写不完整或错误！请填写正确的学院以及相应的专业和班级</p>");
+            return;
+        }
+        $("#true").click();
+    }
+    function select() {
+        console.log($("#xy").val())
+        if($("#xy").val()=="请选择学院"){
+            $("#zy  option").remove("");
+            $("#zy").append("<option>请选择专业</option>")
+            $("#cla  option").remove("");
+            $("#cla").append("<option>请选择班级</option>")
+            return;
+        }
+        $("#zy  option").remove("");
+        $.get("/college/zyAll1",{"cid":$("#xy").val()},function (data) {
+            console.log(data)
+            var list=JSON.parse(data);
+            var str1="";
+            for (var i=0;i<list.length;i++){
+                str1="<option value='"+list[i].id+"'>"+list[i].zyName+"</option>"
+                $("#zy").append(str1);
+            }
+        })
+    }
+    function ZYchange() {
+        $("#cla  option").remove("");
+        $.get("/college/claAll1",{"classid":$("#zy").val()},function (data) {
+            console.log(data)
+            var list=JSON.parse(data);
+            var str1="";
+            for (var i=0;i<list.length;i++){
+                str1="<option value='"+list[i].id+"'>"+list[i].cname+"</option>"
+                $("#cla").append(str1);
+            }
+        })
+    }
+    function methodA() {
+        if($("#dnumber1").text()==""){
+            $("#dnumberspan").text("请正确填写宿舍号！")
+        }
+        $("#dnumberspan").text("")
+        $.ajax({
+            method:"get",
+            url:"/drom/selectDromOne",
+            data:{"dtype":$("#type1").val(),"dnumber1":$("#dnumber1").val()},
+            success:function (data) {
+                if(data.length>0){
+                    $("#dnumberspan").text(data);
+                }
+            }
+        })
+    }
+</script>
 </html>

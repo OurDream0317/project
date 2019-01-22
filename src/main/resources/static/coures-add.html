@@ -6,21 +6,21 @@
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
-<form action="/image/addimg" method="post" enctype="multipart/form-data">
+<form action="/scores/addScore" method="post" enctype="multipart/form-data">
     课程名：
-    <pre>       <input class="addimage" type="text" name="ititle"></pre>
+    <pre>       <input class="addimage" type="text" name="score"></pre>
     课程分类：
-    <pre>       <input class="addimage" type="text" name="itype"></pre>
+    <pre>       <input class="addimage" type="text" name="stype"></pre>
     出版社：
-    <pre>       <input class="addimage" type="text" name="isort"></pre>
+    <pre>       <input class="addimage" type="text" name="sadress"></pre>
     任课教师：
-    <pre>       <input class="addimage" type="text" name="itime"></pre>
+    <pre>       <input class="addimage" type="text" name="steacher"></pre>
     学习阶段：
-    <pre>       <input class="addimage" type="text" name="iauthor"></pre>
+    <pre>       <input class="addimage" type="text" name="slevel"></pre>
     学习班级：
-    <pre>       <textarea style="width: 200px;height: 200px" name="idescribe"></textarea></pre>
+    <pre>       <input class="addimage" type="text" name="sclass"></pre>
      图书封面：  <p>
-    图片上传前预览：<input type="file" id="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*" style="display: none"/>
+    图片上传前预览：<input type="file" name="file" id="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*" style="display: none"/>
     <input type="button" value="隐藏图片" onclick="document.getElementById('xmTanImg').style.display = 'none';"/>
     <input type="button" value="显示图片" onclick="document.getElementById('xmTanImg').style.display = 'block';"/>
 </p>

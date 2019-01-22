@@ -61,7 +61,6 @@ public class ExcelController {
     @RequestMapping("/import")
     public String impotr(MultipartFile file, Model model) throws Exception {
         int adminId = 1;
-        System.out.println(file.getOriginalFilename()+"22222222");
         //获取上传的文件
         /*String month = request.getParameter("month");*/
 
@@ -69,6 +68,6 @@ public class ExcelController {
         //数据导入
         studentService.importExcelInfo(in,file);
         in.close();
-        return "login";
+        return "redirect:/student-list.html";
     }
 }

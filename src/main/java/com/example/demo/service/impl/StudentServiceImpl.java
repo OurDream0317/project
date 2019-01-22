@@ -31,15 +31,14 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void addStudent(Student student) {
+    public void addStudent(Student student,int dclass) {
         Map map = new HashMap();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         String date1 = df.format(new Date()).split("-")[0];
         String date2 = student.getSbrithday().split("-")[0];
-        System.out.println(JSON.toJSON(student));
         System.out.println(date1 + "==========" + date2);
         student.setSage(Integer.parseInt(date1) - Integer.parseInt(date2));
-        System.out.println(student.getSage());
+        student.setClassid(dclass);
         map.put("student", student);
         studentMapper.addStudent(map);
 

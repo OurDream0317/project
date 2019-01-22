@@ -23,14 +23,14 @@
     delete from scores
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.example.demo.model.Scores" >
-    insert into scores (id, score, stype, 
+  <insert id="addScore" >
+    insert into scores (score, stype,
       surl, sadress, steacher, 
-      slevel, sclass, sstatus
+      slevel, sclass
       )
-    values (#{id,jdbcType=INTEGER}, #{score,jdbcType=VARCHAR}, #{stype,jdbcType=VARCHAR}, 
-      #{surl,jdbcType=VARCHAR}, #{sadress,jdbcType=VARCHAR}, #{steacher,jdbcType=VARCHAR}, 
-      #{slevel,jdbcType=VARCHAR}, #{sclass,jdbcType=VARCHAR}, #{sstatus,jdbcType=INTEGER}
+    values (#{scores.score,jdbcType=VARCHAR}, #{scores.stype,jdbcType=VARCHAR},
+      #{scores.surl,jdbcType=VARCHAR}, #{scores.sadress,jdbcType=VARCHAR}, #{scores.steacher,jdbcType=VARCHAR},
+      #{scores.slevel,jdbcType=VARCHAR}, #{scores.sclass,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.example.demo.model.Scores" >

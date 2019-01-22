@@ -38,13 +38,17 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public List selectStatus() {
        List list=imageMapper.selectStatus();
-       if(list.size()<4){
-        List list1=imageMapper.selectStatus1(4-list.size());
-        list.addAll(list1);
-        return list;
-       }
        return list;
     }
-
+    @Override
+    public List selectStatus2() {
+        List list=imageMapper.selectStatus();
+        if(list.size()<4){
+            List list1=imageMapper.selectStatus1(4-list.size());
+            list.addAll(list1);
+            return list;
+        }
+        return list;
+    }
 
 }

@@ -18,6 +18,8 @@ public class Scores {
     private String sclass;
 
     private Integer sstatus;
+    private Integer stuid;
+    private Integer teacherid;
 
     public Integer getId() {
         return id;
@@ -89,5 +91,21 @@ public class Scores {
 
     public void setSstatus(Integer sstatus) {
         this.sstatus = sstatus;
+    }
+
+    public Integer getStuid() {
+        return stuid;
+    }
+
+    public void setStuid(Integer stuid) {
+        this.stuid = stuid;
+    }
+
+    public Integer getTeacherid() {
+        return teacherid;
+    }
+
+    public void setTeacherid(Integer teacherid) {
+        this.teacherid = teacherid;
     }
 }

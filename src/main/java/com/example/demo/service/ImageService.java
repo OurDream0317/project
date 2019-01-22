@@ -11,5 +11,5 @@ public interface ImageService {
     public List selectAll();
     public void updateStatus(int id,int istatus);
     public List selectStatus();
-
+    public List selectStatus2();
 }

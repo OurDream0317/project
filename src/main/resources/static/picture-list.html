@@ -62,10 +62,13 @@
         })
       function Btn(event) {
             if($("#"+event).text()=="选择") {
+
                 $.get("/image/selectStatus",function (data) {
                     var data1=JSON.parse(data);
+
                     if(data1.length<4){
                         $("#" + event).text("已选择");
+
                         $.get("/image/updateStatus",{"id": event,"istatus":1},function () {
 
                         })

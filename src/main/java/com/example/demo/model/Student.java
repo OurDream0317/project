@@ -11,6 +11,24 @@ public class Student {
     private String snumber;
     private int sage;
     private String sbrithday;
+    private int classid;
+    private int delstatus;
+
+    public int getClassid() {
+        return classid;
+    }
+
+    public void setClassid(int classid) {
+        this.classid = classid;
+    }
+
+    public int getDelstatus() {
+        return delstatus;
+    }
+
+    public void setDelstatus(int delstatus) {
+        this.delstatus = delstatus;
+    }
 
     public Integer getId() {
         return id;
