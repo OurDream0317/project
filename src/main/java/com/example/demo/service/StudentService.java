@@ -19,5 +19,6 @@ public interface StudentService {
     public XSSFWorkbook exportExcelInfo(String filename) throws InvocationTargetException, ClassNotFoundException, IntrospectionException, IllegalAccessException, ParseException;
     public  void importExcelInfo(InputStream in, MultipartFile file) throws Exception;
 
-    public Student selStudent(String name);
+    public Student selStudent(Student student);
+
 }

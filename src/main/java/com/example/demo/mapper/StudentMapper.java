@@ -16,5 +16,5 @@ public interface StudentMapper {
     public void delAll(String[] item);
     public List<Student> selectAllStudent();
     public void saveexcel(List list);
-    public Student selStudent(@Param("name") String name);
+    public Student selStudent(Map map);
 }

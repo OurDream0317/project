@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>资讯编写</title>
+    <link rel="stylesheet" href="/ckeditor/contents.css">
+    <script src="/ckeditor/build-config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/ckeditor/ckeditor.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+    <script type="text/javascript">
+     $(function () {
+         editor = CKEDITOR.replace('editor01',
+             {
+                 filebrowserImageUploadUrl: '/backend/content/op/uploadImage?',
+                 language : 'zh-cn',
+                 height:350
+             });
+     })
+
+    </script>
+
+
+
+</head>
+<body>
+<h1>标题：<input type="text" id="title" placeholder="请输入文章标题"></h1>
+<textarea  id="scpg" name="editor01"></textarea>
+<center><input type="submit" id="save" value="保存" style="width: 100px;height: 35px;background-color: #0a6999"></center>
+</body>
+<script>
+    $("#save").click(function () {
+        var content = editor.getData();
+        $.ajax({
+            type:"post",
+            url:"/news/addNews",
+            data:{"title":$("#title").val(),
+                  "content":content
+            }
+        })
+    })
+</script>
+</html>

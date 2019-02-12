@@ -81,6 +81,10 @@
             function method(data) {
                 var str = "";
                 for (var i = 0; i < data.length; i++) {
+                    if(data[i].personid==1){
+                        console.log(data[i].sname)
+                        continue;
+                    }
                     str = "<tr><td><input name='studentid' type='checkbox' value='"+data[i].id+"'></td><td>" + (i + 1) + "</td><td>" + data[i].sname + "</td><td>"+ data[i].snumber+
                         "</td><td>" + data[i].sbrithday + "</td><td>" +
                         data[i].sage + "</td><td>" + data[i].sphone +
@@ -184,6 +188,7 @@
             location.reload();
         })
     }
+    //批量删除
     function deleteAll() {
         var all = $("input:checked[name='studentid']"); //所有name为ck并且是选择状态的checkbox
         console.log(all.length); //所有选中的复选框的长度

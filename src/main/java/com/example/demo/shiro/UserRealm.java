@@ -26,7 +26,7 @@ public class UserRealm extends AuthorizingRealm {
         Student realUser = new Student();
         realUser.setSname(user.getUsername());
         realUser.setSpassword(String.copyValueOf(user.getPassword()));
-        Student newUser =studentService.selStudent(realUser.getSname());
+        Student newUser =studentService.selStudent(realUser);
         if(newUser == null){
             //用户名错误
             //shiro会抛出UnknownAccountException异常

@@ -13,6 +13,7 @@ public class Student {
     private String sbrithday;
     private int classid;
     private int delstatus;
+    private int personid;
 
     public int getClassid() {
         return classid;
@@ -85,4 +86,13 @@ public class Student {
     public void setSbrithday(String sbrithday) {
         this.sbrithday = sbrithday;
     }
+
+    public int getPersonid() {
+        return personid;
+    }
+
+    public void setPersonid(int personid) {
+        this.personid = personid;
+    }
+
 }

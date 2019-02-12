@@ -15,9 +15,30 @@
         <link rel="stylesheet" href="/css/style.css">
 
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-        <!--[if lt IE 9]>
-            <script src="/js/html5.js"></script>
-        <![endif]-->
+
+
+            <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+            <script>
+                $(function () {
+                   $("select").change(function () {
+                       if($("select").val()!=-1){
+                           $("select").css({"background-color":"green"})
+
+                       }else {
+                           $("select").css({"background-color":"red"})
+                       }
+                   })
+                })
+                function loginClick(){
+                      if($("select").val()==-1){
+                           $("select").css({"background-color":"red","font-size":"15px"})
+                      }else{
+                            $("#btn").click();
+                      }
+                }
+            </script>
+
 <style>
     body{
         background-image: url("/img/backbg.jpg"); background-repeat:repeat-y;
@@ -30,19 +51,15 @@
         <div class="page-container">
             <h1>登录(Login)</h1>
             <form action="/student/toLogin" method="post">
-                <input type="text" name="sname" class="username" placeholder="请输入您的用户名！">
+                <input type="text" name="snumber" class="username" placeholder="请输入您的用户名！">
                 <input type="password" name="spassword" class="password" placeholder="请输入您的用户密码！">
-                <input type="Captcha" class="Captcha" name="Captcha" placeholder="请输入验证码！">
-                <button type="submit" class="submit_button">登录</button>
-                <div class="error"><span>+</span></div>
+                <input type="Captcha" class="Captcha" name="Captcha" placeholder="请输入验证码！">         <select style="BACKGROUND-COLOR: transparent;" name="personid"><option value="-1">请选择您的职位</option><option value="1">管理员</option><option  value="0">学生</option></select>
+                <div><button type="button" onclick="loginClick()" class="submit_button">登录</button></div>
+                <div style="display: none"><button id="btn" type="submit" class="submit_button">登录</button></div>
             </form>
         </div>
-		
+        <div>[[${msg}]]</div>
         <!-- Javascript -->
-        <script src="/js/jquery-1.8.2.min.js" ></script>
-        <script src="/js/supersized.3.2.7.min.js" ></script>
-        <script src="/js/supersized-init.js" ></script>
-        <script src="/js/scripts.js" ></script>
 
     </body>
 </html>

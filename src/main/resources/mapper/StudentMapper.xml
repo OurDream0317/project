@@ -14,7 +14,16 @@
     select *  from student where delstatus=0 limit #{start},#{num}
   </select>
   <select id="selStudent" resultType="Student">
-    select *  from student where delstatus=0 and sname=#{name}
+    select *  from student
+    <where> 1=1
+    <if test="student.sname!=null">
+    and  sname=#{student.sname}
+    </if>
+    <if test="student.snumber!=null ">
+    and  snumber=#{student.snumber}
+    </if>
+    </where>
+    and delstatus=0
   </select>
   <insert id="addStudent">
      insert into student(sname,spassword,snumber,sbrithday,sage,sphone,classid) value(#{student.sname},#{student.spassword},#{student.snumber},#{student.sbrithday},#{student.sage},#{student.sphone},#{student.classid})
@@ -40,7 +49,7 @@
     </where>
   </delete>
   <select id="selectAllStudent" resultType="Student">
-    select * from student  where delstatus=0
+    select * from student  where delstatus=0 and personid=0
   </select>
  <!-- <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from student

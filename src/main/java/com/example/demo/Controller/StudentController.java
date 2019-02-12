@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.mail.Session;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -57,12 +59,28 @@ public class StudentController {
         return "login";
     }
     @RequestMapping("/toLogin")
-    public String toLogin(Student student, Model model){
+    public String toLogin(Student student, Model model,HttpSession session){
+        Student student1=studentService.selStudent(student);
+        if(student1==null){
+            model.addAttribute("msg","用户不存在");
+            System.out.println("用户不存在");
+            return "login";
+        }
         Subject subject= SecurityUtils.getSubject();
-        UsernamePasswordToken userToken=new UsernamePasswordToken(student.getSname(),student.getSpassword());
+        UsernamePasswordToken userToken=new UsernamePasswordToken(student1.getSname(),student1.getSpassword());
         try{
             subject.login(userToken);
-            return "index-2";
+            Student studentTO=studentService.selStudent(student1);
+            if(studentTO.getPersonid()!=student.getPersonid()){
+                model.addAttribute("msg","请选择正确的职位");
+                System.out.println("请选择正确的职位");
+                return "login";
+            }
+            model.addAttribute(student);
+            session.setAttribute("student",student);
+            if(student.getPersonid()==1){
+            return "index-2";}
+            else return "index-1";
         }catch (UnknownAccountException e){
             model.addAttribute("msg","用户名不存在");
             System.out.println("用户名不存在");

@@ -98,7 +98,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student selStudent(String name) {
-        return studentMapper.selStudent(name);
+    public Student selStudent(Student student) {
+        Map map=new HashMap();
+        map.put("student",student);
+
+       return studentMapper.selStudent(map);
+
     }
 }

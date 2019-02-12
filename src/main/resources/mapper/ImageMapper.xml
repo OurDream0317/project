@@ -18,7 +18,7 @@
     insert  into image(ititle,itype,isort,itime,iauthor,idescribe,iurl) values (#{image.ititle},#{image.itype},#{image.isort},#{image.itime},#{image.iauthor},#{image.idescribe},#{image.iurl})
   </insert>
   <select id="selectAll" resultType="Image">
-    select * from image
+    select * from image order by isort
   </select>
   <update id="updateStatus">
     update image set istatus=#{istatus} where id=#{id}
