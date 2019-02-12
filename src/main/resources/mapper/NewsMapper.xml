@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.NewsMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.News" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="autor" property="autor" jdbcType="VARCHAR" />
+    <result column="shStatus" property="shstatus" jdbcType="INTEGER" />
+    <result column="fbStatus" property="fbstatus" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, content, time, status, autor, shStatus, fbStatus
+  </sql>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select * from news
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from news
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.News" >
+    insert into news (id, title, content, 
+      time, status, autor, 
+      shStatus, fbStatus)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{time,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{autor,jdbcType=VARCHAR}, 
+      #{shstatus,jdbcType=INTEGER}, #{fbstatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="addNews" parameterType="com.example.demo.model.News" >
+    insert into news
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="data != null" >
+        time,
+      </if>
+      <if test="author != null" >
+        autor,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="data != null" >
+        #{data,jdbcType=VARCHAR},
+      </if>
+
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.News" >
+    update news
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="autor != null" >
+        autor = #{autor,jdbcType=VARCHAR},
+      </if>
+      <if test="shstatus != null" >
+        shStatus = #{shstatus,jdbcType=INTEGER},
+      </if>
+      <if test="fbstatus != null" >
+        fbStatus = #{fbstatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.News" >
+    update news
+    set title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      time = #{time,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      autor = #{autor,jdbcType=VARCHAR},
+      shStatus = #{shstatus,jdbcType=INTEGER},
+      fbStatus = #{fbstatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
