@@ -3,7 +3,7 @@ package com.example.demo.mapper;
 import com.example.demo.model.Student;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 
 import java.util.List;
 import java.util.Map;

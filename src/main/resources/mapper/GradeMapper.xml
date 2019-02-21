@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.GradeMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.Grade" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="stuid" property="stuid" jdbcType="INTEGER" />
+    <result column="claid" property="claid" jdbcType="INTEGER" />
+    <result column="proid" property="proid" jdbcType="INTEGER" />
+    <result column="colid" property="colid" jdbcType="INTEGER" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="C" property="c" jdbcType="DOUBLE" />
+    <result column="C1" property="c1" jdbcType="DOUBLE" />
+    <result column="JAVA" property="java" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, stuid, claid, proid, colid, year, level, C, C1, JAVA
+  </sql>
+  <select id="selectAllGrade" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select * from grade
+    <where>1=1
+      <if test="grade.stuid!=0">
+        and stuid=#{grade.stuid}
+      </if>
+      <if test="grade.claid!=0">
+        and  claid=#{grade.claid}
+      </if>
+      <if test="grade.proid!=0">
+        and proid=#{grade.proid}
+      </if>
+      <if test="grade.colid!=0">
+        and colid=#{grade.colid}
+      </if>
+      <if test="grade.year.length()>0">
+        and year=#{grade.year}
+      </if>
+      <if test="grade.level!='请选择学期'">
+        and level=#{grade.level}
+      </if>
+    </where>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from grade
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from grade
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.Grade" >
+    insert into grade (id, stuid, claid, 
+      proid, colid, year, 
+      level, C, C1, JAVA
+      )
+    values (#{id,jdbcType=INTEGER}, #{stuid,jdbcType=INTEGER}, #{claid,jdbcType=INTEGER}, 
+      #{proid,jdbcType=INTEGER}, #{colid,jdbcType=INTEGER}, #{year,jdbcType=VARCHAR}, 
+      #{level,jdbcType=VARCHAR}, #{c,jdbcType=DOUBLE}, #{c1,jdbcType=DOUBLE}, #{java,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.Grade" >
+    insert into grade
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="stuid != null" >
+        stuid,
+      </if>
+      <if test="claid != null" >
+        claid,
+      </if>
+      <if test="proid != null" >
+        proid,
+      </if>
+      <if test="colid != null" >
+        colid,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="c != null" >
+        C,
+      </if>
+      <if test="c1 != null" >
+        C1,
+      </if>
+      <if test="java != null" >
+        JAVA,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="stuid != null" >
+        #{stuid,jdbcType=INTEGER},
+      </if>
+      <if test="claid != null" >
+        #{claid,jdbcType=INTEGER},
+      </if>
+      <if test="proid != null" >
+        #{proid,jdbcType=INTEGER},
+      </if>
+      <if test="colid != null" >
+        #{colid,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="c != null" >
+        #{c,jdbcType=DOUBLE},
+      </if>
+      <if test="c1 != null" >
+        #{c1,jdbcType=DOUBLE},
+      </if>
+      <if test="java != null" >
+        #{java,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.Grade" >
+    update grade
+    <set >
+      <if test="stuid != null" >
+        stuid = #{stuid,jdbcType=INTEGER},
+      </if>
+      <if test="claid != null" >
+        claid = #{claid,jdbcType=INTEGER},
+      </if>
+      <if test="proid != null" >
+        proid = #{proid,jdbcType=INTEGER},
+      </if>
+      <if test="colid != null" >
+        colid = #{colid,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="c != null" >
+        C = #{c,jdbcType=DOUBLE},
+      </if>
+      <if test="c1 != null" >
+        C1 = #{c1,jdbcType=DOUBLE},
+      </if>
+      <if test="java != null" >
+        JAVA = #{java,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.Grade" >
+    update grade
+    set stuid = #{stuid,jdbcType=INTEGER},
+      claid = #{claid,jdbcType=INTEGER},
+      proid = #{proid,jdbcType=INTEGER},
+      colid = #{colid,jdbcType=INTEGER},
+      year = #{year,jdbcType=VARCHAR},
+      level = #{level,jdbcType=VARCHAR},
+      C = #{c,jdbcType=DOUBLE},
+      C1 = #{c1,jdbcType=DOUBLE},
+      JAVA = #{java,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

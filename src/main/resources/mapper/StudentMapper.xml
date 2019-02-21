@@ -6,6 +6,7 @@
     <result column="sname" property="sname" jdbcType="VARCHAR" />
     <result column="spassword" property="spassword" jdbcType="VARCHAR" />
     <result column="sphone" property="sphone" jdbcType="VARCHAR" />
+    <result column="snumber" property="snumber" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, sname, spassword, sphone
@@ -19,7 +20,7 @@
     <if test="student.sname!=null">
     and  sname=#{student.sname}
     </if>
-    <if test="student.snumber!=null ">
+    <if test="student.snumber!=null">
     and  snumber=#{student.snumber}
     </if>
     </where>

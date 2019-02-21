@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.demo.mapper.StudentMapper;
 import com.example.demo.model.Student;
 import com.example.demo.service.StudentService;
 import org.apache.shiro.SecurityUtils;
@@ -8,6 +9,7 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,8 @@ import java.util.List;
 public class StudentController {
     @Resource
     private StudentService studentService;
+    @Autowired
+    private StudentMapper studentMapper;
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public String login(Student student) {
         if(student.getSname().equals("123") && student.getSpassword().equals("123")){
@@ -90,6 +94,13 @@ public class StudentController {
             System.out.println("密码错误");
             return "login";
         }
+    }
+    @RequestMapping("/selectAllStudent")
+    @ResponseBody
+    public String selectAllStudent(){
+        List list=studentMapper.selectAllStudent();
+        return JSON.toJSONString(list);
+
     }
 
 }
