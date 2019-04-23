@@ -80,7 +80,7 @@ public class ExcelUtil {
         if (excel2003L.equals(fileType)) {
             wb = new HSSFWorkbook(inStr);  //2003-
         } else if (excel2007U.equals(fileType)) {
-            wb = new XSSFWorkbook(inStr);  //2007+
+            wb = new HSSFWorkbook(inStr);  //2007+
         } else {
             throw new Exception("解析的文件格式有误！");
         }

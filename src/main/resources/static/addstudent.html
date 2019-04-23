@@ -7,7 +7,6 @@
     <script>
         $(function () {
             $.get("/college/xyAll",function (data) {
-                console.log(data)
                 var list = JSON.parse(data);
                 var str1 = "";
                 for (var i = 0; i < list.length; i++) {
@@ -39,9 +38,9 @@
         电话：   <pre>       <input class="addStudent" type="text" name="sphone"></pre>
         学号：   <pre>       <input class="addStudent" type="text" name="snumber"></pre>
         出生年月:<pre>       <input class="addStudent" type="date" name="sbrithday"></pre>
-        学院：   <pre>       <select class="addStudent" type="text" name="dxy" id="xy" onchange="select()"><option>请选择学院</option></select></pre>
-        专业：   <pre>       <select class="addStudent" type="text" name="dzy" id="zy" onchange="ZYchange()"><option>请选择专业</option></select></pre>
-        班级：   <pre>       <select class="addStudent" type="text" name="dclass" id="cla" ><option>请选择班级</option></select></pre>
+        学院：   <pre>       <select class="addStudent" type="text" name="colid" id="xy" onchange="select()"><option>请选择学院</option></select></pre>
+        专业：   <pre>       <select class="addStudent" type="text" name="proid" id="zy" onchange="ZYchange()"><option>请选择专业</option></select></pre>
+        班级：   <pre>       <select class="addStudent" type="text" name="classid" id="cla" ><option>请选择班级</option></select></pre>
         <pre>       <input class="add1" type="button" value="取消" id="qx" onclick="window.location.href='/student-list.html'">                 <input class="add1" type="button" value="提交" onclick="methodBtn()">   <input class="add1" type="submit" value="提交" id="true" style="display: none"></pre>
     </form>
 </div>

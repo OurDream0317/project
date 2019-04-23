@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class NewsServiceImpl implements NewsService {
@@ -24,6 +26,42 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public List<News> selectAll() {
         return newsMapper.selectAll();
+    }
+
+    @Override
+    public News selectByPk(int id) {
+        return newsMapper.selectByPk(id);
+    }
+
+    @Override
+    public void updateByPk(News news) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String data=df.format(new Date());
+        news.setTime(data);
+        Map map=new HashMap();
+        map.put("news",news);
+        newsMapper.updateByPk(map);
+    }
+
+    @Override
+    public void delOne(int id) {
+        newsMapper.delOne(id);
+    }
+
+    @Override
+    public void sh(int id,int shstatus) {
+        newsMapper.sh(id,shstatus);
+    }
+
+    @Override
+    public void fbNews(int id, int fbstatus) {
+           newsMapper.fbNews(id,fbstatus);
+    }
+
+    @Override
+    public List<News> searchNews(String content) {
+        content="%"+content+"%";
+        return newsMapper.searchNews(content);
     }
 
 }

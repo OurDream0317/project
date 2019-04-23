@@ -1,6 +1,6 @@
 
 <!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -23,24 +23,60 @@
     <title>资讯列表</title>
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script>
+        var status="";
+        var fbstatus="";
+        var shstatus="";
+        var fb="";
+        var fb1="fb";
         $(function () {
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: "/news/selectAll",
                 dataType: "json",
+                data:{"content":$("#content").val()},
                 success: function(data){
                     $("#count").text(data.length)
                     $.each(data,function (index,obj) {
-                        $("tbody").append("<tr class=\"text-c\">" +
+                        if(obj.fbstatus==0){
+                            fbstatus="未发布"
+                            fb="发布";
+                        }else{
+                            fbstatus="已发布"
+                            fb="取消发布";
+                        }
+                        if(obj.status==0){
+                           status="未删除"
+                        }
+                        if(obj.status==1){
+                            status="已置顶"
+                        }
+                        if(obj.status==2){
+                            status="已删除";
+                        }
+                        if(obj.autor=="admin"){
+                            shstatus="审核通过";
+                        }else{
+                            if(obj.shstatus==0){
+                                shstatus="未审核";
+                                $("#"+obj.id).hide();
+                            }if(obj.shstatus==1){
+                                shstatus="审核通过";
+                            }else{
+                                shstatus="审核不通过";
+                                $("#"+obj.id).hide();
+                            }
+                        }
+                        $("tbody").append("<tr id='tr"+obj.id+"' class=\"text-c\">" +
                             "<td><input name='' type='checkbox' value=''></td>" +
                             "<td>"+(index+1)+"</td>" +
                             "<td>"+obj.title+"</td>" +
                             "<td>...</td>" +
                             "<td>"+obj.time+"</td>" +
-                            "<td>"+obj.shstatus+"</td>" +
-                            "<td>"+obj.fbstatus+"</td>" +
-                            "<td>"+obj.status+"</td>" +
-                            "<td><button>查看</button>&nbsp;&nbsp;&nbsp;<button>修改</button>&nbsp;&nbsp;&nbsp;<button>删除</button></td>" +
+                            "<td>"+obj.autor+"</td>" +
+                            "<td>"+shstatus+"</td>" +
+                            "<td id='fb"+obj.id+"'>"+fbstatus+"</td>" +
+                            "<td>"+status+"</td>" +
+                            "<td><button id="+obj.id+" onclick='isFb("+obj.id+","+obj.fbstatus+","+obj.shstatus+")'>"+fb+"</button>&nbsp;&nbsp;&nbsp;<button onclick='chakan("+obj.id+")'>查看</button>&nbsp;&nbsp;&nbsp;<button onclick='changearticle("+obj.id+")'>修改</button>&nbsp;&nbsp;&nbsp;<button id='del"+obj.id+"' onclick='delOne("+obj.id+")'>删除</button></td>" +
                             "</tr>")
                     })
                 }
@@ -49,26 +85,27 @@
     </script>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 资讯管理 <span class="c-gray en">&gt;</span> 课程列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 资讯管理 <span class="c-gray en">&gt;</span> 资讯列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
     <div class="text-c">
-        <input type="text" name="" id="" placeholder="请输入关键字" style="width:250px" class="input-text">
-        <button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜资讯</button>
+        <input type="text"  id="content" placeholder="请输入关键字" style="width:250px" class="input-text">
+        <button  id="searchNews" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜资讯</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="r">共有数据：<strong><span id="count"></span></strong> 条</span> </div>
     <div class="mt-20">
         <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
             <tr class="text-c">
-                <th width="40"><input name="" type="checkbox" value=""></th>
-                <th width="80">序号</th>
-                <th width="100">标题</th>
+                <th width="40"><input id="all" type="radio" value=""></th>
+                <th width="40">序号</th>
+                <th width="150">标题</th>
                 <th width="100">内容</th>
                 <th width="200">时间</th>
-                <th width="80">置顶状态</th>
-                <th width="150">发布状态</th>
+                <th width="80">作者</th>
+                <th width="80">审核状态</th>
+                <th width="60">发布状态</th>
                 <th width="60">删除状态</th>
-                <th width="100">操作</th>
+                <th width="200">操作</th>
             </tr>
             </thead>
             <tbody>
@@ -89,4 +126,165 @@
 <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
 
 </body>
+<script>
+    $("#searchNews").click(function () {
+        $("table tr").not(':eq(0)').empty();
+        $.ajax({
+            type: "POST",
+            url: "/news/selectAll",
+            dataType: "json",
+            data:{"content":$("#content").val()},
+            success: function(data){
+                $("#count").text(data.length)
+                $.each(data,function (index,obj) {
+                    if(obj.fbstatus==0){
+                        fbstatus="未发布"
+                        fb="发布";
+                    }else{
+                        fbstatus="已发布"
+                        fb="取消发布";
+                    }
+                    if(obj.status==0){
+                        status="未删除"
+                    }
+                    if(obj.status==1){
+                        status="已置顶"
+                    }
+                    if(obj.status==2){
+                        status="已删除";
+                    }
+                    if(obj.autor=="admin"){
+                        shstatus="审核通过";
+                    }else{
+                        if(obj.shstatus==0){
+                            shstatus="未审核";
+                            $("#"+obj.id).hide();
+                        }if(obj.shstatus==1){
+                            shstatus="审核通过";
+                        }else{
+                            shstatus="审核不通过";
+                            $("#"+obj.id).hide();
+                        }
+                    }
+                    $("tbody").append("<tr id='tr"+obj.id+"' class=\"text-c\">" +
+                        "<td><input name='' type='checkbox' value=''></td>" +
+                        "<td>"+(index+1)+"</td>" +
+                        "<td>"+obj.title+"</td>" +
+                        "<td>...</td>" +
+                        "<td>"+obj.time+"</td>" +
+                        "<td>"+obj.autor+"</td>" +
+                        "<td>"+shstatus+"</td>" +
+                        "<td id='fb"+obj.id+"'>"+fbstatus+"</td>" +
+                        "<td>"+status+"</td>" +
+                        "<td><button id="+obj.id+" onclick='isFb("+obj.id+","+obj.fbstatus+","+obj.shstatus+")'>"+fb+"</button>&nbsp;&nbsp;&nbsp;<button onclick='chakan("+obj.id+")'>查看</button>&nbsp;&nbsp;&nbsp;<button onclick='changearticle("+obj.id+")'>修改</button>&nbsp;&nbsp;&nbsp;<button id='del"+obj.id+"' onclick='delOne("+obj.id+")'>删除</button></td>" +
+                        "</tr>")
+                })
+            }
+        })
+    })
+    var tmp=0;
+    $("#all").click(function () {
+        if (tmp != 0) {
+            $("#all").prop("checked",false)
+            var val = $("input[type='checkbox']");
+            val.each(function () {
+                $(this).prop("checked", false);
+            })
+            tmp = 0;
+            return;
+        }
+        var val = $("input[type='checkbox']");
+        val.each(function () {
+            $(this).prop("checked", true);
+        })
+        tmp = 1;
+    })
+    function chakan(tmp) {
+        window.location.href="/news/selectByPk?tmp="+tmp;
+    }
+    function changearticle(tmp) {
+        $.ajax({
+            type: "GET",
+            url: "/news/selectByPk2",
+            dataType: "json",
+            data:{"id":tmp},
+            success:function (result) {
+                if(result.status==2){
+                    layer.msg("删除状态下不可以修改");
+                    return;
+                }
+                window.location.href="/news/changeByPk?tmp="+tmp;
+            },
+            error:function () {
+                layer.msg("请求出错（请检查网络异常）");
+                return;
+            }
+        })
+
+    }
+    $("body").delegate('tr', 'click', function (e) {
+        if(e.target.type=='radio'){
+            return;
+        }
+        if ($(this).find(":checkbox").prop("checked")) {
+            $(this).find(":checkbox").removeAttr("checked");
+        }else {
+            $(this).find(":checkbox").prop("checked", true);
+        }
+    });
+    function delOne(id) {
+        $("#tr" + id).remove();
+        $.ajax({
+            type: "GET",
+            url: "/news/delOne",
+            dataType: "json",
+            data:{"id":id},
+            success:function (result) {
+              layer.msg("删除成功");
+              return;
+            },
+            error:function () {
+                layer.msg("请求出错（请检查网络异常）");
+                return;
+            }
+        })
+
+    }
+ /*   function go() {
+        window.location.href="/article-list.html"
+    }*/
+    function isFb(id,fbstatus,shstatus) {
+         if(shstatus==0){
+             layer.msg("未审核状态不可以发布");
+             return;
+         }
+        if(shstatus==2){
+            layer.msg("审核不通过状态不可以发布");
+            return;
+        }else {
+            $.ajax({
+                type: "GET",
+                url: "/news/fbNews",
+                dataType: "json",
+                data: {"id": id, "fbstatus": fbstatus},
+                success: function (result) {
+                    if ($("#" + id).text() == "发布") {
+                        $("#" + id).text("取消发布");
+                        $("#fb" + id).text("已发布");
+                        return;
+                    }
+                    if ($("#" + id).text() == "取消发布") {
+                        $("#" + id).text("发布");
+                        $("#fb" + id).text("未发布");
+                        return;
+                    }
+                },
+                error: function () {
+                    layer.msg("请求出错（请检查网络异常）");
+                    return;
+                }
+            })
+        }
+    }
+</script>
 </html>

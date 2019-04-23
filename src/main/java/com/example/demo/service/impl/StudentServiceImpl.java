@@ -31,14 +31,14 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void addStudent(Student student,int dclass) {
+    public void addStudent(Student student) {
         Map map = new HashMap();
+        Date date=new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         String date1 = df.format(new Date()).split("-")[0];
         String date2 = student.getSbrithday().split("-")[0];
-        System.out.println(date1 + "==========" + date2);
         student.setSage(Integer.parseInt(date1) - Integer.parseInt(date2));
-        student.setClassid(dclass);
+        student.setStime(df.format(date));
         map.put("student", student);
         studentMapper.addStudent(map);
 
@@ -54,7 +54,7 @@ public class StudentServiceImpl implements StudentService {
         studentMapper.delAll(arr);
     }
 
-    @Override
+ /*   @Override
     public XSSFWorkbook exportExcelInfo(String filename) throws InvocationTargetException, ClassNotFoundException, IntrospectionException, IllegalAccessException, ParseException {
         List<Student> list = studentMapper.selectAllStudent();
         for (int i = 0; i < list.size(); i++) {
@@ -77,7 +77,7 @@ public class StudentServiceImpl implements StudentService {
         xssfWorkbook = ExcelUtil.createExcelFile(Student.class, list, map, sheetName);
         return xssfWorkbook;
     }
-
+*/
     @Override
     public void importExcelInfo(InputStream in, MultipartFile file) throws Exception {
         List<List<Object>> listob = ExcelUtil.getBankListByExcel(in, file.getOriginalFilename());
@@ -104,5 +104,24 @@ public class StudentServiceImpl implements StudentService {
 
        return studentMapper.selStudent(map);
 
+    }
+
+    @Override
+    public Student updateOne(int id) {
+        return studentMapper.updateOne(id);
+    }
+
+    @Override
+    public void updateStudent(Student student) {
+        Map map=new HashMap();
+        map.put("student",student);
+        studentMapper.updateStudent(map);
+    }
+
+    @Override
+    public List searchStusent(Student student) {
+        Map map=new HashMap();
+        map.put("student",student);
+        return studentMapper.searchStusent(map);
     }
 }

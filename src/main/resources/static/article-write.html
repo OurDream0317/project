@@ -36,6 +36,9 @@
             url:"/news/addNews",
             data:{"title":$("#title").val(),
                   "content":content
+            },
+            success:function () {
+                window.location.href="/article-list.html";
             }
         })
     })

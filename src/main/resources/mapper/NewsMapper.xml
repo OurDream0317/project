@@ -14,13 +14,37 @@
   <sql id="Base_Column_List" >
     id, title, content, time, status, autor, shStatus, fbStatus
   </sql>
-  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select * from news
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select * from news where status in(0,1)
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from news
+  <select id="searchNews" resultMap="BaseResultMap"  >
+    select * from news where title like #{content} and status in(0,1)
+    union
+     select * from news where content like #{content} and status in(0,1)
+  </select>
+  <select id="selectByPk" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select * from news where id=#{id}
+  </select>
+  <update id="fbNews" parameterType="java.lang.Integer" >
+    update  news
+    <set>
+      <if test="fbstatus==0">
+      fbstatus=1
+    </if>
+      <if test="fbstatus==1">
+        fbstatus=0
+      </if>
+    </set>
     where id = #{id,jdbcType=INTEGER}
-  </delete>
+  </update>
+  <update id="delOne" parameterType="java.lang.Integer" >
+    update  news set status=2,fbstatus=0
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="sh" parameterType="java.lang.Integer" >
+    update  news set shstatus=#{shstatus}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
   <insert id="insert" parameterType="com.example.demo.model.News" >
     insert into news (id, title, content, 
       time, status, autor, 
@@ -62,32 +86,20 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.News" >
+  <update id="updateByPk" parameterType="com.example.demo.model.News" >
     update news
     <set >
-      <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR},
+      <if test="news.title != null" >
+        title = #{news.title,jdbcType=VARCHAR},
       </if>
-      <if test="content != null" >
-        content = #{content,jdbcType=VARCHAR},
+      <if test="news.content != null" >
+        content = #{news.content,jdbcType=VARCHAR},
       </if>
-      <if test="time != null" >
-        time = #{time,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="autor != null" >
-        autor = #{autor,jdbcType=VARCHAR},
-      </if>
-      <if test="shstatus != null" >
-        shStatus = #{shstatus,jdbcType=INTEGER},
-      </if>
-      <if test="fbstatus != null" >
-        fbStatus = #{fbstatus,jdbcType=INTEGER},
+      <if test="news.time != null" >
+        time = #{news.time,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{news.id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.demo.model.News" >
     update news

@@ -1,101 +1,210 @@
-
 <!DOCTYPE HTML>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <!--[if lt IE 9]>
     <script type="text/javascript" src="/lib/html5shiv.js"></script>
     <script type="text/javascript" src="/lib/respond.min.js"></script>
     <![endif]-->
-    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css" />
-    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css" />
-    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
-    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin" />
-    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css"/>
     <!--[if IE 6]>
-    <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
     <title>图片列表</title>
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script>
         $(function () {
-            var tmp1="";
-             var selectBtn="";
+            var tmp1 = "";
+            var selectBtn = "";
             $.ajax({
                 type: "GET",
                 url: "/image/selectAll",
                 dataType: "json",
-                success: function(data){
+                success: function (data) {
                     $("#count").text(data.length)
-                    console.log(data)
-                    $.each(data,function (index,obj) {
-                        if(obj.itype==0){
-                             tmp1="校园美景";
-                        }else if(obj.itype==1){
-                            tmp1="学生风采";
-                        }else{
-                            tmp1="校园通知";
+                    $.each(data, function (index, obj) {
+                        if (obj.itype == 0) {
+                            tmp1 = "校园美景";
+                        } else if (obj.itype == 1) {
+                            tmp1 = "学生风采";
+                        } else {
+                            tmp1 = "校园通知";
                         }
-                        if(obj.istatus==0){
-                            selectBtn="选择";
-                        }else if(obj.istatus==1){
-                            selectBtn="已选择";
+                        if (obj.istatus == 0) {
+                            selectBtn = "选择";
+                        } else if (obj.istatus == 1) {
+                            selectBtn = "已选择";
                         }
-                        $("tbody").append("<tr class=\"text-c\">" +
-                            "<td><input name='' type='checkbox' value=''></td>" +
-                            "<td>"+(index+1)+"</td>" +
-                            "<td>"+tmp1+"</td>" +
-                            "<td><img src="+obj.iurl+" style='width: 50px;height: 30px'></td>" +
-                            "<td>"+obj.idescribe+"</td>" +
-                            "<td>"+obj.isort+"</td>" +
-                            "<td>"+obj.itime+"</td>" +
-                            "<td><button id="+obj.id+" onclick='Btn("+obj.id+")'>"+selectBtn+"</button>&nbsp;&nbsp;&nbsp;<button>修改</button>&nbsp;&nbsp;&nbsp;<button>删除</button></td>" +
+                        $("tbody").append("<tr id='tr" + obj.id + "' class=\"text-c\">" +
+                            "<td><input name='studentid' type='checkbox' value='"+ obj.id +"'></td>" +
+                            "<td>" + (index + 1) + "</td>" +
+                            "<td>" + tmp1 + "</td>" +
+                            "<td><img src=" + obj.iurl + " style='width: 50px;height: 30px'></td>" +
+                            "<td>" + obj.idescribe + "</td>" +
+                            "<td>" + obj.isort + "</td>" +
+                            "<td>" + obj.itime + "</td>" +
+                            "<td><button id=" + obj.id + " onclick='Btn(" + obj.id + ")'>" + selectBtn + "</button>&nbsp;&nbsp;&nbsp;<button onclick='updateOne(" + obj.id + ")'>修改</button>&nbsp;&nbsp;&nbsp;<button id='del" + obj.id + "' onclick='delOne(" + obj.id + ")'>删除</button></td>" +
                             "</tr>")
                     })
                 }
             })
         })
-      function Btn(event) {
-            if($("#"+event).text()=="选择") {
 
-                $.get("/image/selectStatus",function (data) {
-                    var data1=JSON.parse(data);
+        function Btn(event) {
+            if ($("#" + event).text() == "选择") {
 
-                    if(data1.length<4){
+                $.get("/image/selectStatus", function (data) {
+                    var data1 = JSON.parse(data);
+
+                    if (data1.length < 4) {
                         $("#" + event).text("已选择");
 
-                        $.get("/image/updateStatus",{"id": event,"istatus":1},function () {
+                        $.get("/image/updateStatus", {"id": event, "istatus": 1}, function () {
 
                         })
                     }
                 })
 
             }
-          if($("#"+event).text()=="已选择") {
-              $("#"+event).text("选择");
-              $.get("/image/updateStatus",{"id": event,"istatus":0},function () {
+            if ($("#" + event).text() == "已选择") {
+                $("#" + event).text("选择");
+                $.get("/image/updateStatus", {"id": event, "istatus": 0}, function () {
 
-              })
-          }
+                })
+            }
+        }
+
+        function delOne(id) {
+            $("#tr" + id).remove();
+            $.ajax({
+                type: "GET",
+                url: "/image/delOne",
+                dataType: "json",
+                data: {"id": id},
+                success: function (result) {
+                    layer.msg("删除成功");
+                    setTimeout(go,1500);
+                },
+                error: function () {
+                    layer.msg("请求出错（请检查网络异常）");
+                    return;
+                }
+            })
+        }
+        function updateOne(id) {
+            window.location.href="/image/updateOne?id="+id;
+        }
+        //批量删除
+        function deleteAll() {
+            var all = $("input:checked[name='studentid']"); //所有name为ck并且是选择状态的checkbox
+            if(all.length<=0){
+                layer.msg("请选择要删除的数据")
+            }else {
+                layer.confirm('是否删除被选中的数据？', {
+                    btn: ['是', '否'] //按钮
+                }, function () {
+                    //删除
+                    var ids = new Array();
+                    for (var i = 0; i < all.length; i++) {
+                        ids.push(all[i].getAttribute("value"));
+                        all[i].parentNode.parentNode.remove();
+                    }
+                    $.ajax({
+                        url: "/image/delAll",
+                        data: {ids: ids},
+                        dataType: "json",
+                        traditional: true,
+                        success: function (data) {
+                            layer.msg("删除成功");
+                            setTimeout(go,1500);
+                        }, error: function () {
+                            layer.msg("请检查网络异常");
+                            return;
+                        }
+                    })
+                }, function () {
+                    layer.closeAll();
+                    return;
+                });
+            }
+        }
+        function go() {
+            window.location.reload();
+        }
+      function search() {
+          var min=$("#logmin").val();
+          var max=$("#logmax").val();
+          var Myitype=$("#Myitype").val();
+          $.ajax({
+              method: "get",
+              url: "/image/selectByBtn",
+              data: {"min":min, "max": max,"Myitype":Myitype},
+              success:function (data) {
+                  data=JSON.parse(data)
+                  $("table  tr:not(:first)").empty("");
+                  $("#count").text(data.length)
+                  $.each(data, function (index, obj) {
+                      if (obj.itype == 0) {
+                          tmp1 = "校园美景";
+                      } else if (obj.itype == 1) {
+                          tmp1 = "学生风采";
+                      } else {
+                          tmp1 = "校园通知";
+                      }
+                      if (obj.istatus == 0) {
+                          selectBtn = "选择";
+                      } else if (obj.istatus == 1) {
+                          selectBtn = "已选择";
+                      }
+                      $("tbody").append("<tr id='tr" + obj.id + "' class=\"text-c\">" +
+                          "<td><input name='studentid' type='checkbox' value='"+ obj.id +"'></td>" +
+                          "<td>" + (index + 1) + "</td>" +
+                          "<td>" + tmp1 + "</td>" +
+                          "<td><img src=" + obj.iurl + " style='width: 50px;height: 30px'></td>" +
+                          "<td>" + obj.idescribe + "</td>" +
+                          "<td>" + obj.isort + "</td>" +
+                          "<td>" + obj.itime + "</td>" +
+                          "<td><button id=" + obj.id + " onclick='Btn(" + obj.id + ")'>" + selectBtn + "</button>&nbsp;&nbsp;&nbsp;<button onclick='updateOne(" + obj.id + ")'>修改</button>&nbsp;&nbsp;&nbsp;<button id='del" + obj.id + "' onclick='delOne(" + obj.id + ")'>删除</button></td>" +
+                          "</tr>")
+                  })
+              }
+          })
       }
+
+
     </script>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 图片管理 <span class="c-gray en">&gt;</span> 图片列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 图片管理 <span
+        class="c-gray en">&gt;</span> 图片列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+                                              href="javascript:location.replace(location.href);" title="刷新"><i
+        class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
     <div class="text-c"> 日期范围：
-        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin"
+               class="input-text Wdate" style="width:120px;">
         -
-        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;">
-        <input type="text" name="" id="" placeholder=" 图片名称" style="width:250px" class="input-text">
-        <button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜图片</button>
+        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax"
+               class="input-text Wdate" style="width:120px;">
+        <select type="text"  id="Myitype" style="width:250px" class="input-text">
+            <option value="">请输入图片名称</option><option value="0">校园美景</option><option value="1">学生风采</option ><option value="2">校园通知</option>
+        </select>
+        <button onclick="search()" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 搜图片</button>
     </div>
-    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius"  href="/picture-add.html"><i class="Hui-iconfont">&#xe600;</i> 添加图片</a></span> <span class="r">共有数据：<strong><span id="count"></span></strong> 条</span> </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20"><span class="l"><a href="javascript:;" onclick="deleteAll()"
+                                                               class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a
+            class="btn btn-primary radius" href="/picture-add.html"><i class="Hui-iconfont">&#xe600;</i> 添加图片</a></span>
+        <span class="r">共有数据：<strong><span id="count"></span></strong> 条</span></div>
     <div class="mt-20">
         <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>

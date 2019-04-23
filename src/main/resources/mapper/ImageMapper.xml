@@ -1,32 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.demo.mapper.ImageMapper" >
-  <resultMap id="BaseResultMap" type="com.example.demo.model.Image" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="ititle" property="ititle" jdbcType="VARCHAR" />
-    <result column="itype" property="itype" jdbcType="VARCHAR" />
-    <result column="isort" property="isort" jdbcType="INTEGER" />
-    <result column="itime" property="itime" jdbcType="VARCHAR" />
-    <result column="iauthor" property="iauthor" jdbcType="VARCHAR" />
-    <result column="idescribe" property="idescribe" jdbcType="VARCHAR" />
-    <result column="iurl" property="iurl" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.example.demo.mapper.ImageMapper">
+    <resultMap id="BaseResultMap" type="com.example.demo.model.Image">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="ititle" property="ititle" jdbcType="VARCHAR"/>
+        <result column="itype" property="itype" jdbcType="VARCHAR"/>
+        <result column="isort" property="isort" jdbcType="INTEGER"/>
+        <result column="itime" property="itime" jdbcType="VARCHAR"/>
+        <result column="iauthor" property="iauthor" jdbcType="VARCHAR"/>
+        <result column="idescribe" property="idescribe" jdbcType="VARCHAR"/>
+        <result column="iurl" property="iurl" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, ititle, itype, isort, itime, iauthor, idescribe, iurl
   </sql>
-  <insert id="addimage">
+    <insert id="addimage">
     insert  into image(ititle,itype,isort,itime,iauthor,idescribe,iurl) values (#{image.ititle},#{image.itype},#{image.isort},#{image.itime},#{image.iauthor},#{image.idescribe},#{image.iurl})
   </insert>
-  <select id="selectAll" resultType="Image">
-    select * from image order by isort
+    <select id="selectAll" resultType="Image">
+    select * from image where isdel=0 order by isort desc
   </select>
-  <update id="updateStatus">
+    <select id="selectById" resultType="Image">
+    select * from image where isdel=0 and id=#{id}
+  </select>
+    <update id="updateStatus">
     update image set istatus=#{istatus} where id=#{id}
   </update>
-  <select id="selectStatus" resultType="Image">
-    select * from image where istatus=1
+    <select id="selectStatus" resultType="Image">
+    select * from image where istatus=1 and isdel=0
   </select>
-  <select id="selectStatus1" resultType="Image">
-    select * from image where istatus=0 limit 0,#{num}
+    <select id="selectStatus1" resultType="Image">
+    select * from image where istatus=0 and isdel=0 limit 0,#{num}
   </select>
+    <update id="delOne">
+    update image set isdel=1 where id=#{id}
+  </update>
+    <update id="updateOne2">
+        update image set ititle=#{image.ititle},itype=#{image.itype},isort=#{image.isort},itime=#{image.itime},idescribe=#{image.idescribe}
+        <if test="image.iurl!=null">
+        ,iurl=#{image.iurl}
+        </if>
+        where id=#{image.id}
+    </update>
+    <update id="delAll">
+        update image set isdel=1
+        <where>
+            id in
+            <foreach collection="array" index="index" item="item"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </update>
+    <select id="selectByBtn" resultType="Image">
+      select * from image where isdel=0
+        <if test="min != null and min != ''">AND itime <![CDATA[>=]]>#{min}</if>
+        <if test="max != null and max != ''">AND itime <![CDATA[<=]]>#{max}</if>
+        <if test="Myitype!=''">
+          AND  itype=#{Myitype}
+        </if>
+       order by isort desc
+    </select>
 </mapper>

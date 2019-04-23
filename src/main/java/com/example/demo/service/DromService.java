@@ -11,5 +11,6 @@ public interface DromService {
     public Drom selectDromOne(String dtype,String dnumber1);
     Drom selectDromDemo(int id);
     void updatedrom(Drom drom);
-
+    void delAll(String[] ids);
+    void delOne(int id);
 }

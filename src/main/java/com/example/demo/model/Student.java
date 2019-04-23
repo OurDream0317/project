@@ -12,9 +12,14 @@ public class Student {
     private int sage;
     private String sbrithday;
     private int classid;
+    private int colid;
+    private int proid;
     private int delstatus;
     private int personid;
-
+    private String stime;
+ private String xyName;
+    private String zyName;
+    private String cname;
     public int getClassid() {
         return classid;
     }
@@ -95,4 +100,51 @@ public class Student {
         this.personid = personid;
     }
 
+    public int getColid() {
+        return colid;
+    }
+
+    public void setColid(int colid) {
+        this.colid = colid;
+    }
+
+    public int getProid() {
+        return proid;
+    }
+
+    public void setProid(int proid) {
+        this.proid = proid;
+    }
+
+    public String getStime() {
+        return stime;
+    }
+
+    public void setStime(String stime) {
+        this.stime = stime;
+    }
+
+    public String getXyName() {
+        return xyName;
+    }
+
+    public void setXyName(String xyName) {
+        this.xyName = xyName;
+    }
+
+    public String getZyName() {
+        return zyName;
+    }
+
+    public void setZyName(String zyName) {
+        this.zyName = zyName;
+    }
+
+    public String getCname() {
+        return cname;
+    }
+
+    public void setCname(String cname) {
+        this.cname = cname;
+    }
 }

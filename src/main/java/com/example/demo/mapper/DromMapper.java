@@ -15,4 +15,6 @@ public interface DromMapper {
    public  Drom selectDromOne(@Param("dtype")String dtype,@Param("dnumber1")String dnumber1);
    Drom selectDromDemo(@Param("id")int id);
    void updatedrom(Map map);
+   void delAll(String[] ids);
+   void delOne(@Param("id") int id);
 }

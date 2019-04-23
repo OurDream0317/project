@@ -25,7 +25,9 @@ public class Drom {
     private String dprople5;
 
     private Integer dstatus;
-
+    private String xyName;
+    private String zyName;
+    private String cname;
     public Integer getId() {
         return id;
     }
@@ -144,5 +146,29 @@ public class Drom {
 
     public void setDprople5(String dprople5) {
         this.dprople5 = dprople5;
+    }
+
+    public String getXyName() {
+        return xyName;
+    }
+
+    public void setXyName(String xyName) {
+        this.xyName = xyName;
+    }
+
+    public String getZyName() {
+        return zyName;
+    }
+
+    public void setZyName(String zyName) {
+        this.zyName = zyName;
+    }
+
+    public String getCname() {
+        return cname;
+    }
+
+    public void setCname(String cname) {
+        this.cname = cname;
     }
 }

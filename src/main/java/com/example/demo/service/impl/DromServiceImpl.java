@@ -64,4 +64,14 @@ public class DromServiceImpl implements DromService {
         map.put("drom",drom);
         dromMapper.updatedrom(map);
     }
+
+    @Override
+    public void delAll(String[] ids) {
+        dromMapper.delAll(ids);
+    }
+
+    @Override
+    public void delOne(int id) {
+        dromMapper.delOne(id);
+    }
 }

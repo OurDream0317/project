@@ -199,4 +199,17 @@
       dstatus = #{dstatus,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <update id="delAll">
+    update drom set dstatus=1
+    <where>
+      id in
+      <foreach collection="array" index="index" item="item"
+               open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </where>
+  </update>
+  <update id="delOne">
+      update drom set dstatus=1 where id=#{id}
+  </update>
 </mapper>

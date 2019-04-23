@@ -2,6 +2,7 @@ package com.example.demo.Controller;
 
 import com.alibaba.fastjson.JSON;
 import com.example.demo.mapper.StudentMapper;
+import com.example.demo.model.Image;
 import com.example.demo.model.Student;
 import com.example.demo.service.StudentService;
 import org.apache.shiro.SecurityUtils;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.mail.Session;
@@ -46,21 +48,22 @@ public class StudentController {
         return JSON.toJSONString(list);
     }
     @RequestMapping("/addstudent")
-    public String addstudent(Student student,int dclass){
-        studentService.addStudent(student,dclass);
+    public String addstudent(Student student){
+        System.out.println(JSON.toJSONString(student));
+      studentService.addStudent(student);
         return "redirect:/student-list.html";
     }
     @RequestMapping("/delstudent")
+    @ResponseBody
     public String delstudent(int id){
         studentService.delStudent(id);
-        return "redirect:/student-list.html";
+        return JSON.toJSONString("success");
     }
     @RequestMapping("/delAll")
-    public String delAll(String ids){
-        System.out.println(ids+"====");
-        String[] arr=ids.split(",");
-        studentService.delAll(arr);
-        return "login";
+    @ResponseBody
+    public String delAll(String[] ids){
+        studentService.delAll(ids);
+        return JSON.toJSONString("success");
     }
     @RequestMapping("/toLogin")
     public String toLogin(Student student, Model model,HttpSession session){
@@ -80,8 +83,8 @@ public class StudentController {
                 System.out.println("请选择正确的职位");
                 return "login";
             }
-            model.addAttribute(student);
-            session.setAttribute("student",student);
+            model.addAttribute("student",studentTO);
+            session.setAttribute("student",studentTO);
             if(student.getPersonid()==1){
             return "index-2";}
             else return "index-1";
@@ -95,12 +98,36 @@ public class StudentController {
             return "login";
         }
     }
-    @RequestMapping("/selectAllStudent")
+       @RequestMapping("/selectAllStudent")
     @ResponseBody
     public String selectAllStudent(){
         List list=studentMapper.selectAllStudent();
         return JSON.toJSONString(list);
-
     }
 
+    @RequestMapping("/updateOne")
+    @ResponseBody
+    public String updateOne(int id,HttpSession session){
+        session.setAttribute("studentId",id);
+        return JSON.toJSONString("success");
+    }
+    @RequestMapping("/updateOne2")
+    @ResponseBody
+    public String updateOne2(HttpSession session){
+        Student student=studentService.updateOne((Integer) session.getAttribute("studentId"));
+        return JSON.toJSONString(student);
+    }
+    @RequestMapping("/updateStudent")
+    public String updateStudent(Student student){
+        System.out.println(JSON.toJSONString(student));
+        studentService.updateStudent(student);
+        return "redirect:/student-list.html";
+    }
+    @RequestMapping("/searchStusent")
+    @ResponseBody
+    public String searchStusent(Student student){
+        System.out.println(JSON.toJSONString(student));
+        List list=studentService.searchStusent(student);
+        return JSON.toJSONString(list);
+    }
 }

@@ -14,8 +14,9 @@
             //使选择控件不可操作
             document.getElementById("xdaTanFileImg").setAttribute("disabled", "disabled");
         }
+
         function upfile() {
-            $("#xmTanImg").attr("src",$("#xdaTanFileImg").val())
+            $("#xmTanImg").attr("src", $("#xdaTanFileImg").val())
         }
     </script>
     <style>
@@ -45,42 +46,58 @@
         图片标题：
         <pre>       <input class="addimage" type="text" name="ititle"></pre>
         图片栏目：
-        <pre>       <input class="addimage" type="text" name="itype"></pre>
+        <pre>       <select class="addimage" type="text" name="itype"><option value="0">校园美景</option><option value="1">学生风采</option ><option value="2">校园通知</option></select></pre>
         排序值：
         <pre>       <input class="addimage" type="text" name="isort"></pre>
-        发布日期：
-        <pre>       <input class="addimage" type="text" name="itime"></pre>
-        图文作者：
-        <pre>       <input class="addimage" type="text" name="iauthor"></pre>
         图文描述：
         <pre>       <textarea style="width: 200px;height: 200px" name="idescribe"></textarea></pre>
         图片上传：
         <div>
             <p>
-                图片上传前预览：<input type="file" id="xdaTanFileImg" onchange="upfile()" name="file" style="display: none"/>
-                <input type="button" value="隐藏图片" onclick="document.getElementById('xmImg').style.display = 'none';"/>
-                <input type="button" value="显示图片"
-                       onclick="document.getElementById('xmTanImg').style.display = 'block';"/>
+                图片上传前预览：<input type="file" name="file" id="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*" style="display: none"/>
+                <input type="button" value="隐藏图片" onclick="document.getElementById('xmTanImg').style.display = 'none';"/>
+                <input type="button" value="显示图片" onclick="document.getElementById('xmTanImg').style.display = 'block';"/>
             </p>
-            <label for="xdaTanFileImg"><img src="/img/upfile.jpg" id="xmTanImg" style="width: 200px;height: 200px"/></label>
-        </div>
-
-        <pre>      <input class="add1" type="button" value="取消" id="qx"
-                          onclick="window.location.href='/picture-list.html'">                <input class="add1"
-                                                                                                     type="submit"
-                                                                                                     value="提交"
-                                                                                                     id="true"></pre>
+            <label for="xdaTanFileImg"><img src="/img/upfile.jpg" id="xmTanImg1" style="width: 200px;height: 200px"/></label>
+            <img id="xmTanImg"/>
+            <div id="xmTanDiv"></div>
+            <pre>      <input class="add1" type="button" value="取消" id="qx"
+                              onclick="window.location.href='/picture-list.html'">                <input class="add1"
+                                                                                                        type="submit"
+                                                                                                        value="提交"
+                                                                                                        id="true"></pre>
     </form>
 </div>
-<!--<script>
-    function picture_noadd(url){
-        var index = layer.open({
-            type: 4,
-            content: url
-        });
-        layer.full(index);
-    }
+<script>
+    //选择图片，马上预览
+    function xmTanUploadImg(obj) {
+        var file = obj.files[0];
+        var reader = new FileReader();
 
-</script>-->
+        //读取文件过程方法
+        reader.onloadstart = function (e) {
+            console.log("开始读取....");
+        }
+        reader.onprogress = function (e) {
+            console.log("正在读取中....");
+        }
+        reader.onabort = function (e) {
+            console.log("中断读取....");
+        }
+        reader.onerror = function (e) {
+            console.log("读取异常....");
+        }
+        reader.onload = function (e) {
+            console.log("成功读取....");
+
+            var img = document.getElementById("xmTanImg");
+
+            img.src = e.target.result;
+            //或者 img.src = this.result;  //e.target == this
+        }
+
+        reader.readAsDataURL(file)
+    }
+</script>
 </body>
 </html>

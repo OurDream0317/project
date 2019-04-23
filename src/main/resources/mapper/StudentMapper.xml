@@ -11,23 +11,26 @@
   <sql id="Base_Column_List" >
     id, sname, spassword, sphone
   </sql>
+  <select id="updateOne" resultType="Student">
+    select *  from student where delstatus=0 and id=#{id}
+  </select>
   <select id="studentLogin" resultType="Student">
-    select *  from student where delstatus=0 limit #{start},#{num}
+    select s.*,c.xyName,p.zyName,a.cname from student s left join college c on s.colid=c.id left join profession p on s.colid=p.id left join class a on s.colid=a.id where s.delstatus=0 and s.personid=0 limit #{start},#{num}
   </select>
   <select id="selStudent" resultType="Student">
     select *  from student
     <where> 1=1
-    <if test="student.sname!=null">
+    <if test="student.sname!=null and student.sname!=''">
     and  sname=#{student.sname}
     </if>
-    <if test="student.snumber!=null">
+    <if test="student.snumber!=null and student.snumber!=''">
     and  snumber=#{student.snumber}
     </if>
     </where>
     and delstatus=0
   </select>
   <insert id="addStudent">
-     insert into student(sname,spassword,snumber,sbrithday,sage,sphone,classid) value(#{student.sname},#{student.spassword},#{student.snumber},#{student.sbrithday},#{student.sage},#{student.sphone},#{student.classid})
+     insert into student(sname,spassword,snumber,sbrithday,sage,sphone,stime,classid,colid,proid) value(#{student.sname},#{student.spassword},#{student.snumber},#{student.sbrithday},#{student.sage},#{student.sphone},#{student.stime},#{student.classid},#{student.colid},#{student.proid})
   </insert>
   <insert id="saveexcel" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
      insert into student(sname,spassword,sphone,snumber,sage,sbrithday) values
@@ -50,8 +53,33 @@
     </where>
   </delete>
   <select id="selectAllStudent" resultType="Student">
-    select * from student  where delstatus=0 and personid=0
+    select s.*,c.xyName,p.zyName,a.cname from student s left join college c on s.colid=c.id left join profession p on s.colid=p.id left join class a on s.colid=a.id where s.delstatus=0 and s.personid=0
   </select>
+    <select id="searchStusent" resultType="Student">
+    select * from student  where delstatus=0 and personid=0
+    <if test="student.sname!=null and student.sname.length()>0">
+     and  sname=#{student.sname}
+    </if>
+        <if test="student.snumber!=null and student.snumber.length()>0">
+            and  snumber=#{student.snumber}
+        </if>
+        <if test="student.colid!=0">
+            and  colid=#{student.colid}
+        </if>
+        <if test="student.proid!=0">
+            and  proid=#{student.proid}
+        </if>
+        <if test="student.classid!=0">
+            and  classid=#{student.classid}
+        </if>
+  </select>
+  <update id="updateStudent" parameterType="com.example.demo.model.Student" >
+    update student
+    set colid = #{student.colid,jdbcType=VARCHAR},
+      proid = #{student.proid,jdbcType=VARCHAR},
+      classid = #{student.classid,jdbcType=VARCHAR}
+    where id = #{student.id,jdbcType=INTEGER}
+  </update>
  <!-- <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from student
     where id = #{id,jdbcType=INTEGER}

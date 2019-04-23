@@ -31,6 +31,7 @@
     </style>
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script>
+        var is_del;
         $(function () {
             var tmp1="";
             var col="";
@@ -40,28 +41,29 @@
                 dataType: "json",
                 success: function(data){
                     $("#count").text(data.length)
-                    console.log(data)
                     $.each(data,function (index,obj) {
                         $.get("/college/xyOne",{"id":obj.dxy},function (data1) {
                             var data1=JSON.parse(data1);
                             tmp1=data1.xyName;
-                            console.log(tmp1)
                             $("#"+obj.id+'td1').text(tmp1)
                         })
                         $.get("/college/zyOne",{"id":obj.dzy},function (data1) {
                             var data1=JSON.parse(data1);
                             tmp1=data1.zyName;
-                            console.log(tmp1)
                             $("#"+obj.id+'td2').text(tmp1)
                         })
                         $.get("/college/claOne",{"id":obj.dclass},function (data1) {
                             var data1=JSON.parse(data1);
                             tmp1=data1.cname;
-                            console.log(tmp1)
                             $("#"+obj.id+'td3').text(tmp1)
                         })
-                        $("tbody").append("<tr class=\"text-c\">" +
-                            "<td><input name='' type='checkbox' value=''></td>" +
+                        if(obj.dstatus==0){
+                            is_del="未删除";
+                        }else{
+                            is_del="已删除";
+                        }
+                        $("tbody").append("<tr id='tr" + obj.id + "' class=\"text-c\">" +
+                            "<td><input name='studentid' type='checkbox' value='"+ obj.id +"'></td>" +
                             "<td>"+(index+1)+"</td>" +
                             "<td>"+obj.dtype+"</td>" +
                             "<td>"+obj.dnumber+"</td>" +
@@ -71,8 +73,8 @@
                             "<td id="+obj.id+'td2'+"></td>" +
                             "<td id="+obj.id+'td3'+"></td>" +
                             "<td>"+obj.dprople+"&nbsp;"+obj.dprople1+"&nbsp;"+obj.dprople2+"&nbsp;"+obj.dprople3+"&nbsp;"+obj.dprople4+"&nbsp;"+obj.dprople5+"</td>" +
-                            "<td>"+obj.dstatus+"</td>" +
-                            "<td style='width: 150px'>&nbsp;<button onclick='updateOne("+obj.id+")'>修改</button>&nbsp;&nbsp;&nbsp;<button>删除</button></td>" +
+                            "<td>"+is_del+"</td>" +
+                            "<td style='width: 150px'>&nbsp;<button onclick='updateOne("+obj.id+","+obj.dstatus+")')'>修改</button>&nbsp;&nbsp;&nbsp;<button onclick='delOne(" + obj.id + ")'>删除</button></td>" +
                             "</tr>")
                     })
                 }
@@ -87,19 +89,39 @@
                     success: function(data){
                         $("#count").text(data.length)
                         $.each(data,function (index,obj) {
-                            $("tbody").append("<tr class=\"text-c\">" +
-                                "<td><input name='' type='checkbox' value=''></td>" +
+                            $.get("/college/xyOne",{"id":obj.dxy},function (data1) {
+                                var data1=JSON.parse(data1);
+                                tmp1=data1.xyName;
+                                $("#"+obj.id+'td1').text(tmp1)
+                            })
+                            $.get("/college/zyOne",{"id":obj.dzy},function (data1) {
+                                var data1=JSON.parse(data1);
+                                tmp1=data1.zyName;
+                                $("#"+obj.id+'td2').text(tmp1)
+                            })
+                            $.get("/college/claOne",{"id":obj.dclass},function (data1) {
+                                var data1=JSON.parse(data1);
+                                tmp1=data1.cname;
+                                $("#"+obj.id+'td3').text(tmp1)
+                            })
+                            if(obj.dstatus==0){
+                                is_del="未删除";
+                            }else{
+                                is_del="已删除";
+                            }
+                            $("tbody").append("<tr id='tr" + obj.id + "' class=\"text-c\">" +
+                                "<td><input name='studentid' type='checkbox' value='"+ obj.id +"'></td>" +
                                 "<td>"+(index+1)+"</td>" +
                                 "<td>"+obj.dtype+"</td>" +
                                 "<td>"+obj.dnumber+"</td>" +
                                 "<td>"+obj.dfloor+"</td>" +
                                 "<td>"+obj.dnumber1+"</td>" +
-                                "<td>"+obj.dxy+"</td>" +
-                                "<td>"+obj.dzy+"</td>" +
-                                "<td>"+obj.dclass+"</td>" +
+                                "<td id="+obj.id+'td1'+"></td>" +
+                                "<td id="+obj.id+'td2'+"></td>" +
+                                "<td id="+obj.id+'td3'+"></td>" +
                                 "<td>"+obj.dprople+"&nbsp;"+obj.dprople1+"&nbsp;"+obj.dprople2+"&nbsp;"+obj.dprople3+"&nbsp;"+obj.dprople4+"&nbsp;"+obj.dprople5+"</td>" +
-                                "<td>"+obj.dstatus+"</td>" +
-                                "<td style='width: 150px'>&nbsp;<button onclick='updateOne("+obj.id+")'>修改</button>&nbsp;&nbsp;&nbsp;<button>删除</button></td>" +
+                                "<td>"+is_del+"</td>" +
+                                "<td style='width: 150px'>&nbsp;<button onclick='updateOne("+obj.id+","+obj.dstatus+")'>修改</button>&nbsp;&nbsp;&nbsp;<button onclick='delOne(" + obj.id + ")'>删除</button></td>" +
                                 "</tr>")
                         })
                     }
@@ -160,8 +182,65 @@
 
 </body>
 <script>
-    function updateOne(tmp) {
-        console.log(tmp);
+    //批量删除
+    function datadel() {
+        var all = $("input:checked[name='studentid']"); //所有name为ck并且是选择状态的checkbox
+        if(all.length<=0){
+            layer.msg("请选择要删除的数据")
+        }else {
+            layer.confirm('是否删除被选中的数据？', {
+                btn: ['是', '否'] //按钮
+            }, function () {
+                //删除
+                var ids = new Array();
+                for (var i = 0; i < all.length; i++) {
+                    ids.push(all[i].getAttribute("value"));
+                    all[i].parentNode.parentNode.remove();
+                }
+                $.ajax({
+                    url: "/drom/delAll",
+                    data: {ids: ids},
+                    dataType: "json",
+                    traditional: true,
+                    success: function (data) {
+                        layer.msg("删除成功");
+                        setTimeout(go,1500);
+                    }, error: function () {
+                        layer.msg("请检查网络异常");
+                        return;
+                    }
+                })
+            }, function () {
+                layer.closeAll();
+                return;
+            });
+        }
+    }
+    function delOne(id) {
+        $("#tr" + id).remove();
+        $.ajax({
+            type: "GET",
+            url: "/drom/delOne",
+            dataType: "json",
+            data: {"id": id},
+            success: function (result) {
+                layer.msg("删除成功");
+                setTimeout(go,1500);
+            },
+            error: function () {
+                layer.msg("请求出错（请检查网络异常）");
+                return;
+            }
+        })
+    }
+    function go() {
+        window.location.reload();
+    }
+    function updateOne(tmp,tmp1) {
+        if(tmp1==1){
+            layer.msg("删除状态下不可修改");
+            return;
+        }
         $.ajax({
             method:"get",
             url:"/drom/updateDrom",
@@ -172,37 +251,5 @@
             }
         })
     }
-    /*  function updateOne(tmp) {
-        console.log(tmp);
-
-       layer.open({
-             title: '在线调试',
-             area: ['400px', '550px'],
-             content: '<html><head></head><body><table>' +
-                 '<tr><th>学院</th><th> <select class="adddrom" type="text" name="dxy" id="xy" onchange="select()"><option>请选择学院</option></select></th></tr>' +
-                 '<tr><th>专业</th><th><select class="adddrom" type="text" name="dzy" id="zy" onchange="ZYchange()"><option>请选择专业</option></select></th></tr>' +
-                 '<tr><th>班级</th><th><select class="adddrom" type="text" name="dclass" id="cla" ><option>请选择班级</option></select></th></tr>' +
-                 '<tr><th>1号床</th><th> <input class="adddrom" type="text" name="dprople" placeholder="请输入宿舍成员"></th></tr>' +
-                 '<tr><th>2号床</th><th><input class="adddrom" type="text" name="dprople1" placeholder="请输入宿舍成员"></th></tr>' +
-                 '<tr><th>3号床</th><th><input class="adddrom" type="text" name="dprople2" placeholder="请输入宿舍成员"></th></tr>' +
-                 '<tr><th>4号床</th><th><input class="adddrom" type="text" name="dprople3" placeholder="请输入宿舍成员"></th></tr>' +
-                 '<tr><th>5号床</th><th><input class="adddrom" type="text" name="dprople4" placeholder="请输入宿舍成员"></th></tr>' +
-                 '<tr><th>6号床</th><th><input class="adddrom" type="text" name="dprople5" placeholder="请输入宿舍成员"></th></tr></table></body></html>',
-             btn: ['取消', '提交'],
-             yes: function(index, layero){
-                 //按钮【按钮一】的回调
-                 console.log("取消");
-                 layer.close(index);
-             },
-             btn2: function(index, layero){
-                 //按钮【按钮二】的回调
-                 console.log("提交")
-                 //return false 开启该代码可禁止点击该按钮关闭
-             },
-             fixed:false,
-             resize:true
-
-         })
-    }*/
 </script>
 </html>

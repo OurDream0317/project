@@ -2,18 +2,13 @@ package com.example.demo.Controller;
 
 import com.alibaba.fastjson.JSON;
 import com.example.demo.model.Drom;
-import com.example.demo.service.CollegeService;
 import com.example.demo.service.DromService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.SynthScrollBarUI;
 import java.util.List;
 
 @Controller
@@ -24,9 +19,9 @@ public class DromController {
 
     @RequestMapping("/selectAll")
     @ResponseBody
-    public List selectAll() {
+    public String selectAll() {
         List list = dromService.selectAll();
-        return list;
+        return JSON.toJSONString(list);
     }
 
     @RequestMapping("/adddrom")
@@ -69,7 +64,18 @@ public class DromController {
         int id= (int) session.getAttribute("id");
         drom.setId(id);
           dromService.updatedrom(drom);
-          System.out.println(JSON.toJSONString(drom));
         return "redirect:/drom-list.html";
+    }
+    @RequestMapping("/delAll")
+    @ResponseBody
+    public String delAll(String[] ids){
+        dromService.delAll(ids);
+        return JSON.toJSONString("success");
+    }
+    @RequestMapping("/delOne")
+    @ResponseBody
+    public String delOne(int id){
+        dromService.delOne(id);
+        return JSON.toJSONString("success");
     }
 }
