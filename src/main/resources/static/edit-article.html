@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+    <style>
+        h1{
+            text-align: center;
+        }
+    </style>
+    <script>
+        $(function () {
+            $.ajax({
+                type:"GET",
+                url:"/news/selectByPk1",
+                dataType:"json",
+                success:function (data) {
+                    console.log(data.shstatus)
+                    $("#id").val(data.id);
+                    $("h1").text(data.title);
+                    $("#center").append(data.content);
+                    if(data.shstatus==1){
+                        $("#isSH").hide();
+                    }
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+<div><input type="text" id="id"  style="display: none">
+    <h1></h1>
+    <div id="center" style="margin-left: 50px;margin-right: 50px"></div>
+    <div id="isSH"><center><input type="button" id="sh" value="审核" style="width: 100px;height: 35px;background-color: #0a6999;margin-bottom: 50px"></center></div>
+</div>
+</body>
+<script>
+    $("#sh").click(function () {
+        layer.confirm('是否通过审核？', {
+            btn: ['通过', '不通过'] //按钮
+        }, function () {
+            $.ajax({
+                url: "/news/sh",
+                type: "POST",
+                dataType: 'json',
+                data: {"id":$("#id").val(),"shstatus":1},
+            success: function (result) {
+                layer.msg('审核通过', {icon: 1});
+                time: 1500//3s后自动关闭
+                layer.closeAll();
+            },
+            error: function (xhr) {
+                layer.msg("请求出错(请检查相关网络状况.)");
+                return;
+            }
+        });
+        }, function () {
+            $.ajax({
+                url: "/news/sh",
+                type: "POST",
+                dataType: 'json',
+                data: {"id":$("#id").val(),"shstatus":2},
+                success: function (result) {
+                    layer.msg('审核不通过', {icon: 1});
+                    time: 1500//3s后自动关闭
+                    layer.closeAll();
+                },
+                error: function (xhr) {
+                    layer.msg("请求出错(请检查相关网络状况.)");
+                    return;
+                }
+            });
+        });
+    })
+</script>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript">
+
+        //判断浏览器是否支持FileReader接口
+        if (typeof FileReader == 'undefined') {
+            document.getElementById("xmTanDiv").InnerHTML = "<h1>当前浏览器不支持FileReader接口</h1>";
+            //使选择控件不可操作
+            document.getElementById("xdaTanFileImg").setAttribute("disabled", "disabled");
+        }
+
+        function upfile() {
+            $("#xmTanImg").attr("src", $("#xdaTanFileImg").val())
+        }
+    </script>
+    <style>
+        .addimage {
+            width: 200px;
+            height: 30px;
+            border-radius: 2px;
+        }
+
+        .add1 {
+            width: 50px;
+            height: 30px;
+            border-radius: 4px;
+            background-color: deepskyblue;
+        }
+
+        #btn {
+            position: relative;
+            left: 50px;
+        }
+    </style>
+
+</head>
+<body>
+<div id="addImage01" style="display:block">
+    <form action="/image/updateOne2" method="post" enctype="multipart/form-data">
+        <input type="text" style="display: none" id="imageid" name="id">
+        图片标题：
+        <pre>       <input class="addimage" type="text" id="ititle" name="ititle" ></pre>
+        图片栏目：
+        <pre>       <select class="addimage" type="text" id="itype" name="itype"></select></pre>
+        排序值：
+        <pre>       <input class="addimage" type="text" id="isort" name="isort"></pre>
+        图文描述：
+        <pre>       <textarea style="width: 200px;height: 200px" name="idescribe" id="idescribe"></textarea></pre>
+        图片上传：
+        <div>
+            <p>
+                图片上传前预览：<input type="file" name="file" id="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*" style="display: none"/>
+                <input type="button" value="隐藏图片" onclick="document.getElementById('xmTanImg').style.display = 'none';"/>
+                <input type="button" value="显示图片" onclick="document.getElementById('xmTanImg').style.display = 'block';"/>
+            </p>
+            <label for="xdaTanFileImg"><img src="/img/upfile.jpg" id="xmTanImg1" style="width: 200px;height: 200px"/></label>
+            <img id="xmTanImg" style="width: 500px;height: 400px">
+            <input type="text"  id="img" style="display: none">
+            <div id="xmTanDiv"></div>
+            <pre>      <input class="add1" type="button" value="取消" id="qx"
+                              onclick="window.location.href='/picture-list.html'">                <input class="add1"
+                                                                                                         type="submit"
+                                                                                                         value="提交"
+                                                                                                         id="true"></pre>
+    </form>
+</div>
+<script>
+    $(function () {
+        $.ajax({
+            type: "GET",
+            url: "/image/updateOne1",
+            dataType: "json",
+            success:function (result) {
+                $("#imageid").val(result.id);
+                $("#ititle").val(result.ititle);
+                if(result.itype==0){
+                    $("#itype").append("<option value='0'>校园美景</option><option value='1'>学生风采</option ><option value='2'>校园通知</option>");
+                }
+                if(result.itype==1){
+                    $("#itype").append("<option value='1'>学生风采</option ><option value='0'>校园美景</option><option value='2'>校园通知</option>");
+                }
+                if(result.itype==1){
+                    $("#itype").append("<option value='2'>校园通知</option><option value='1'>学生风采</option ><option value='0'>校园美景</option>");
+                }
+                $("#isort").val(result.isort);
+                $("#idescribe").text(result.idescribe);
+                $("#xmTanImg").attr("src", result.iurl);
+                $("#img").val(result.iurl);
+            },
+            error:function () {
+                layer.msg("请检查网络异常");
+            }
+        })
+    })
+    //选择图片，马上预览
+    function xmTanUploadImg(obj) {
+        var file = obj.files[0];
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var img = document.getElementById("xmTanImg");
+            img.src = e.target.result;
+            $("#img").val(this.result)
+            //或者 img.src = this.result;  //e.target == this
+        }
+        reader.readAsDataURL(file)
+    }
+</script>
+</body>
+</html>

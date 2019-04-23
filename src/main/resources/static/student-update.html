@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        $(function () {
+            var tmp="";
+            var tmp1="";
+            var tmp2="";
+            $.get("/college/xyAll",function (data) {
+                var list = JSON.parse(data);
+                var str1 = "";
+                for (var i = 0; i < list.length; i++) {
+                    str1 = "<option value='" + list[i].id + "'>" + list[i].xyName + "</option>"
+                    $("#xy").append(str1);
+                }
+            });
+            $.ajax({
+                type: "GET",
+                url: "/student/updateOne2",
+                success:function (data) {
+                    var  data=JSON.parse(data);
+                    console.log(data.colid+"=="+data.proid+"=="+data.classid)
+                    $.get("/college/xyOne",{"id":data.colid},function (data1) {
+                        var data1=JSON.parse(data1);
+                        tmp=data1.xyName;
+                        $("#xy1").val(data1.id);
+                        $("#xy1").text(tmp);
+                    })
+                    $.get("/college/zyOne",{"id":data.proid},function (data1) {
+                        var data1=JSON.parse(data1);
+                        tmp1=data1.zyName;
+                        $("#zy1").val(data1.id);
+                        $("#zy1").text(tmp1);
+                    })
+                    $.get("/college/claOne",{"id":data.classid},function (data1) {
+                        var data1=JSON.parse(data1);
+                        tmp2=data1.cname;
+                        $("#cla1").val(data1.id);
+                        $("#cla1").text(tmp2);
+                    })
+                    $("#id").val(data.id);
+                    $("#sname").val(data.sname);
+                    $("#spassword").val(data.spassword);
+                    $("#sphone").val(data.sphone);
+                    $("#snumber").val(data.snumber);
+                    $("#sbrithday").val(data.sbrithday);
+                }
+            })
+        })
+    </script>
+    <style>
+        .addStudent{
+            width: 200px;
+            height: 30px;
+            border-radius: 2px;
+        }
+        .add1{
+            width: 50px;
+            height: 30px;
+            border-radius: 4px;
+            background-color: deepskyblue;
+        }
+    </style>
+</head>
+<body>
+<div id="addStudent01" style="display:block">
+    <form action="/student/updateStudent" method="get">
+        <input type="text" name="id" id="id" style="display: none">
+        用户名： <pre>       <input class="addStudent" type="text" id="sname" name="sname" readonly="readonly"></pre>
+        密码：   <pre>       <input class="addStudent" type="text" id="spassword" name="spassword" readonly="readonly"></pre>
+        电话：   <pre>       <input class="addStudent" type="text" id="sphone" name="sphone" readonly="readonly"></pre>
+        学号：   <pre>       <input class="addStudent" type="text" id="snumber" name="snumber" readonly="readonly"></pre>
+        出生年月:<pre>       <input class="addStudent" type="date" id="sbrithday" name="sbrithday" readonly="readonly"></pre>
+        学院：   <pre>       <select class="addStudent" type="text" name="colid" id="xy" onchange="select()"><option id="xy1">请选择学院</option></select></pre>
+        专业：   <pre>       <select class="addStudent" type="text" name="proid" id="zy" onchange="ZYchange()"><option id="zy1">请选择专业</option></select></pre>
+        班级：   <pre>       <select class="addStudent" type="text" name="classid" id="cla" ><option id="cla1">请选择班级</option></select></pre>
+        <pre>       <input class="add1" type="button" value="取消" id="qx" onclick="window.location.href='/student-list.html'">                 <input class="add1" type="button" value="提交" onclick="methodBtn()">   <input class="add1" type="submit" value="提交" id="true" style="display: none"></pre>
+    </form>
+</div>
+<div id="div1" style="width: 200px;height: 200px;background-color: #00b7ee;position: absolute;right: 300px;top: 500px;display: none">
+
+</div>
+</body>
+<script>
+    function methodBtn() {
+        if($("#xy").val()=="请选择学院"||$("#zy").val()=="请选择专业"||$("#cla").val()=="请选择班级"){
+            $("#div1").show();
+            $("#div1").html("<p>信息填写不完整或错误！请填写正确的学院以及相应的专业和班级</p>");
+            return;
+        }
+        $("#true").click();
+    }
+    function select() {
+        console.log($("#xy").val())
+        if($("#xy").val()=="请选择学院"){
+            $("#zy  option").remove("");
+            $("#zy").append("<option>请选择专业</option>")
+            $("#cla  option").remove("");
+            $("#cla").append("<option>请选择班级</option>")
+            return;
+        }
+        $("#zy  option").remove("");
+        $.get("/college/zyAll1",{"cid":$("#xy").val()},function (data) {
+            var list=JSON.parse(data);
+            var str1="";
+            for (var i=0;i<list.length;i++){
+                str1="<option value='"+list[i].id+"'>"+list[i].zyName+"</option>"
+                $("#zy").append(str1);
+            }
+        })
+    }
+    function ZYchange() {
+        $("#cla  option").remove("");
+        $.get("/college/claAll1",{"classid":$("#zy").val()},function (data) {
+            console.log(data)
+            var list=JSON.parse(data);
+            var str1="";
+            for (var i=0;i<list.length;i++){
+                str1="<option value='"+list[i].id+"'>"+list[i].cname+"</option>"
+                $("#cla").append(str1);
+            }
+        })
+    }
+    function methodA() {
+        if($("#dnumber1").text()==""){
+            $("#dnumberspan").text("请正确填写宿舍号！")
+        }
+        $("#dnumberspan").text("")
+        $.ajax({
+            method:"get",
+            url:"/drom/selectDromOne",
+            data:{"dtype":$("#type1").val(),"dnumber1":$("#dnumber1").val()},
+            success:function (data) {
+                if(data.length>0){
+                    $("#dnumberspan").text(data);
+                }
+            }
+        })
+    }
+</script>
+</html>
