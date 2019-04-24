@@ -9,33 +9,35 @@
     <result column="colid" property="colid" jdbcType="INTEGER" />
     <result column="year" property="year" jdbcType="VARCHAR" />
     <result column="level" property="level" jdbcType="VARCHAR" />
-    <result column="C" property="c" jdbcType="DOUBLE" />
-    <result column="C1" property="c1" jdbcType="DOUBLE" />
-    <result column="JAVA" property="java" jdbcType="DOUBLE" />
+    <result column="scorename" property="scorename" jdbcType="VARCHAR" />
+    <result column="gradenumber" property="gradenumber" jdbcType="DOUBLE" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, stuid, claid, proid, colid, year, level, C, C1, JAVA
+    id, stuid, claid, proid, colid, year, level, scorename, gradenumber
   </sql>
   <select id="selectAllGrade" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select * from grade
+    select g.*,s.snumber from grade g left join student s on g.stuid=s.id
     <where>1=1
       <if test="grade.stuid!=0">
-        and stuid=#{grade.stuid}
+        and g.stuid=#{grade.stuid}
       </if>
       <if test="grade.claid!=0">
-        and  claid=#{grade.claid}
+        and  g.claid=#{grade.claid}
       </if>
       <if test="grade.proid!=0">
-        and proid=#{grade.proid}
+        and g.proid=#{grade.proid}
       </if>
       <if test="grade.colid!=0">
-        and colid=#{grade.colid}
+        and g.colid=#{grade.colid}
       </if>
-      <if test="grade.year.length()>0">
-        and year=#{grade.year}
+      <if test="grade.year!=''">
+        and g.year=#{grade.year}
       </if>
-      <if test="grade.level!='请选择学期'">
-        and level=#{grade.level}
+      <if test="grade.level!=''">
+        and g.level=#{grade.level}
+      </if>
+      <if test="grade.numberno!=''">
+        and s.snumber=#{grade.numberno}
       </if>
     </where>
   </select>

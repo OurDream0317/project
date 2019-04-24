@@ -86,4 +86,10 @@ public class NewsController {
         newsService.fbNews(id,fbstatus);
         return JSON.toJSONString("success");
     }
+    @RequestMapping("/selectNewsByAdmin")
+    @ResponseBody
+    public String selectNewsByAdmin(){
+        List list=newsService.selectNewsByAdmin();
+        return JSON.toJSONString(list);
+    }
 }

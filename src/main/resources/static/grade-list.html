@@ -1,69 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <!--[if lt IE 9]>
     <script type="text/javascript" src="/lib/html5shiv.js"></script>
     <script type="text/javascript" src="/lib/respond.min.js"></script>
     <![endif]-->
-    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css" />
-    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css" />
-    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
-    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin" />
-    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css"/>
     <!--[if IE 6]>
-    <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
     <title>成绩查询</title>
-    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-   <script>
-        $(function (){
-            $.get("/college/xyAll",function (data) {
-                console.log(data)
-                var list = JSON.parse(data);
-                var str1 = "";
-                for (var i = 0; i < list.length; i++) {
-                    str1 = "<option value='" + list[i].id + "'>" + list[i].xyName + "</option>"
-                    $("#xy").append(str1);
-                }
-            })
-        })
-    </script>
-    <style>
-        .check1{
-            width: 150px;
-            height: 30px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-family: 微软雅黑;
-        }
-        .check{
-            width: 150px;
-            height: 35px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-family: 微软雅黑;
-        }
-        .span1{
-            font-size: 10px;
-            font-family: 微软雅黑;
-            color: dodgerblue;
-        }
-    </style>
+    <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <script src="../layui/layui.all.js"></script>
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
 </head>
 <body>
 
-<pre>    <span class="span1">学生名：</span>  <input type="text" class="check1" name="sname" placeholder="请输入学生名">    <span class="span1">学号：</span>  <input type="text" name="snumber" class="check1" placeholder="请输入学生学号"> 学期<select class="check1" name="time1"></select>--<select class="check1" name="time2"><option value="请选择学期">请选择学期</option><option value="第一学期">第一学期</option><option value="第二学期">第二学期</option></select>
+<div>
+    <span class="span1">学生名：</span>
+    <input type="text" class="check1" name="sname" placeholder="请输入学生名">
+    <span class="span1">学号：</span>
+    <input type="text" name="snumber" class="check1" placeholder="请输入学生学号">
+    <span class="span1">学期：</span>
+    <input type="text"  name="time1" id="test2" placeholder="yyyy" style="width: 150px;height: 30px;border-radius: 4px;font-size: 12px;
+    font-family: 微软雅黑;">--
+    <select class="check1" name="time2">
+        <option value="">请选择学期</option>
+        <option value="第一学期">第一学期</option>
+        <option value="第二学期">第二学期</option>
+    </select>
+</div>
+<div>
+    <span class="span2">学院：</span>
+    <select id="xy" name="xy" class="check" onchange="selectXY()">
+        <option value="0">请选择学院</option>
+    </select>
+    <span class="span2">专业：</span>
+    <select id="zy" name="zy" type="text" class="check" onchange="ZYchange()">
+        <option value="0">请选择专业</option>
+    </select>
+    <span class="span2">班级：</span>
+    <select type="text" name="cla" class="check" id="cla">
+        <option value="0">请选择班级</option>
+    </select>
+    <input class="check" type="button" onclick="submitGrade()" value="搜索" style="background-color: deepskyblue;margin-left: 12px; margin-top: -5px;">
+</div>
 
-    <span class="span1">学院：</span>  <select id="xy" name="xy" class="check" onchange="select()"><option value="0">请选择学院</option></select>   <span class="span1">专业：</span>  <select id="zy" name="zy"  type="text" class="check" onchange="ZYchange()"><option value="0">请选择专业</option></select>   <span class="span1">班级：</span>  <select type="text" name="cla" class="check" id="cla"><option value="0">请选择班级</option></select>   <input class="check" type="button" onclick="submitGrade()" value="搜索" style="background-color: deepskyblue"></pre>
-
-
-<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="r">共有数据：<strong><span id="count"></span></strong> 条</span> </div>
+<div class="cl pd-5 bg-1 bk-gray mt-20">
+    <span class="r">共有数据：<strong><span id="count"></span></strong> 条</span>
+</div>
 <div class="mt-20">
     <table class="table table-border table-bordered table-bg table-hover table-sort">
         <thead>
@@ -71,9 +69,14 @@
             <th width="40"><input name="" type="checkbox" value=""></th>
             <th width="80">序号</th>
             <th width="100">学生</th>
-            <th width="100">C</th>
-            <th width="200">C++</th>
-            <th width="80">Java</th>
+            <th width="100">学号</th>
+            <th width="100">班级</th>
+            <th width="100">专业</th>
+            <th width="100">学院</th>
+            <th width="80">年份</th>
+            <th width="100">学期</th>
+            <th width="100">课程名称</th>
+            <th width="80">成绩</th>
             <th width="100">操作</th>
         </tr>
         </thead>
@@ -81,50 +84,130 @@
         </tbody>
     </table>
 </div>
-
 </body>
+<style>
+    .check1 {
+        margin-left: 0px;
+        width: 150px;
+        height: 30px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-family: 微软雅黑;
+    }
 
+    .check {
+        margin-top: 15px;
+        width: 150px;
+        height: 35px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-family: 微软雅黑;
+    }
 
+    .span1 {
+              margin-left: 60px;
+              font-size: 10px;
+              font-family: 微软雅黑;
+              color: dodgerblue;
+          }
+    .span2 {
+        margin-left: 68px;
+        font-size: 10px;
+        font-family: 微软雅黑;
+        color: dodgerblue;
+    }
+</style>
 <script>
+    layui.use('laydate', function() {
+        var laydate = layui.laydate;
+        //年选择器
+        laydate.render({
+            elem: '#test2'
+            , type: 'year'
+        });
+    });
+    $(function () {
+        $.get("/college/xyAll", function (data) {
+            var list = JSON.parse(data);
+            var str1 = "";
+            for (var i = 0; i < list.length; i++) {
+                str1 = "<option value='" + list[i].id + "'>" + list[i].xyName + "</option>"
+                $("#xy").append(str1);
+            }
+
+        });
+
+    });
+
     function submitGrade() {
         $.ajax({
-            url:"/grade/selectAll",
-            method:"post",
-            data:{
-                sname:$('input[name=sname]').val(),
-                snumber:$('input[name=snumber]').val(),
-                time1:$('select[name=time1]').val(),
-                time2:$('select[name=time2]').val(),
-                xy:$('select[name=xy]').val(),
-                zy:$('select[name=zy]').val(),
-                cla:$('select[name=cla]').val(),
-            },
-            dataType:"json",
-            success:function (data) {
-                $("tbody tr").remove();
-                $("#count").text(data.length);
-                $.each(data,function (index,obj) {
-                    $("tbody").append("<tr class=\"text-c\">" +
-                        "<td><input name='' type='checkbox' value=''></td>" +
-                        "<td>"+(index+1)+"</td>" +
-                        "<td>"+obj.stuid+"</td>" +
-                        "<td>"+obj.c+"</td>" +
-                        "<td>"+obj.c1+"</td>" +
-                        "<td>"+obj.java+"</td>" +
-                        "<td><button>查看</button>&nbsp;&nbsp;&nbsp;<button>修改</button>&nbsp;&nbsp;&nbsp;<button>删除</button></td>" +
-                        "</tr>")
-                })
+                url: "/grade/selectAll",
+                method: "post",
+                data: {
+                    sname: $('input[name=sname]').val(),
+                    snumber: $('input[name=snumber]').val(),
+                    time1: $('input[name=time1]').val(),
+                    time2: $('select[name=time2]').val(),
+                    xy: $('select[name=xy]').val(),
+                    zy: $('select[name=zy]').val(),
+                    cla: $('select[name=cla]').val(),
+                },
+                dataType: "json",
+                success: function (data) {
+                    var tmp1="";
+                    var tmp2="";
+                    $("tbody tr").remove();
+                    $("#count").text(data.length);
+                    $.each(data, function (index, obj) {
+                        $.get("/student/selectStudentByID",{"id":obj.stuid},function (data1) {
+                            var data1=JSON.parse(data1);
+                            tmp1=data1.sname;
+                            $("#"+obj.id+'td').text(tmp1);
+                            tmp2=data1.snumber;
+                            $("#"+obj.id+'td0').text(tmp2);
+                        });
+                        $.get("/college/claOne",{"id":obj.claid},function (data1) {
+                            var data1=JSON.parse(data1);
+                            tmp1=data1.cname;
+                            $("#"+obj.id+'td1').text(tmp1)
+                        });
+                        $.get("/college/zyOne",{"id":obj.proid},function (data1) {
+                            var data1=JSON.parse(data1);
+                            tmp1=data1.zyName;
+                            $("#"+obj.id+'td2').text(tmp1)
+                        });
+                        $.get("/college/xyOne",{"id":obj.colid},function (data1) {
+                            var data1=JSON.parse(data1);
+                            tmp1=data1.xyName;
+                            $("#"+obj.id+'td3').text(tmp1)
+                        });
+                        $("tbody").append("<tr class=\"text-c\">" +
+                            "<td><input name='' type='checkbox' value=''></td>" +
+                            "<td>" + (index + 1) + "</td>" +
+                            "<td id="+obj.id+'td'+"></td>" +
+                            "<td id="+obj.id+'td0'+"></td>" +
+                            "<td id="+obj.id+'td1'+"></td>" +
+                            "<td id="+obj.id+'td2'+"></td>" +
+                            "<td id="+obj.id+'td3'+"></td>" +
+                            "<td>" + obj.year + "</td>" +
+                            "<td>" + obj.level + "</td>" +
+                            "<td>" + obj.scorename + "</td>" +
+                            "<td>" + obj.gradenumber + "</td>" +
+                            "<td><button>修改</button></td>" +
+                            "</tr>")
+                    })
+                }
             }
-            }
-            )
+        )
     }
-    function select() {
+
+    function selectXY() {
         console.log($("#xy").val())
-        if($("#xy").val()=="请选择学院"){
+        if($("#xy").val()=="0"){
             $("#zy  option").remove("");
-            $("#zy").append("<option>请选择专业</option>")
+            $("#zy").append("<option value='0'>请选择专业</option>")
             $("#cla  option").remove("");
-            $("#cla").append("<option>请选择班级</option>")
+            $("#cla").append("<option value='0'>请选择班级</option>")
             return;
         }
         $("#zy  option").remove("");
@@ -138,27 +221,19 @@
             }
         })
     }
+
     function ZYchange() {
         $("#cla  option").remove("");
-        $.get("/college/claAll1",{"classid":$("#zy").val()},function (data) {
+        $.get("/college/claAll1", {"classid": $("#zy").val()}, function (data) {
             console.log(data)
-            var list=JSON.parse(data);
-            var str1="";
-            for (var i=0;i<list.length;i++){
-                str1="<option value='"+list[i].id+"'>"+list[i].cname+"</option>"
+            var list = JSON.parse(data);
+            var str1 = "";
+            for (var i = 0; i < list.length; i++) {
+                str1 = "<option value='" + list[i].id + "'>" + list[i].cname + "</option>"
                 $("#cla").append(str1);
             }
         })
     }
 </script>
-<!--_footer 作为公共模版分离出去-->
-<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
-<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
 
-<!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
-<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
 </html>

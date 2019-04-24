@@ -25,6 +25,9 @@
   <select id="selectByPk" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select * from news where id=#{id}
   </select>
+  <select id="selectNewsByAdmin" resultMap="BaseResultMap">
+    select * from news where autor='admin' and fbstatus=1 order by time desc
+  </select>
   <update id="fbNews" parameterType="java.lang.Integer" >
     update  news
     <set>

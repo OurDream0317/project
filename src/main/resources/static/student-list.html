@@ -89,10 +89,18 @@
             function methodA(data) {
                 var str = "";
                 for (var i = 0; i < data.length; i++) {
-                    str = "<tr id=" + data[i].id + "><td><input name='studentid' type='checkbox' value='" + data[i].id + "'></td><td>" + (i+1) + "</td><td>" + data[i].sname + "</td><td>" + data[i].snumber +
-                        "</td><td>" + data[i].xyName + "</td><td>" + data[i].zyName + "</td><td>" + data[i].cname + "</td><td>" + data[i].sbrithday + "</td><td>" +
-                        data[i].sage + "</td><td>" + data[i].sphone +
-                        "</td><td><button style='background-color: lightgreen' onclick='updateStudent(" + data[i].id + ")'>修改</button>&nbsp;&nbsp;&nbsp;" +
+                    str = "<tr id=" + data[i].id + ">" +
+                        "<td><input name='studentid' type='checkbox' value='" + data[i].id + "'></td>" +
+                        "<td>" + (i + 1) + "</td>" +
+                        "<td>" + data[i].sname + "</td>" +
+                        "<td>" + data[i].snumber + "</td>" +
+                        "<td>" + data[i].xyName + "</td>" +
+                        "<td>" + data[i].zyName + "</td>" +
+                        "<td>" + data[i].cname + "</td>" +
+                        "<td>" + data[i].sbrithday + "</td>" +
+                        "<td>" + data[i].sage + "</td>" +
+                        "<td>" + data[i].sphone + "</td>" +
+                        "<td><button style='background-color: lightgreen' onclick='updateStudent(" + data[i].id + ")'>修改</button>&nbsp;&nbsp;&nbsp;" +
                         "<button class='btn'  style='background-color: red' onclick='del(" + data[i].id + ")'>删除</button></td></tr>";
                     $("table").append(str);
                 }
@@ -110,7 +118,7 @@
                 }
             })
             $("#file").click(function () {
-                window.location.href="/excel/export"
+                window.location.href = "/excel/export"
             })
             $("#file1").click(function () {
                 layer.open({
@@ -181,27 +189,29 @@
             method(start)
 
         }
+
         //修改一条数据
         function updateStudent(id) {
             $.ajax({
-                method:"get",
-                url:"/student/updateOne",
-                data:{
-                    id:id
-                },success:function () {
-                    window.location.href="/student-update.html";
+                method: "get",
+                url: "/student/updateOne",
+                data: {
+                    id: id
+                }, success: function () {
+                    window.location.href = "/student-update.html";
                 }
             })
         }
+
         function del(del) {
             var index = layer.load(1, {
-                shade: [0.1,'#fff'] //0.1透明度的白色背景
+                shade: [0.1, '#fff'] //0.1透明度的白色背景
             });
             $.get("/student/delstudent", {"id": del}, function () {
                 layer.close(index);
                 $("#" + del).remove();
                 layer.msg("删除成功")
-                setTimeout(go,1500);
+                setTimeout(go, 1500);
             });
         }
 
@@ -240,9 +250,11 @@
                 });
             }
         }
+
         function go() {
             window.location.reload();
         }
+
         function select() {
             if ($("#xy").val() == "请选择学院") {
                 $("#zy  option").remove("");
@@ -279,19 +291,25 @@
 
 </head>
 <body>
-<div class="cl pd-5 bg-1 bk-gray mt-20"><span class="l"><a href="javascript:;" onclick="deleteAll()"
-                                                           class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a
-        class="btn btn-primary radius" href="/addstudent.html" style="margin-left: 10px"><i class="Hui-iconfont">&#xe600;</i> 添加学生</a></span><input type="button" value="Excel导出" id="file"
-                                                                                                                          class="btn btn-danger radius" style="margin-left: 10px"><input type="button" value="Excel导入" id="file1"  class="btn btn-danger radius" style="margin-left: 10px">
+<div class="cl pd-5 bg-1 bk-gray mt-20">
+    <span class="l">
+        <a href="javascript:;" onclick="deleteAll()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+        <a class="btn btn-primary radius" href="/addstudent.html" style="margin-left: 10px"><i class="Hui-iconfont">&#xe600;</i> 添加学生</a>
+    </span>
+    <input type="button" value="Excel导出" id="file" class="btn btn-danger radius" style="margin-left: 10px">
+    <input type="button" value="Excel导入" id="file1" class="btn btn-danger radius" style="margin-left: 10px">
     <span class="r">共有数据：<strong><span id="count"></span></strong> 条</span></div>
 
 <div id="center">
-    <pre><span class="span1">学生名：</span>  <input type="text" class="check" placeholder="请输入学生名" id="sname">    <span class="span1">学号：</span>  <input
-            type="text" class="check" placeholder="请输入学生学号" id="snumber">    <span class="span1">学院：</span>  <select id="xy"
-                                                                                                        class="check"
-                                                                                                        onchange="select()"><option value='0'>请选择学院</option></select>   <span
+    <pre><span class="span1">学生名：</span>  <input type="text" class="check" placeholder="请输入学生名" id="sname">    <span
+            class="span1">学号：</span>  <input
+            type="text" class="check" placeholder="请输入学生学号" id="snumber">    <span class="span1">学院：</span>  <select
+            id="xy"
+            class="check"
+            onchange="select()"><option value='0'>请选择学院</option></select>   <span
             class="span1">专业：</span>  <select id="zy" type="text" class="check" onchange="ZYchange()"><option value='0'>请选择专业</option></select>   <span
-            class="span1">班级：</span>  <select type="text" class="check" id="cla"><option value='0'>请选择班级</option></select>   <input
+            class="span1">班级：</span>  <select type="text" class="check" id="cla"><option
+            value='0'>请选择班级</option></select>   <input
             class="check" type="button" value="搜索" id="searchStudent" style="background-color: deepskyblue"></pre>
     <div id="center-one">
         <table cellspacing="0" cellpadding="0">
@@ -307,7 +325,8 @@
             <th width="200">电话</th>
             <th width="200">操作</th>
         </table>
-        <pre>                                                         <input class="ye" type="button" value="上一页" onclick="upordown(start-1)">              <input
+        <pre>                                                         <input class="ye" type="button" value="上一页"
+                                                                             onclick="upordown(start-1)">              <input
                 type="text" style="width: 60px;height: 20px;text-align: center" readonly="readonly" id="ye_center">               <input
                 class="ye" type="button" value="下一页" onclick="upordown(start+1)"></pre>
     </div>
@@ -321,37 +340,35 @@
 </body>
 <script>
     $("#searchStudent").click(function () {
-        var sname=$("#sname").val();
-        var snumber=$("#snumber").val();
-        var zy=$("#zy").val();
-        var xy=$("#xy").val();
-        var cla=$("#cla").val();
+        var sname = $("#sname").val();
+        var snumber = $("#snumber").val();
+        var zy = $("#zy").val();
+        var xy = $("#xy").val();
+        var cla = $("#cla").val();
         $.ajax({
             method: "get",
             url: "/student/searchStusent",
-            data: {"sname": sname, "snumber": snumber,"colid":xy,"proid":zy,"classid":cla},
-            success:function (data) {
+            data: {"sname": sname, "snumber": snumber, "colid": xy, "proid": zy, "classid": cla},
+            success: function (data) {
                 var data = JSON.parse(data)
                 $("table  tr:not(:first)").empty("");
                 $("#count").text(data.length);
                 var str = "";
                 for (var i = 0; i < data.length; i++) {
-                    if (data[i].personid == 1) {
-                        continue;
-                    }
                     str = "<tr id=" + data[i].id + "><td><input name='studentid' type='checkbox' value='" + data[i].id + "'></td><td>" + (i + 1) + "</td><td>" + data[i].sname + "</td><td>" + data[i].snumber +
-                        "</td><td>" + data[i].sbrithday + "</td><td>" +
+                        "</td><td>" + data[i].xyName + "</td><td>" + data[i].zyName + "</td><td>" + data[i].cname + "</td><td>" + data[i].sbrithday + "</td><td>" +
                         data[i].sage + "</td><td>" + data[i].sphone +
                         "</td><td><button style='background-color: lightgreen' onclick='updateStudent(" + data[i].id + ")'>修改</button>&nbsp;&nbsp;&nbsp;" +
                         "<button class='btn'  style='background-color: red' onclick='del(" + data[i].id + ")'>删除</button></td></tr>";
                     $("table").append(str);
                 }
             },
-            error:function () {
+            error: function () {
                 layer.msg("请检查网络异常")
             }
         })
     })
+
     function methodBtn() {
         if ($("#xy").val() == "请选择学院" || $("#zy").val() == "请选择专业" || $("#cla").val() == "请选择班级") {
             $("#div1").show();
@@ -363,7 +380,7 @@
 
     function select() {
         console.log($("#xy").val())
-        if ($("#xy").val() == "请选择学院") {
+        if ($("#xy").val() == "0") {
             $("#zy  option").remove("");
             $("#zy").append("<option value='0'>请选择专业</option>")
             $("#cla  option").remove("");

@@ -11,6 +11,9 @@
   <sql id="Base_Column_List" >
     id, sname, spassword, sphone
   </sql>
+    <select id="selectStudentByID" resultType="Student">
+    select sname,snumber  from student where id=#{id}
+  </select>
   <select id="updateOne" resultType="Student">
     select *  from student where delstatus=0 and id=#{id}
   </select>
@@ -56,21 +59,21 @@
     select s.*,c.xyName,p.zyName,a.cname from student s left join college c on s.colid=c.id left join profession p on s.colid=p.id left join class a on s.colid=a.id where s.delstatus=0 and s.personid=0
   </select>
     <select id="searchStusent" resultType="Student">
-    select * from student  where delstatus=0 and personid=0
+        select s.*,c.xyName,p.zyName,a.cname from student s left join college c on s.colid=c.id left join profession p on s.colid=p.id left join class a on s.colid=a.id where s.delstatus=0 and s.personid=0
     <if test="student.sname!=null and student.sname.length()>0">
-     and  sname=#{student.sname}
+     and  s.sname=#{student.sname}
     </if>
         <if test="student.snumber!=null and student.snumber.length()>0">
-            and  snumber=#{student.snumber}
+            and  s.snumber=#{student.snumber}
         </if>
         <if test="student.colid!=0">
-            and  colid=#{student.colid}
+            and  s.colid=#{student.colid}
         </if>
         <if test="student.proid!=0">
-            and  proid=#{student.proid}
+            and  s.proid=#{student.proid}
         </if>
         <if test="student.classid!=0">
-            and  classid=#{student.classid}
+            and  s.classid=#{student.classid}
         </if>
   </select>
   <update id="updateStudent" parameterType="com.example.demo.model.Student" >

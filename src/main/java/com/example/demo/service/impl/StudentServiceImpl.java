@@ -25,7 +25,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List studentLogin(int start, int num) {
-
         List<Student> list = studentMapper.studentLogin(start, num);
         return list;
     }

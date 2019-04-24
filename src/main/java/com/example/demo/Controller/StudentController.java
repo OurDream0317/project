@@ -49,7 +49,6 @@ public class StudentController {
     }
     @RequestMapping("/addstudent")
     public String addstudent(Student student){
-        System.out.println(JSON.toJSONString(student));
       studentService.addStudent(student);
         return "redirect:/student-list.html";
     }
@@ -104,7 +103,12 @@ public class StudentController {
         List list=studentMapper.selectAllStudent();
         return JSON.toJSONString(list);
     }
-
+    @RequestMapping("/selectStudentByID")
+    @ResponseBody
+    public String selectStudentByID(int id){
+        Student student=studentMapper.selectStudentByID(id);
+        return JSON.toJSONString(student);
+    }
     @RequestMapping("/updateOne")
     @ResponseBody
     public String updateOne(int id,HttpSession session){
@@ -126,7 +130,6 @@ public class StudentController {
     @RequestMapping("/searchStusent")
     @ResponseBody
     public String searchStusent(Student student){
-        System.out.println(JSON.toJSONString(student));
         List list=studentService.searchStusent(student);
         return JSON.toJSONString(list);
     }

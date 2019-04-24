@@ -27,4 +27,5 @@ public interface NewsMapper {
     void delOne(@Param("id") int id);
     void sh(@Param("id") int id,@Param("shstatus") int shstatus);
     void fbNews(@Param("id") int id,@Param("fbstatus") int fbstatus);
+    List selectNewsByAdmin();
 }

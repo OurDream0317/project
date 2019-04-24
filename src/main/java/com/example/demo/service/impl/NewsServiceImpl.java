@@ -64,4 +64,9 @@ public class NewsServiceImpl implements NewsService {
         return newsMapper.searchNews(content);
     }
 
+    @Override
+    public List selectNewsByAdmin() {
+        return newsMapper.selectNewsByAdmin();
+    }
+
 }

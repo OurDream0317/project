@@ -15,11 +15,10 @@ public class Grade {
 
     private String level;
 
-    private Double c;
+    private String scorename;
 
-    private Double c1;
-
-    private Double java;
+    private Double gradenumber;
+    private String numberno;
 
     public Integer getId() {
         return id;
@@ -77,27 +76,27 @@ public class Grade {
         this.level = level == null ? null : level.trim();
     }
 
-    public Double getC() {
-        return c;
+    public String getScorename() {
+        return scorename;
     }
 
-    public void setC(Double c) {
-        this.c = c;
+    public void setScorename(String scorename) {
+        this.scorename = scorename;
     }
 
-    public Double getC1() {
-        return c1;
+    public Double getGradenumber() {
+        return gradenumber;
     }
 
-    public void setC1(Double c1) {
-        this.c1 = c1;
+    public void setGradenumber(Double gradenumber) {
+        this.gradenumber = gradenumber;
     }
 
-    public Double getJava() {
-        return java;
+    public String getNumberno() {
+        return numberno;
     }
 
-    public void setJava(Double java) {
-        this.java = java;
+    public void setNumberno(String numberno) {
+        this.numberno = numberno;
     }
 }

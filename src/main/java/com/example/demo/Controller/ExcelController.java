@@ -45,7 +45,6 @@ public class ExcelController {
             cell.setCellValue(text);
         }
         List<Student> list = studentMapper.selectAllStudent();
-        System.out.println(JSON.toJSONString(list));
         int i=0;
         for (Student student:list) {
             HSSFRow row1=sheet.createRow(i+1);

@@ -22,20 +22,21 @@ public class GradeController {
     @RequestMapping("/grade/selectAll")
     @ResponseBody
     public String selectAllGrade(String sname,String snumber,String time1,String time2,int xy,int zy,int cla){
-        Student student=new Student();
-        student.setSname(sname);
-        student.setSnumber(snumber);
-       Student student1=studentService.selStudent(student);
         Grade grade=new Grade();
+        grade.setNumberno(snumber);
         grade.setColid(xy);
         grade.setProid(zy);
         grade.setClaid(cla);
         grade.setStuid(0);
-        if(student1!=null){
-        grade.setStuid(student1.getId());}
         grade.setYear(time1);
         grade.setLevel(time2);
-
+        if(!("".equals(sname))){
+            Student student=new Student();
+            student.setSname(sname);
+            student.setSnumber(snumber);
+            Student student1=studentService.selStudent(student);
+            grade.setStuid(student1.getId());
+        }
         List list=gradeService.selectAllGrade(grade);
         return JSON.toJSONString(list);
     }

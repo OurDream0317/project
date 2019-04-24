@@ -13,4 +13,5 @@ public interface NewsService {
     void sh(int id,int shstaatus);
     void fbNews(int id,int fbstatus);
     List<News> searchNews(String content);
+    List selectNewsByAdmin();
 }
