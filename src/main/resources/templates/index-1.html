@@ -36,7 +36,9 @@
             <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
                 <ul class="cl">
                     <li class="dropDown dropDown_hover">
-                        <a href="#" class="dropDown_A">[[${student.sname}]] <i class="Hui-iconfont">&#xe6d5;</i></a>
+                        <a href="#" class="dropDown_A"><span>[[${student.sname}]]</span>
+                            <span id="span_message" style="display: none">[[${student.snumber}]]</span>
+                            <i class="Hui-iconfont">&#xe6d5;</i></a>
                         <ul class="dropDown-menu menu radius box-shadow">
                             <li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
                             <li><a href="/login">切换账户</a></li>
@@ -65,6 +67,7 @@
             <dt><i class="Hui-iconfont">&#xe616;</i> 资讯列表<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
+                    <li><a data-href="/article-list.html" data-title="资讯管理" href="javascript:void(0)">资讯管理</a></li>
                     <li><a data-href="/article-write.html" data-title="资讯编写" href="javascript:void(0)">资讯编写</a></li>
                 </ul>
             </dd>
@@ -119,7 +122,7 @@
         <div class="Hui-tabNav-wp">
             <ul id="min_title_list" class="acrossTab cl">
                 <li class="active">
-                    <span title="我的桌面" data-href="welcome.html">我的桌面</span>
+                    <span title="首页" data-href="welcome.html">首页</span>
                     <em></em></li>
             </ul>
         </div>
@@ -172,51 +175,63 @@
         });
     });
     /*个人信息*/
-    function myselfinfo(){
+    function myselfinfo() {
+        var snumber = $("#span_message").text();
+        $.ajax({
+            url: "/student/studentMessage",
+            type: "get",
+            data: {"snumber": snumber},
+            dataType: 'json',
+            success: function (result) {
+                $("#sname").text(result.sname);
+                $("#spwd").text(result.spassword);
+                $("#sphone").text(result.sphone);
+                $("#age").text(result.sage);
+                $("#bri").text(result.sbrithday);
+                $("#snum").text(result.snumber);
+                $("#xy").text(result.xyName);
+                $("#zy").text(result.zyName);
+                $("#cla").text(result.cname);
+                if (result.snumber == "admin") {
+                    $("#1").hide();
+                    $("#2").hide();
+                    $("#3").hide();
+                    $("#4").hide();
+                }
+            }
+        });
         layer.open({
             type: 1,
-            area: ['400px','550px'],
+            area: ['400px', '300px'],
             fix: false, //不固定
             maxmin: true,
-            shade:0.4,
+            shade: 0.4,
             title: '查看信息',
-            content: '<div>管理员信息</div>'
-        });
-    }
+            content: "<table>" +
+                "<tr><th>用户名：</th><th id='sname'></th></tr>" +
+                "<tr><th>密码：</th><th id='spwd'></th></tr>" +
+                "<tr><th>手机号：</th><th  id='sphone'></th></tr>" +
+                "<tr id='1'><th>学号：</th><th id='snum'></th></tr>" +
+                "<tr><th>年龄：</th><th id='age'></th></tr>" +
+                "<tr><th>生日：</th><th id='bri'></th></tr>" +
+                "<tr id='2'><th>学院：</th><th id='xy'></th></tr>" +
+                "<tr id='3'><th>专业：</th><th id='zy'></th></tr>" +
+                "<tr id='4'><th>班级：</th><th id='cla'></th ></tr>" +
+                "</table>"
 
-    /*资讯-添加*/
-    function article_add(title,url){
-        var index = layer.open({
-            type: 2,
-            title: title,
-            content: url
+            /*"<div style='text-align: center;font-size: 20px'>" +
+                "<div>用户名：<span id='sname'></span></div>" +
+                "<div>密码：<span id='spwd'></span></div>" +
+                "<div>手机号：<span id='sphone'></span></div>" +
+                "<div id='1'>学号：<span id='snum'></span></div>" +
+                "<div>年龄：<span id='age'></span></div>" +
+                "<div>生日：<span id='bri'></span></div>" +
+                "<div id='2'>学院：<span id='xy'></span></div>" +
+                "<div id='3'>专业：<span id='zy'></span></div>" +
+                "<div id='4'>班级：<span id='cla'></span></div>" +
+                "</div>"*/
         });
-        layer.full(index);
     }
-    /*图片-添加*/
-    function picture_add(title,url){
-        var index = layer.open({
-            type: 2,
-            title: title,
-            content: url
-        });
-        layer.full(index);
-    }
-    /*产品-添加*/
-    function product_add(title,url){
-        var index = layer.open({
-            type: 2,
-            title: title,
-            content: url
-        });
-        layer.full(index);
-    }
-    /*用户-添加*/
-    function member_add(title,url,w,h){
-        layer_show(title,url,w,h);
-    }
-
-
 </script>
 
 <!--此乃百度统计代码，请自行删除-->

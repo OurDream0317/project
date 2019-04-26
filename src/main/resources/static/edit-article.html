@@ -48,8 +48,7 @@
                 data: {"id":$("#id").val(),"shstatus":1},
             success: function (result) {
                 layer.msg('审核通过', {icon: 1});
-                time: 1500//3s后自动关闭
-                layer.closeAll();
+                setTimeout(go,1500);
             },
             error: function (xhr) {
                 layer.msg("请求出错(请检查相关网络状况.)");
@@ -63,9 +62,8 @@
                 dataType: 'json',
                 data: {"id":$("#id").val(),"shstatus":2},
                 success: function (result) {
-                    layer.msg('审核不通过', {icon: 1});
-                    time: 1500//3s后自动关闭
-                    layer.closeAll();
+                    layer.msg('审核不通过', {icon: 2});
+                    setTimeout(go,1500);
                 },
                 error: function (xhr) {
                     layer.msg("请求出错(请检查相关网络状况.)");
@@ -74,5 +72,8 @@
             });
         });
     })
+    function go() {
+       window.location.href="/article-list.html"
+    }
 </script>
 </html>

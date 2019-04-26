@@ -30,7 +30,7 @@
         var fb1="fb";
         $(function () {
             $.ajax({
-                type: "POST",
+                type: "get",
                 url: "/news/selectAll",
                 dataType: "json",
                 data:{"content":$("#content").val()},
@@ -61,7 +61,8 @@
                                 $("#"+obj.id).hide();
                             }if(obj.shstatus==1){
                                 shstatus="审核通过";
-                            }else{
+                            }
+                            if(obj.shstatus==2){
                                 shstatus="审核不通过";
                                 $("#"+obj.id).hide();
                             }
@@ -130,7 +131,7 @@
     $("#searchNews").click(function () {
         $("table tr").not(':eq(0)').empty();
         $.ajax({
-            type: "POST",
+            type: "get",
             url: "/news/selectAll",
             dataType: "json",
             data:{"content":$("#content").val()},
@@ -161,7 +162,8 @@
                             $("#"+obj.id).hide();
                         }if(obj.shstatus==1){
                             shstatus="审核通过";
-                        }else{
+                        }
+                        if(obj.shstatus==2){
                             shstatus="审核不通过";
                             $("#"+obj.id).hide();
                         }

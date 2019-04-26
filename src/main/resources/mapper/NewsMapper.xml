@@ -22,11 +22,22 @@
     union
      select * from news where content like #{content} and status in(0,1)
   </select>
+  <select id="selectAll1" resultMap="BaseResultMap" >
+    select * from news where autor=#{sname} and status in(0,1)
+  </select>
+  <select id="searchNews1" resultMap="BaseResultMap"  >
+    select * from news where title like #{content} and autor=#{sname} status in(0,1)
+    union
+     select * from news where content like #{content} and autor=#{sname} status in(0,1)
+  </select>
   <select id="selectByPk" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select * from news where id=#{id}
   </select>
   <select id="selectNewsByAdmin" resultMap="BaseResultMap">
-    select * from news where autor='admin' and fbstatus=1 order by time desc
+    select * from news where isadmin=0 and fbstatus=1 order by time desc
+  </select>
+  <select id="selectNewsByStudent" resultMap="BaseResultMap">
+    select * from news where isadmin=1  and fbstatus=1 order by time desc
   </select>
   <update id="fbNews" parameterType="java.lang.Integer" >
     update  news
@@ -72,6 +83,7 @@
       <if test="author != null" >
         autor,
       </if>
+      isadmin,shstatus
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="title != null" >
@@ -87,6 +99,7 @@
       <if test="author != null" >
         #{author,jdbcType=VARCHAR},
       </if>
+      #{isadmin},#{shstatus}
     </trim>
   </insert>
   <update id="updateByPk" parameterType="com.example.demo.model.News" >

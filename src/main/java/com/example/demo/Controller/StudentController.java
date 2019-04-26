@@ -133,4 +133,21 @@ public class StudentController {
         List list=studentService.searchStusent(student);
         return JSON.toJSONString(list);
     }
+    @RequestMapping("/studentMessage")
+    @ResponseBody
+    public String studentMessage(String snumber){
+        Student student=studentService.studentMessage(snumber);
+        return JSON.toJSONString(student);
+    }
+    @RequestMapping(value ="/updatePWD",method = RequestMethod.POST)
+    @ResponseBody
+    public String updatePWD(String pwd1,String pwd2,String pwd3,HttpSession session){
+           Student student= (Student) session.getAttribute("student");
+           if(!student.getSpassword().equals(pwd1)){
+               return "0";
+           }else{
+              studentService.updatePWD(pwd2,student.getId());
+               return "1";
+           }
+    }
 }

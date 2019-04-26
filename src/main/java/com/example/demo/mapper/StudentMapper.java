@@ -23,4 +23,6 @@ public interface StudentMapper {
    Student updateOne(@Param("id")int id);
     void updateStudent(Map map);
     List searchStusent(Map map);
+    Student studentMessage(@Param("snumber") String snumber);
+    void updatePWD(@Param("pwd") String pwd,@Param("id") int id);
 }

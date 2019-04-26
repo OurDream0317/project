@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.mail.Session;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,16 +30,27 @@ public class NewsController {
           newsService.addNews(title,content,author);
         return "redirect:/article-list.html";
     }
-    @RequestMapping(value = "/selectAll",produces = "application/json;charset=UTF-8",method = RequestMethod.POST)
+    @RequestMapping(value = "/selectAll")
     @ResponseBody
-    public String selectAll(String content){
-        List list=null;
-        if(content.length()<=0||content==null){
-         list=newsService.selectAll();
+    public String selectAll(String content, HttpSession session) {
+        Student student = (Student) session.getAttribute("student");
+        if (student.getSname().equals("admin")) {
+            List list = null;
+            if (content.length() <= 0 || content == null) {
+                list = newsService.selectAll();
+            } else {
+                list = newsService.searchNews(content);
+            }
+            return JSON.toJSONString(list);
         }else{
-          list=newsService.searchNews(content);
+            List list = null;
+            if (content.length() <= 0 || content == null) {
+                list = newsService.selectAll1(student.getSname());
+            } else {
+                list = newsService.searchNews1(content,student.getSname());
+            }
+            return JSON.toJSONString(list);
         }
-        return JSON.toJSONString(list);
     }
     @RequestMapping("/selectByPk")
     public String selectByPk(int tmp,HttpSession session){
@@ -89,7 +101,27 @@ public class NewsController {
     @RequestMapping("/selectNewsByAdmin")
     @ResponseBody
     public String selectNewsByAdmin(){
-        List list=newsService.selectNewsByAdmin();
-        return JSON.toJSONString(list);
+        List<News> list=newsService.selectNewsByAdmin();
+        List list1=new ArrayList();
+        for (News news:list) {
+              if(news.getTitle().length()>=24){
+                  news.setTitle(news.getTitle().substring(0,23)+"......");
+              }
+              list1.add(news);
+        }
+        return JSON.toJSONString(list1);
+    }
+    @RequestMapping("/selectNewsByStudent")
+    @ResponseBody
+    public String selectNewsByStudent(){
+        List<News> list=newsService.selectNewsByStudent();
+        List list1=new ArrayList();
+        for (News news:list) {
+            if(news.getTitle().length()>=24){
+                news.setTitle(news.getTitle().substring(0,23)+"......");
+            }
+            list1.add(news);
+        }
+        return JSON.toJSONString(list1);
     }
 }

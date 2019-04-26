@@ -123,4 +123,14 @@ public class StudentServiceImpl implements StudentService {
         map.put("student",student);
         return studentMapper.searchStusent(map);
     }
+
+    @Override
+    public Student studentMessage(String snumber) {
+        return studentMapper.studentMessage(snumber);
+    }
+
+    @Override
+    public void updatePWD(String pwd, int id) {
+        studentMapper.updatePWD(pwd,id);
+    }
 }

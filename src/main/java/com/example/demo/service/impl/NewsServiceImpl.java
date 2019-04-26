@@ -20,12 +20,23 @@ public class NewsServiceImpl implements NewsService {
     public void addNews(String title, String content,String author) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         String data=df.format(new Date());
-        newsMapper.addNews(title,content,data,author);
+        int isadmin=1;
+        int shstatus=0;
+        if("admin".equals(author)){
+            isadmin=0;
+            shstatus=1;
+        }
+        newsMapper.addNews(title,content,data,author,isadmin,shstatus);
     }
 
     @Override
     public List<News> selectAll() {
         return newsMapper.selectAll();
+    }
+
+    @Override
+    public List<News> selectAll1(String sname) {
+        return newsMapper.selectAll1(sname);
     }
 
     @Override
@@ -65,8 +76,19 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public List selectNewsByAdmin() {
+    public List<News> searchNews1(String content, String sname) {
+        content="%"+content+"%";
+        return newsMapper.searchNews1(content,sname);
+    }
+
+    @Override
+    public List<News> selectNewsByAdmin() {
         return newsMapper.selectNewsByAdmin();
+    }
+
+    @Override
+    public List<News> selectNewsByStudent() {
+        return newsMapper.selectNewsByStudent();
     }
 
 }
