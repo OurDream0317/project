@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <title>修改密码</title>
+</head>
+<body>
+<div style="display: none"><a href="/login" id="Studentlogin">切换账户</a></div>
+<form style="margin-left: 25%;margin-top: 15%">
+<pre>  请输入原始密码：  <input type="text" style="width: 400px;height: 35px;font-size: 20px" name="pwd1"></pre>
+<pre>    请输入新密码：  <input type="text" style="width: 400px;height: 35px" name="pwd2"></pre>
+<pre>请再次输入新密码：  <input type="text" style="width: 400px;height: 35px" name="pwd3"></pre>
+<pre>          <input type="reset" value="重置" style="width: 100px;height: 30px;background-color: #2e9ad0;border-style: none">                            <input type="button" value="提交" style="width: 100px;height: 30px;background-color: #2e9ad0;border-style: none"></pre>
+</form>
+</body>
+<script type="text/javascript">
+      $("input[type=button]").click(function () {
+          var pwd1=$("input[name=pwd1]").val();
+          var pwd2=$("input[name=pwd2]").val();
+          var pwd3=$("input[name=pwd3]").val();
+         if (pwd1==""){
+             alert("请输入正确的原始密码！")
+         }else{
+            if(pwd2==""||pwd3==""){
+                alert("填写新密码不能为空！")
+            }else{
+                if(pwd2!=pwd3){
+                    alert("两次输入的新密码不一致，请检查后重新输入！")
+                }else{
+                    $.ajax({
+                        url:"/student/updatePWD",
+                        type:"post",
+                        data:{"pwd1":pwd1,"pwd2":pwd2,"pwd3":pwd3},
+                        success:function (result) {
+                            if(result=="0"){
+                                alert("输入的原始密码不正确！");
+                            };
+                            if(result=="1"){
+                                alert("密码修改成功！3秒后进入进入登录页面进行重新登录。。。。。。");
+                                setTimeout(go,3000);
+                            }
+                        }
+                    })
+                }
+            }
+         }
+      })
+    function go() {
+        window.location.href="/logout";
+    }
+</script>
+</html>
